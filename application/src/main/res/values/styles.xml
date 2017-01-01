@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/appPrimaryLight</item>
         <item name="colorPrimaryDark">@color/appPrimaryDark</item>
         <item name="colorAccent">@color/appPrimaryLight</item>
+        <item name="android:colorForeground">@color/appPrimaryDark</item>
+        <item name="android:navigationBarColor">@color/appPrimaryDark</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.android.bookmybook.HomeActivity">
+    android:id="@+id/main_CL"
+    tools:context="com.android.bookmybook.activity.HomeActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,14 +22,15 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_home" />
+    <include
+        android:id="@+id/abcd" layout="@layout/content_home" />
 
-    <android.support.design.widget.FloatingActionButton
+    <ImageButton
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/books"
+        android:background="@drawable/fab"
         android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:layout_gravity="right|bottom" />
 
 </android.support.design.widget.CoordinatorLayout>

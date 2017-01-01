@@ -185,4 +185,7 @@
     <color name="textLightPrimary">#FFFFFF</color>
     <color name="textLightSecondary">#bfbfbf</color>
 
+    <!--fab-->
+    <color name="fab">#FF6347</color>
+
 </resources>

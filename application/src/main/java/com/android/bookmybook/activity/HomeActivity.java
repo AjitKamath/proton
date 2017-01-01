@@ -1,48 +1,81 @@
-package com.android.bookmybook;
+package com.android.bookmybook.activity;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Layout;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewStub;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ViewFlipper;
 
-public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import com.android.bookmybook.R;
+import com.android.bookmybook.util.Utility;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
+import static com.android.bookmybook.util.Constants.OK;
+
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private static final String CLASS_NAME = Utility.class.getName();
+    private Context mContext = this;
+
+    /*components*/
+    @InjectView(R.id.drawer_layout)
+    DrawerLayout drawer_layout;
+
+    /*components*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        ButterKnife.inject(this);
+
+        initComponents();
+    }
+
+    private void initComponents(){
+        //toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        //check git
-
+        //drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        //navigation
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //fab
+        ImageButton fab = (ImageButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utility.showSnacks(drawer_layout, "Replace with your own action", OK, Snackbar.LENGTH_LONG);
+            }
+        });
     }
+
 
     @Override
     public void onBackPressed() {
@@ -82,9 +115,12 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        ViewFlipper vf = (ViewFlipper) findViewById(R.id.vf);
+
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            vf.setDisplayedChild(0);
         } else if (id == R.id.nav_gallery) {
+            vf.setDisplayedChild(1);
 
         } else if (id == R.id.nav_slideshow) {
 
