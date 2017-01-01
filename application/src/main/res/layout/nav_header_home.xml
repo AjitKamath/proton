@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:textColor="@color/textLightPrimary"
-        android:text="AJIT KAMATH" />
+        android:text="VISHAL VARSHNEY" />
 
     <TextView
         android:layout_marginTop="5dp"
