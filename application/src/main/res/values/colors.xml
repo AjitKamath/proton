@@ -183,7 +183,7 @@
 
     <!--Text-->
     <color name="textLightPrimary">#FFFFFF</color>
-    <color name="textLightSecondary">#bfbfbf</color>
+    <color name="textLightSecondary">#e7e7e7</color>
 
     <!--fab-->
     <color name="fab">#FF6347</color>

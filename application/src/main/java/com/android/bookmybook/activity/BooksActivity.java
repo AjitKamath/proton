@@ -1,10 +1,7 @@
 package com.android.bookmybook.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
@@ -12,16 +9,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewStub;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ViewFlipper;
 
 import com.android.bookmybook.R;
@@ -32,7 +23,7 @@ import butterknife.InjectView;
 
 import static com.android.bookmybook.util.Constants.OK;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class BooksActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final String CLASS_NAME = Utility.class.getName();
     private Context mContext = this;
 
@@ -45,7 +36,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_books);
         ButterKnife.inject(this);
 
         initComponents();
@@ -54,9 +45,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private void initComponents(){
         //toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(getResources().getString(R.string.app_name));
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         //drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -67,8 +56,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         //navigation
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setItemIconTintList(null);
-        navigationView.getMenu().getItem(1).setActionView(R.layout.menu_dot);
         navigationView.setNavigationItemSelectedListener(this);
 
         //fab
@@ -120,13 +107,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-       // ViewFlipper vf = (ViewFlipper) findViewById(R.id.vf);
+        //ViewFlipper vf = (ViewFlipper) findViewById(R.id.vf);
 
         /*if (id == R.id.nav_camera) {
-            Intent i = new Intent(this, BooksActivity.class);
-            startActivity(i);
-            finish();
-
             //vf.setDisplayedChild(0);
         } else if (id == R.id.nav_gallery) {
             //vf.setDisplayedChild(1);
