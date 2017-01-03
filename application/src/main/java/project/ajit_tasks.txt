@@ -1,3 +1,10 @@
 2-jan-16
 1. common header, fab & navigation drawer for all the activities.
 2. ui for navigation drawer.
+
+-------------------GIT PUSH ON 2-jan-16--------------------------
+
+3-jan-16
+1. php connect from android.
+2. common layouts for books.
+
