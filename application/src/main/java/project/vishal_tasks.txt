@@ -1,3 +1,0 @@
-2-jan-16
-1. common header, fab & navigation drawer for all the activities.
-2. ui for navigation drawer.
