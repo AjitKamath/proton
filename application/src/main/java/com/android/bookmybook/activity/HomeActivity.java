@@ -48,6 +48,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_home);
         ButterKnife.inject(this);
 
+        //Test
+
         initComponents();
     }
 
