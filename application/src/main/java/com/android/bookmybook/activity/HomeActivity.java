@@ -14,32 +14,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ListView;
 
 import com.android.bookmybook.R;
+import com.android.bookmybook.adapter.CategorizedBooksListViewAdapter;
+import com.android.bookmybook.model.BooksList;
+import com.android.bookmybook.task.AsyncTaskManager;
+import com.android.bookmybook.util.AsyncTaskUtility;
 import com.android.bookmybook.util.Utility;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+import static com.android.bookmybook.util.Constants.ASYNC_TASK_GET_BOOKS_ALL;
 import static com.android.bookmybook.util.Constants.OK;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private static final String CLASS_NAME = Utility.class.getName();
+    private static final String CLASS_NAME = HomeActivity.class.getName();
     private Context mContext = this;
 
     /*components*/
@@ -51,7 +44,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @InjectView(R.id.nav_view)
     NavigationView nav_view;
+
+    @InjectView(R.id.categorizedBooksLV)
+    ListView categorizedBooksLV;
     /*components*/
+
+    /*Async Task Manager*/
+    private AsyncTaskManager asyncTaskManager = new AsyncTaskManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +60,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         initComponents();
         
-        loadBooks();
+        fetchBooks();
     }
 
-    private void loadBooks() {
+    private void fetchBooks() {
+        BookTask bookTask = new BookTask();
+        bookTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, ASYNC_TASK_GET_BOOKS_ALL);
     }
 
     private void initComponents(){
@@ -142,76 +143,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... voids) {
-                String url = "http://192.168.43.253/bmb/register.php";
-                String params = "code=3";
-
-                URL test = null;
-                try {
-                    test = new URL(url);
-                    HttpURLConnection urlConnection = (HttpURLConnection) test.openConnection();
-                    urlConnection.setRequestMethod("POST");
-                    urlConnection.setRequestProperty("USER-AGENT", "Mozilla/5.0");
-                    urlConnection.setRequestProperty("ACCEPT-LANGUAGE", "en-US,en;0.5");
-
-                    urlConnection.setDoOutput(true);
-                    DataOutputStream ds = new DataOutputStream(urlConnection.getOutputStream());
-                    ds.writeBytes(params);
-                    ds.flush();
-                    ds.close();
-
-                    int resp = urlConnection.getResponseCode();
-
-
-                    //urlConnection.setChunkedStreamingMode(0);
-
-                }
-                catch(Exception e){
-                    String s ;
-                }
-                finally {
-                    //test.disconnect();
-                }
-
-                return "";
-            }
-
-
-            @Override
-            protected void onPostExecute(String html) {
-
-            }
-        }.execute();
-
-
-
-
-
-
-        // ViewFlipper vf = (ViewFlipper) findViewById(R.id.vf);
-
-        /*if (id == R.id.nav_camera) {
-            Intent i = new Intent(this, BooksActivity.class);
-            startActivity(i);
-            finish();
-
-            //vf.setDisplayedChild(0);
-        } else if (id == R.id.nav_gallery) {
-            //vf.setDisplayedChild(1);
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }*/
+        asyncTaskManager.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "REGISTER_USER");
 
         drawer_layout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private class BookTask extends AsyncTask<String, Void, List<BooksList>> {
+        @Override
+        protected List<BooksList> doInBackground(String... urls) {
+            return AsyncTaskUtility.fetchAllBooks();
+        }
+
+        @Override
+        protected void onPostExecute(List<BooksList> result) {
+            CategorizedBooksListViewAdapter adapter = new CategorizedBooksListViewAdapter(mContext, result);
+            categorizedBooksLV.setAdapter(adapter);
+        }
     }
 }

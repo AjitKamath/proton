@@ -4,17 +4,33 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
+    <RelativeLayout
         android:layout_marginTop="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SCI-FI"
-        android:textColor="@color/appPrimaryLight"
-        android:textSize="12sp"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/book_category_heading_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SCI-FI"
+            android:textColor="@color/orrange"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:textColor="@color/orrange"
+            android:textSize="15sp"/>
+
+    </RelativeLayout>
+
 
     <View
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider_height"
         android:background="@color/divider" />

@@ -4,6 +4,11 @@ package com.android.bookmybook.util;
  * Created by ajit on 6/1/15.
  */
 public final class Constants{
+    /*Async Task Purpose Keys*/
+    public static final String ASYNC_TASK_GET_BOOKS_ALL = "GET_BOOKS_ALL";
+    public static final String ASYNC_TASK_REGISTER_USER = "REGISTER_USER";
+
+
     //DB
     public static final String DB_NAME = "FINAPPL.db";
     public static final int DB_VERSION = 87;

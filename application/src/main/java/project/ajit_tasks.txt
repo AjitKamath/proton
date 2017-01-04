@@ -8,3 +8,13 @@
 1. php connect from android.
 2. common layouts for books.
 
+-------------------GIT PUSH ON 3-jan-16--------------------------
+
+4-jan-16
+1. category wise books can now be seen in the home activity.
+2. book data is hardcoded.
+3. book grid view and list view adapters created.
+4. updated the column BOOK.CATEGORY as BOOK.CTGRY_ID.
+5. added sql_v0.1.sql to git
+
+

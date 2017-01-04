@@ -195,7 +195,7 @@
 
     <!--share,seek & wish-->
     <color name="share">#006400</color>
-    <color name="seek">#FFD700</color>
+    <color name="seek">#9932CC</color>
     <color name="wish">#e33d1b</color>
 
 </resources>

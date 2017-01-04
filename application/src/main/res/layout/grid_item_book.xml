@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/book_ll"
     android:orientation="vertical"
     android:gravity="center"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <ImageView
+        android:id="@+id/book_iv"
         android:layout_width="120dp"
         android:layout_height="180dp"
         android:background="@drawable/book_check"/>
 
     <TextView
+        android:id="@+id/book_title_tv"
         android:layout_marginTop="2dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,18 +22,34 @@
         android:textColor="@color/black"
         android:text="FELIDAE"/>
 
-    <TextView
-        android:layout_marginTop="1dp"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="10sp"
-        android:maxLength="20"
-        android:textColor="@color/textLightTertiary"
-        android:text="BY AKIF PRINCIPI"/>
+        android:gravity="center"
+        android:orientation="horizontal">
 
+        <TextView
+            android:layout_marginTop="1dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:maxLength="20"
+            android:textColor="@color/textLightTertiary"
+            android:text="BY "/>
+
+        <TextView
+            android:id="@+id/book_author_tv"
+            android:layout_marginTop="1dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:maxLength="20"
+            android:textColor="@color/textLightTertiary"
+            android:text="AKIF PRINCIPI"/>
+    </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,73 +58,36 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="17sp"
             android:textColor="@color/appPrimaryDark"
             android:text="₹"/>
 
         <TextView
+            android:id="@+id/book_rent_tv"
             android:layout_marginLeft="2dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="17sp"
             android:textColor="@color/appPrimaryDark"
             android:text="349"/>
 
         <TextView
             android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="10sp"
             android:textColor="@color/textLightTertiary"
-            android:text="/ 15 DAYS"/>
+            android:text="/"/>
+
+        <TextView
+            android:id="@+id/book_duration_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:textColor="@color/textLightTertiary"
+            android:text="15 DAYS"/>
 
     </LinearLayout>
-
-    <GridLayout
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="5"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textColor="@color/share"
-            android:text="SHARE"/>
-
-        <View
-            android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_height="@dimen/divider_height"
-            android:layout_width="@dimen/divider_height"
-            android:background="@color/divider" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textColor="@color/seek"
-            android:text="SEEK"/>
-
-        <View
-            android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_height="@dimen/divider_height"
-            android:layout_width="@dimen/divider_height"
-            android:background="@color/divider" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textColor="@color/wish"
-            android:text="WISH"/>
-
-    </GridLayout>
 
 </LinearLayout>
