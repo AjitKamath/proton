@@ -5,22 +5,31 @@ package com.android.bookmybook.model;
  */
 
 public class Book {
-    private String title;
-    private Double rent;
+    private String TITLE;
+    private String AUTHOR;
+    private Double RENT;
 
-    public String getTitle() {
-        return title;
+    public String getTITLE() {
+        return TITLE;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTITLE(String TITLE) {
+        this.TITLE = TITLE;
     }
 
-    public Double getRent() {
-        return rent;
+    public String getAUTHOR() {
+        return AUTHOR;
     }
 
-    public void setRent(Double rent) {
-        this.rent = rent;
+    public void setAUTHOR(String AUTHOR) {
+        this.AUTHOR = AUTHOR;
+    }
+
+    public Double getRENT() {
+        return RENT;
+    }
+
+    public void setRENT(Double RENT) {
+        this.RENT = RENT;
     }
 }
