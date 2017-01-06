@@ -1,161 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/book_ll"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_marginBottom="5dp"
-    android:gravity="center"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:gravity="center"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/card_view"
+    <ImageView
+        android:id="@+id/book_iv"
+        android:layout_width="120dp"
+        android:layout_height="180dp"
+        android:background="@drawable/sun"/>
+
+    <TextView
+        android:id="@+id/book_title_tv"
+        android:layout_marginTop="2dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="5dp"
-        android:elevation="3dp"
-        card_view:cardCornerRadius="2dp">
+        android:textSize="12sp"
+        android:maxLength="20"
+        android:textColor="@color/black"
+        android:text="FELIDAE"/>
 
-        <LinearLayout
-            android:padding="2dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
+        <TextView
+            android:layout_marginTop="1dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:maxLength="20"
+            android:textColor="@color/textLightTertiary"
+            android:text="BY "/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="₹"
-                    android:textColor="@color/appPrimaryDark"
-                    android:textSize="15sp" />
+        <TextView
+            android:id="@+id/book_author_tv"
+            android:layout_marginTop="1dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:maxLength="20"
+            android:textColor="@color/textLightTertiary"
+            android:text="AKIF PRINCIPI"/>
+    </LinearLayout>
 
-                <TextView
-                    android:id="@+id/book_rent_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
-                    android:text="349"
-                    android:textColor="@color/appPrimaryDark"
-                    android:textSize="15sp" />
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp"
-                    android:text="/"
-                    android:textColor="@color/textLightTertiary"
-                    android:textSize="10sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:textColor="@color/appPrimaryDark"
+            android:text="₹"/>
 
-                <TextView
-                    android:id="@+id/book_duration_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="15 DAYS"
-                    android:textColor="@color/textLightTertiary"
-                    android:textSize="10sp" />
+        <TextView
+            android:id="@+id/book_rent_tv"
+            android:layout_marginLeft="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:textColor="@color/appPrimaryDark"
+            android:text="349"/>
 
-            </LinearLayout>
+        <TextView
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:textColor="@color/textLightTertiary"
+            android:text="/"/>
 
-            <ImageView
-                android:id="@+id/book_iv"
-                android:layout_width="160dp"
-                android:layout_height="220dp"
-                android:background="@drawable/book_check" />
+        <TextView
+            android:id="@+id/book_duration_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:textColor="@color/textLightTertiary"
+            android:text="15 DAYS"/>
 
-            <TextView
-                android:id="@+id/book_title_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:maxLength="20"
-                android:text="FELIDAE"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:maxLength="20"
-                    android:text="BY "
-                    android:textColor="@color/textLightTertiary"
-                    android:textSize="10sp" />
-
-                <TextView
-                    android:id="@+id/book_author_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:maxLength="20"
-                    android:text="AKIF PRINCIPI"
-                    android:textColor="@color/textLightTertiary"
-                    android:textSize="10sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_alignParentLeft="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="2dp"
-                        android:text="14"
-                        android:textColor="@color/textLightTertiary"
-                        android:textSize="10sp" />
-
-                    <TextView
-                        android:layout_alignParentLeft="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:text="BOOKS"
-                        android:textColor="@color/textLightTertiary"
-                        android:textSize="10sp" />
-
-                    <ImageView
-                        android:id="@+id/book_options_iv"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="2dp"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:background="@drawable/ic_list_grey600_48dp"/>
-
-
-                </RelativeLayout>
-
-
-
-            </LinearLayout>
-        </LinearLayout>
-
-    </android.support.v7.widget.CardView>
+    </LinearLayout>
 
 </LinearLayout>
