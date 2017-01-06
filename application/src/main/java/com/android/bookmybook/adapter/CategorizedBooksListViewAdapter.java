@@ -2,12 +2,14 @@ package com.android.bookmybook.adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.bookmybook.R;
@@ -50,7 +52,10 @@ public class CategorizedBooksListViewAdapter extends BaseAdapter {
 
             mHolder.category_books_ll = (LinearLayout) convertView.findViewById(R.id.category_books_ll);
             mHolder.book_category_heading_tv = (TextView) convertView.findViewById(R.id.book_category_heading_tv);
-            mHolder.book_category_books_gv = (GridView) convertView.findViewById(R.id.book_category_books_gv);
+            //mHolder.book_category_books_gv = (GridView) convertView.findViewById(R.id.book_category_books_gv);
+            mHolder.book_category_heading_rl = (RelativeLayout) convertView.findViewById(R.id.book_category_heading_rl);
+
+            mHolder.gridView = (RecyclerView) convertView.findViewById(R.id.grid);
 
             convertView.setTag(layout, mHolder);
 
@@ -61,11 +66,24 @@ public class CategorizedBooksListViewAdapter extends BaseAdapter {
         BooksList categoryBooksList = booksList.get(position);
 
         //heading
+        //hard codes
+        if("FICTION".equalsIgnoreCase(categoryBooksList.getCategory())){
+            mHolder.book_category_heading_rl.setBackgroundResource(R.drawable.science_fiction);
+        }
+        else if("THRILLER".equalsIgnoreCase(categoryBooksList.getCategory())){
+            mHolder.book_category_heading_rl.setBackgroundResource(R.drawable.thriller);
+        }
+
         mHolder.book_category_heading_tv.setText(categoryBooksList.getCategory());
 
-        //grid view
-        adapter = new BooksGridViewAdapter(mContext, categoryBooksList.getBooksList());
-        mHolder.book_category_books_gv.setAdapter(adapter);
+        //mHolder.gridView.setHasFixedSize(true);
+        mHolder.gridView.setNestedScrollingEnabled(false);
+
+        //set layout manager and adapter for "GridView"
+        GridLayoutManager layoutManager = new GridLayoutManager(mContext, 2);
+        mHolder.gridView.setLayoutManager(layoutManager);
+        GridViewAdapter gridViewAdapter = new GridViewAdapter(mContext, categoryBooksList.getBooksList());
+        mHolder.gridView.setAdapter(gridViewAdapter);
 
         setFont(mHolder.category_books_ll);
 
@@ -109,7 +127,9 @@ public class CategorizedBooksListViewAdapter extends BaseAdapter {
     private class ViewHolder {
         private LinearLayout category_books_ll;
         private TextView book_category_heading_tv;
-        private GridView book_category_books_gv;
+        //private GridView book_category_books_gv;
+        private RecyclerView gridView;
+        private RelativeLayout book_category_heading_rl;
 
     }
 

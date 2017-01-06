@@ -9,6 +9,8 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +20,7 @@ import android.widget.ListView;
 
 import com.android.bookmybook.R;
 import com.android.bookmybook.adapter.CategorizedBooksListViewAdapter;
+import com.android.bookmybook.adapter.GridViewAdapter;
 import com.android.bookmybook.model.BooksList;
 import com.android.bookmybook.task.AsyncTaskManager;
 import com.android.bookmybook.util.AsyncTaskUtility;

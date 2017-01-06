@@ -3,19 +3,22 @@
     android:id="@+id/category_books_ll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/screen_padding">
+    android:orientation="vertical">
 
     <include
-        android:id="@+id/book_category"
-        layout="@layout/common_heading_book_category" />
+        android:id="@+id/header_book_category"
+        layout="@layout/common_header_book_category" />
 
-    <GridView
-        android:layout_marginBottom="15dp"
-        android:id="@+id/book_category_books_gv"
+    <android.support.v7.widget.RecyclerView
+        android:layout_gravity="center"
+        android:padding="@dimen/screen_padding"
+        android:foregroundGravity="center"
+        android:id="@+id/grid"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="2"
-        android:scrollbars="none"/>
+        android:layout_height="match_parent" />
+
+    <include
+        android:id="@+id/footer_book_category"
+        layout="@layout/common_footer_book_category" />
 
 </LinearLayout>

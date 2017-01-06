@@ -1,20 +1,28 @@
-2-jan-16
+2-jan-17
 1. common header, fab & navigation drawer for all the activities.
 2. ui for navigation drawer.
 
--------------------GIT PUSH ON 2-jan-16--------------------------
+-------------------GIT PUSH ON 2-jan-17--------------------------
 
-3-jan-16
+3-jan-17
 1. php connect from android.
 2. common layouts for books.
 
--------------------GIT PUSH ON 3-jan-16--------------------------
+-------------------GIT PUSH ON 3-jan-17--------------------------
 
-4-jan-16
+4-jan-17
 1. category wise books can now be seen in the home activity.
 2. book data is hardcoded.
 3. book grid view and list view adapters created.
 4. updated the column BOOK.CATEGORY as BOOK.CTGRY_ID.
 5. added sql_v0.1.sql to git
+
+-------------------GIT PUSH ON 4-jan-17--------------------------
+
+6-jan-2017
+1. implemented Recycler view to fix nested scrollable view issue.
+2. books are shown as cards
+3. book category header is an image instead of a text.
+
 
 
