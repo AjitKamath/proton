@@ -1,0 +1,3 @@
+6-jan-2017
+1. added new column CATEGORY.CTGRY_IMGE
+2. updated the SQL and data model doc to v0.2.

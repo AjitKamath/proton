@@ -10,7 +10,7 @@
         android:id="@+id/book_iv"
         android:layout_width="120dp"
         android:layout_height="180dp"
-        android:background="@drawable/book_check"/>
+        android:background="@drawable/sun"/>
 
     <TextView
         android:id="@+id/book_title_tv"
