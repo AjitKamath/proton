@@ -22,7 +22,7 @@ import static com.android.bookmybook.util.Constants.UI_FONT;
 /**
  * Created by ajit on 17/1/15.
  */
-public class CategorizedBooksListViewAdapter extends BaseAdapter {
+public class ListViewAdapterCategorizedBooks extends BaseAdapter {
     private final String CLASS_NAME = this.getClass().getName();
     private Context mContext;
     private LayoutInflater inflater;
@@ -31,9 +31,7 @@ public class CategorizedBooksListViewAdapter extends BaseAdapter {
 
     private List<BooksList> booksList;
 
-    private BooksGridViewAdapter adapter;
-
-    public CategorizedBooksListViewAdapter(Context mContext, List<BooksList> booksList) {
+    public ListViewAdapterCategorizedBooks(Context mContext, List<BooksList> booksList) {
         super();
 
         this.mContext = mContext;
@@ -52,10 +50,8 @@ public class CategorizedBooksListViewAdapter extends BaseAdapter {
 
             mHolder.category_books_ll = (LinearLayout) convertView.findViewById(R.id.category_books_ll);
             mHolder.book_category_heading_tv = (TextView) convertView.findViewById(R.id.book_category_heading_tv);
-            //mHolder.book_category_books_gv = (GridView) convertView.findViewById(R.id.book_category_books_gv);
             mHolder.book_category_heading_rl = (RelativeLayout) convertView.findViewById(R.id.book_category_heading_rl);
-
-            mHolder.gridView = (RecyclerView) convertView.findViewById(R.id.grid);
+            mHolder.category_books_rv = (RecyclerView) convertView.findViewById(R.id.category_books_rv);
 
             convertView.setTag(layout, mHolder);
 
@@ -76,14 +72,14 @@ public class CategorizedBooksListViewAdapter extends BaseAdapter {
 
         mHolder.book_category_heading_tv.setText(categoryBooksList.getCategory());
 
-        //mHolder.gridView.setHasFixedSize(true);
-        mHolder.gridView.setNestedScrollingEnabled(false);
-
-        //set layout manager and adapter for "GridView"
+        //books grid
         GridLayoutManager layoutManager = new GridLayoutManager(mContext, 2);
-        mHolder.gridView.setLayoutManager(layoutManager);
-        GridViewAdapter gridViewAdapter = new GridViewAdapter(mContext, categoryBooksList.getBooksList());
-        mHolder.gridView.setAdapter(gridViewAdapter);
+        mHolder.category_books_rv.setLayoutManager(layoutManager);
+
+        RecyclerViewAdapterBooks adapter = new RecyclerViewAdapterBooks(mContext, categoryBooksList.getBooksList());
+        mHolder.category_books_rv.setAdapter(adapter);
+
+        mHolder.category_books_rv.setNestedScrollingEnabled(false);
 
         setFont(mHolder.category_books_ll);
 
@@ -127,8 +123,7 @@ public class CategorizedBooksListViewAdapter extends BaseAdapter {
     private class ViewHolder {
         private LinearLayout category_books_ll;
         private TextView book_category_heading_tv;
-        //private GridView book_category_books_gv;
-        private RecyclerView gridView;
+        private RecyclerView category_books_rv;
         private RelativeLayout book_category_heading_rl;
 
     }

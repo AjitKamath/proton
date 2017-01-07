@@ -24,5 +24,13 @@
 2. books are shown as cards
 3. book category header is an image instead of a text.
 
+-------------------GIT PUSH ON 6-jan-17--------------------------
+
+7-jan-17
+1. POC on image upload and download.
+2. FAB with toolbar
+
+-------------------GIT PUSH ON 7-jan-17--------------------------
+
 
 

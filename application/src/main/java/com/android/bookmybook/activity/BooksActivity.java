@@ -1,9 +1,11 @@
 package com.android.bookmybook.activity;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,16 +14,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ViewFlipper;
+import android.widget.LinearLayout;
 
 import com.android.bookmybook.R;
+import com.android.bookmybook.model.BooksList;
+import com.android.bookmybook.util.AsyncTaskUtility;
 import com.android.bookmybook.util.Utility;
+import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
+
+import java.io.File;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-
-import static com.android.bookmybook.util.Constants.OK;
 
 public class BooksActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final String CLASS_NAME = Utility.class.getName();
@@ -30,6 +35,18 @@ public class BooksActivity extends AppCompatActivity implements NavigationView.O
     /*components*/
     @InjectView(R.id.drawer_layout)
     DrawerLayout drawer_layout;
+
+    @InjectView(R.id.fabtoolbar)
+    FABToolbarLayout layout;
+
+    @InjectView(R.id.fabtoolbar_fab)
+    FloatingActionButton fabtoolbar_fab;
+
+    @InjectView(R.id.fab_seek_ll)
+    LinearLayout fab_seek_ll;
+
+    @InjectView(R.id.fab_share_ll)
+    LinearLayout fab_share_ll;
 
     /*components*/
 
@@ -59,13 +76,42 @@ public class BooksActivity extends AppCompatActivity implements NavigationView.O
         navigationView.setNavigationItemSelectedListener(this);
 
         //fab
-        ImageButton fab = (ImageButton) findViewById(R.id.fab);
+        /*ImageButton fab = (ImageButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Utility.showSnacks(drawer_layout, "Replace with your own action", OK, Snackbar.LENGTH_LONG);
             }
+        });*/
+    }
+
+    private void initFab() {
+        fabtoolbar_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                layout.show();
+            }
         });
+
+        fab_seek_ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                File file = Environment.getExternalStorageDirectory();
+
+                //new AsyncTaskUtility().uploadFiles()
+            }
+        });
+
+        fab_seek_ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new BookTask().execute("");
+
+
+            }
+        });
+
     }
 
 
@@ -93,12 +139,22 @@ public class BooksActivity extends AppCompatActivity implements NavigationView.O
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        return super.onOptionsItemSelected(item);
+    }
+
+    private class BookTask extends AsyncTask<String, Void, List<BooksList>> {
+        @Override
+        protected List<BooksList> doInBackground(String... urls) {
+             AsyncTaskUtility.test();
+
+            return null;
         }
 
-        return super.onOptionsItemSelected(item);
+        @Override
+        protected void onPostExecute(List<BooksList> result) {
+            //ListViewAdapterCategorizedBooks adapter = new ListViewAdapterCategorizedBooks(mContext, result);
+            //categorizedBooksLV.setAdapter(adapter);
+        }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -106,6 +162,14 @@ public class BooksActivity extends AppCompatActivity implements NavigationView.O
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+
+        new BookTask().execute("");
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
 
         //ViewFlipper vf = (ViewFlipper) findViewById(R.id.vf);
 
@@ -128,4 +192,6 @@ public class BooksActivity extends AppCompatActivity implements NavigationView.O
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
 }

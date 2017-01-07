@@ -10,12 +10,16 @@ import com.android.bookmybook.model.Book;
 import com.android.bookmybook.model.BooksList;
 
 import java.io.DataOutputStream;
+import java.io.File;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.android.bookmybook.util.Constants.OK;
+import static com.android.bookmybook.util.Constants.SERVER_ADDRESS;
+import static com.android.bookmybook.util.Constants.SERVER_CHARSET;
+import static com.android.bookmybook.util.Constants.SERVER_PROJECT_DIRECTORY;
 
 public class AsyncTaskUtility extends Activity{
 
@@ -45,6 +49,69 @@ public class AsyncTaskUtility extends Activity{
         }
 
         return -1;
+    }
+
+    public static boolean uploadFiles(List<File> filesList, String userIdStr, String purposeStr){
+        if (filesList == null || filesList.isEmpty()) {
+            return false;
+        }
+
+        if (userIdStr == null || userIdStr.trim().isEmpty()) {
+            return false;
+        }
+
+        if (purposeStr == null || purposeStr.trim().isEmpty()) {
+            return false;
+        }
+
+        boolean uploadFail = false;
+        try {
+            MultipartUtility multipart = new MultipartUtility(SERVER_ADDRESS, SERVER_CHARSET);
+
+            for(File iterFiles: filesList){
+                multipart.addFilePart("file", iterFiles);
+                multipart.addFormField("user_id", userIdStr);
+                multipart.addFormField("purpose", purposeStr);
+
+                String response = multipart.finish(); // response from server.
+
+                if(response.equalsIgnoreCase("-1")){
+                    uploadFail = true;
+                }
+            }
+        }
+        catch(Exception e){
+            Log.e(CLASS_NAME, e.getMessage());
+        }
+
+        return uploadFail;
+    }
+
+    public static boolean test(){
+        File file = new File("/storage/emulated/0/DCIM/Flipkart/IMG_1419894120735.jpeg");
+        boolean uploadFail = false;
+        try {
+            MultipartUtility multipart = new MultipartUtility(SERVER_ADDRESS+"imupload.php", SERVER_CHARSET);
+
+            multipart.addFilePart("image", file);
+            multipart.addFormField("book_id", "7");
+            multipart.addFormField("title", "SHERLOCK HOMES");
+            multipart.addFormField("category_id", "1");
+            multipart.addFormField("author", "DANNY BOYLE");
+            multipart.addFormField("publication", "DEEPA PUBLICATIONS");
+            multipart.addFormField("description", "WORST BOOK EVER");
+            multipart.addFormField("user_id", "Ajit");
+            multipart.addFormField("rent", "200");
+            multipart.addFormField("min_duration", "1");
+            multipart.addFormField("max_duration", "1");
+
+            String response = multipart.finish(); // response from server.
+        }
+        catch(Exception e){
+            Log.e(CLASS_NAME, e.getMessage());
+        }
+
+        return uploadFail;
     }
 
     public static List<BooksList> fetchAllBooks(){

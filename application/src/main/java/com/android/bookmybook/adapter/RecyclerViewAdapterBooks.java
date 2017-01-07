@@ -5,6 +5,7 @@ package com.android.bookmybook.adapter;
  */
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,12 +23,14 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.ViewHolder> {
+import static com.android.bookmybook.util.Constants.UI_FONT;
+
+public class RecyclerViewAdapterBooks extends RecyclerView.Adapter<RecyclerViewAdapterBooks.ViewHolder> {
     private List<Book> items;
     private Context context;
     private LayoutInflater inflater;
 
-    public GridViewAdapter(Context context, List<Book> items) {
+    public RecyclerViewAdapterBooks(Context context, List<Book> items) {
         super();
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.context = context;
@@ -43,7 +45,7 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(GridViewAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(RecyclerViewAdapterBooks.ViewHolder viewHolder, int position) {
         Book book = items.get(position);
 
         // loading album cover using Glide library
@@ -60,6 +62,8 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.ViewHo
                 showPopupMenu(view);
             }
         });
+
+        setFont(viewHolder.book_ll);
     }
 
     /**
@@ -77,6 +81,25 @@ public class GridViewAdapter extends RecyclerView.Adapter<GridViewAdapter.ViewHo
             }
         });
         popup.show();
+    }
+
+    //method iterates over each component in the activity and when it finds a text view..sets its font
+    public void setFont(ViewGroup group) {
+        //set font for all the text view
+        final Typeface robotoCondensedLightFont = Typeface.createFromAsset(context.getAssets(), UI_FONT);
+
+        int count = group.getChildCount();
+        View v;
+
+        for(int i = 0; i < count; i++) {
+            v = group.getChildAt(i);
+            if(v instanceof TextView) {
+                ((TextView) v).setTypeface(robotoCondensedLightFont);
+            }
+            else if(v instanceof ViewGroup) {
+                setFont((ViewGroup) v);
+            }
+        }
     }
 
     @Override

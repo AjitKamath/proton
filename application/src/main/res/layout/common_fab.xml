@@ -1,20 +1,100 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.android.bookmybook.activity.HomeActivity">
+    android:layout_height="match_parent">
 
-    <ImageButton
-        android:layout_margin="15dp"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:src="@drawable/books"
-        android:background="@drawable/fab"
-        android:id="@+id/fab"
-        android:layout_gravity="right|bottom" />
+    <com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/fabtoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:containerId="@+id/fabtoolbar_container"
+        app:fabId="@+id/fabtoolbar_fab"
+        app:fabToolbarId="@+id/fabtoolbar_toolbar"
+        app:fadeInFraction="0.2"
+        app:hideDuration="200"
+        app:horizontalMargin="30dp"
+        app:showDuration="600"
+        app:verticalMargin="30dp">
 
-</android.support.design.widget.CoordinatorLayout>
+        <RelativeLayout
+            android:id="@id/fabtoolbar_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@id/fabtoolbar_fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/dot"
+                app:borderWidth="0dp"
+                app:fabSize="normal" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@id/fabtoolbar_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="115dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/appPrimaryDark"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <LinearLayout
+                    android:id="@+id/fab_seek_ll"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/seek_book"/>
+
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:text="SEEK"
+                        android:textSize="18sp"
+                        android:textColor="@color/white"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/fab_share_ll"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/share_book"/>
+
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:text="SHARE"
+                        android:textSize="18sp"
+                        android:textColor="@color/white"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout>
+</RelativeLayout>
