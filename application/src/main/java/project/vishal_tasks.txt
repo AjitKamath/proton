@@ -1,3 +1,9 @@
 6-jan-2017
 1. added new column CATEGORY.CTGRY_IMGE
 2. updated the SQL and data model doc to v0.2.
+
+---------------------------------GIT PUSH ON JAN 6 2017-------------------------
+7-jan-2017
+1. modify and commit DB structure
+2. POC for file upload
+3. Test for Book post from app to DB
