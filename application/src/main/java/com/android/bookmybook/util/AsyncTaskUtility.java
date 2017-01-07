@@ -32,6 +32,7 @@ public class AsyncTaskUtility extends Activity{
             urlConnection.setRequestProperty("USER-AGENT", "Mozilla/5.0");
             urlConnection.setRequestProperty("ACCEPT-LANGUAGE", "en-US,en;0.5");
 
+
             urlConnection.setDoOutput(true);
             DataOutputStream ds = new DataOutputStream(urlConnection.getOutputStream());
             ds.writeBytes(params);
