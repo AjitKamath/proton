@@ -16,6 +16,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.android.bookmybook.R.id.mobile;
 import static com.android.bookmybook.util.Constants.OK;
 import static com.android.bookmybook.util.Constants.SERVER_ADDRESS;
 import static com.android.bookmybook.util.Constants.SERVER_CHARSET;
@@ -212,5 +213,27 @@ public class AsyncTaskUtility extends Activity{
         }
 
         return null;
+    }
+
+    public static void addNewUser(String user_id,String mobile,String email,String password,String name,String gender,String city)
+    {
+        try {
+            MultipartUtility multipart = new MultipartUtility(SERVER_ADDRESS+"register.php", SERVER_CHARSET);
+
+            multipart.addFormField("code", "1");
+            multipart.addFormField("user_id", user_id);
+            multipart.addFormField("email", mobile);
+            multipart.addFormField("mobile", email);
+            multipart.addFormField("password", password);
+            multipart.addFormField("name", name);
+            multipart.addFormField("gender", gender);
+            multipart.addFormField("city", city);
+
+            String response = multipart.finish();// response from server.
+            System.out.println(response);
+        }
+        catch(Exception e) {
+            Log.e(CLASS_NAME, e.getMessage());
+        }
     }
 }
