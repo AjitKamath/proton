@@ -3,7 +3,19 @@
 2. updated the SQL and data model doc to v0.2.
 
 ---------------------------------GIT PUSH ON JAN 6 2017-------------------------
+
 7-jan-2017
 1. modify and commit DB structure
 2. POC for file upload
 3. Test for Book post from app to DB
+
+---------------------------------GIT PUSH ON JAN 7 2017-------------------------
+
+8-jan-2017
+1. Modify Book Table added new column as "REVIEWED"
+2. Commit updated DB structure
+3. Registration screen and test for inserting registration data in DB
+
+---------------------------------GIT PUSH ON JAN 8 2017-------------------------
+
+
