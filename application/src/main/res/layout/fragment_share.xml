@@ -1,0 +1,19 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/share_rl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/screen_padding"
+    app:theme="@style/AppTheme"
+    android:orientation="vertical">
+
+    <include android:id="@+id/common_fragment_header"
+        layout="@layout/common_fragment_header" />
+
+    <com.android.bookmybook.component.ViewPagerCustom
+        android:id="@+id/share_book_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

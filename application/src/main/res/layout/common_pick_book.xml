@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/common_pick_book_ll"
+    android:layout_marginBottom="5dp"
+    android:gravity="center"
+    android:background="@color/white"
+    android:layout_width="@dimen/pick_book_image_width"
+    android:layout_height="@dimen/pick_book_image_height">
+
+    <ImageView
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:id="@+id/common_pick_book_iv"
+        android:layout_width="@dimen/pick_book_image_width"
+        android:layout_height="@dimen/pick_book_image_height"
+        android:background="@drawable/book_check"/>
+
+    <LinearLayout
+        android:id="@+id/common_pick_no_book_ll"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@drawable/books"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/textLightTertiary"
+            android:textSize="10sp"
+            android:text="TAP TO SET BOOK COVER"/>
+    </LinearLayout>
+
+
+</LinearLayout>

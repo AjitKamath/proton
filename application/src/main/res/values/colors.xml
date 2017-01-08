@@ -186,6 +186,7 @@
     <color name="textLightSecondary">#e7e7e7</color>
     <color name="textLightTertiary">#808080</color>
     <color name="text_amount">#006400</color>
+    <color name="text_currency">#303F9F</color>
 
     <!--fab-->
     <color name="fab">#FF6347</color>

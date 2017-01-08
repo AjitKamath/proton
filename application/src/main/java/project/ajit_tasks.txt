@@ -32,5 +32,11 @@
 
 -------------------GIT PUSH ON 7-jan-17--------------------------
 
+8-jan-2017
+1. started construction of share book fragment.
+2. view pager in share book fragment
+3. POC on get image from camera as well as gallery and set it in image view.
+
+-------------------GIT PUSH ON 8-jan-17--------------------------
 
 

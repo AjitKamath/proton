@@ -33,4 +33,11 @@
         <attr name="fabDrawableAnimationEnabled" format="boolean"/>
     </declare-styleable>
 
+    <style name="fragment_theme" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:colorAccent">@color/appPrimaryDark</item>
+
+        <!-- No need to override 'datePickerStyle' -->
+        <!-- <item name="android:datePickerStyle">@style/MyDatePickerStyle</item> -->
+    </style>
+
 </resources>

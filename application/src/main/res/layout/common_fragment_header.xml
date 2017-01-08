@@ -1,0 +1,45 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/common_fragment_header"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:layout_gravity="center"
+    android:gravity="left"
+    android:background="@color/appPrimaryDark"
+    android:orientation="vertical"
+    app:theme="@style/AppTheme">
+
+    <TextView
+        android:padding="@dimen/screen_padding"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:text="SHARE A BOOK"/>
+
+    <TextView
+        android:id="@+id/common_fragment_header_back_tv"
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@+id/common_fragment_header_next_tv"
+        android:padding="@dimen/screen_padding"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:text="BACK"/>
+
+    <TextView
+        android:id="@+id/common_fragment_header_next_tv"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentRight="true"
+        android:padding="@dimen/screen_padding"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:text="NEXT"/>
+
+</RelativeLayout>

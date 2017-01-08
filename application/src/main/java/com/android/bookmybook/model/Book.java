@@ -1,10 +1,12 @@
 package com.android.bookmybook.model;
 
+import java.io.Serializable;
+
 /**
  * Created by ajit on 3/1/17.
  */
 
-public class Book {
+public class Book implements Serializable {
     private String TITLE;
     private String AUTHOR;
     private Double RENT;

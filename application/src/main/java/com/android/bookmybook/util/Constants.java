@@ -55,63 +55,15 @@ public final class Constants{
     public static final String UI_DATE_FORMAT = "d MMM yyyy";
     public static final String UI_TIME_FORMAT = "hh:mm a";
 
-    //Bundle Keys, Sharde Prefs, Intent, fragment names
+    //Bundle Keys, Shared Prefs, Intent, fragment names
     //FRAGMENT NAMES
-    public static final String FRAGMENT_ADD_UPDATE_TRANSACTION = "FRAGMENT_ADD_UPDATE_TRANSACTION";
-    public static final String FRAGMENT_ADD_UPDATE_TRANSFER = "FRAGMENT_ADD_UPDATE_TRANSFER";
-    public static final String FRAGMENT_ADD_UPDATE_BUDGET = "FRAGMENT_ADD_UPDATE_BUDGET";
-    public static final String FRAGMENT_ADD_UPDATE_CATEGORY = "FRAGMENT_ADD_UPDATE_CATEGORY";
-    public static final String FRAGMENT_ADD_UPDATE_ACCOUNT = "FRAGMENT_ADD_UPDATE_ACCOUNT";
-    public static final String FRAGMENT_ADD_UPDATE_SPENTON = "FRAGMENT_ADD_UPDATE_SPENTON";
-
-    public static final String FRAGMENT_SELECT_REPEAT = "FRAGMENT_SELECT_REPEAT";
-    public static final String FRAGMENT_SELECT_AMOUNT = "FRAGMENT_SELECT_AMOUNT";
-    public static final String FRAGMENT_SELECT_CATEGORY = "FRAGMENT_SELECT_CATEGORY";
-    public static final String FRAGMENT_SELECT_ACCOUNT = "FRAGMENT_SELECT_ACCOUNT";
-    public static final String FRAGMENT_SELECT_SPENTON = "FRAGMENT_SELECT_SPENTON";
-    public static final String FRAGMENT_SELECT_IMAGE = "FRAGMENT_SELECT_IMAGE";
-    public static final String FRAGMENT_SELECT_COUNTRIES = "FRAGMENT_SELECT_COUNTRIES";
-
-    public static final String FRAGMENT_TRANSACTION_DETAILS = "FRAGMENT_TRANSACTION_DETAILS";
-    public static final String FRAGMENT_TRANSFER_DETAILS = "FRAGMENT_TRANSFER_DETAILS";
-    public static final String FRAGMENT_BUDGET_DETAILS = "FRAGMENT_BUDGET_DETAILS";
-
-    public static final String FRAGMENT_LOGIN = "FRAGMENT_LOGIN";
-    public static final String FRAGMENT_CONFIRM = "FRAGMENT_CONFIRM";
-    public static final String FRAGMENT_DELETE_CONFIRM = "FRAGMENT_DELETE_CONFIRM";
-    public static final String FRAGMENT_ADD_ACTIVITY = "FRAGMENT_ADD_ACTIVITY";
-    public static final String FRAGMENT_OPTIONS = "FRAGMENT_OPTIONS";
-    public static final String FRAGMENT_SETTINGS = "FRAGMENT_SETTINGS";
-    public static final String FRAGMENT_CATEGORIES = "FRAGMENT_CATEGORIES";
-    public static final String FRAGMENT_ACCOUNTS = "FRAGMENT_ACCOUNTS";
-    public static final String FRAGMENT_SPENTONS = "FRAGMENT_SPENTONS";
+    public static final String FRAGMENT_SHARE_BOOK = "FRAGMENT_SHARE_BOOK";
 
     //FRAGMENT OBJECT KEYS
-    public static final String CONFIRM_MESSAGE = "CONFIRM_MESSAGE";
+    public static final String LOGGED_IN_USER = "LOGGED_IN_USER";
 
-    public static final String TRANSACTION_OBJECT = "TRANSACTION_OBJECT";
-    public static final String TRANSFER_OBJECT = "TRANSFER_OBJECT";
-    public static final String LOGGED_IN_OBJECT = "LOGGED_IN_OBJECT";
-    public static final String SELECTED_DATE = "SELECTED_DATE";
-    public static final String REPEAT_OBJECT = "REPEAT_OBJECT";
-    public static final String AMOUNT_OBJECT = "AMOUNT_OBJECT";
-    public static final String CATEGORY_OBJECT = "CATEGORY_OBJECT";
-    public static final String ACCOUNT_OBJECT = "ACCOUNT_OBJECT";
-    public static final String SPENTON_OBJECT = "SPENTON_OBJECT";
-    public static final String COUNTRY_OBJECT = "COUNTRY_OBJECT";
-    public static final String BUDGET_OBJECT = "BUDGET_OBJECT";
-    public static final String IMAGE_OBJECT = "IMAGE_OBJECT";
+    public static final String BOOK = "BOOK";
 
-    public static final String SELECTED_CATEGORY_OBJECT = "SELECTED_CATEGORY_OBJECT";
-    public static final String SELECTED_ACCOUNT_OBJECT = "SELECTED_ACCOUNT_OBJECT";
-    public static final String SELECTED_SPENTON_OBJECT = "SELECTED_SPENTON_OBJECT";
-    public static final String SELECTED_REPEAT_OBJECT = "SELECTED_REPEAT_OBJECT";
-    public static final String SELECTED_AMOUNT_OBJECT = "SELECTED_AMOUNT_OBJECT";
-    public static final String SELECTED_COUNTRY_OBJECT = "SELECTED_COUNTRY_OBJECT";
-    public static final String SELECTED_IMAGE_OBJECT = "SELECTED_IMAGE_OBJECT";
-    public static final String SELECTED_GENERIC_OBJECT = "SELECTED_GENERIC_OBJECT";
-
-    public static final String ACCOUNT_TYPE_FLAG = "ACCOUNT_TYPE_FLAG";
 
     //SHARED PREFS KEYS
     public static final String SHARED_PREF = "SHARED_PREFERENCE";
