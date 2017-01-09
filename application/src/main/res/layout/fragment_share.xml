@@ -5,15 +5,31 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_margin="@dimen/screen_padding"
-    app:theme="@style/AppTheme"
-    android:orientation="vertical">
+    android:background="@color/white"
+    android:orientation="vertical"
+    app:theme="@style/AppTheme">
 
-    <include android:id="@+id/common_fragment_header"
+    <include
+        android:id="@+id/common_fragment_header"
         layout="@layout/common_fragment_header" />
 
-    <com.android.bookmybook.component.ViewPagerCustom
-        android:id="@+id/share_book_vp"
+    <LinearLayout
+        android:padding="@dimen/screen_padding"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <include
+            android:id="@+id/common_pick_book"
+            layout="@layout/common_pick_book" />
+
+        <com.android.bookmybook.component.ViewPagerCustom
+            android:layout_marginLeft="10dp"
+            android:id="@+id/share_book_vp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pick_book_image_height" />
+
+    </LinearLayout>
 
 </LinearLayout>

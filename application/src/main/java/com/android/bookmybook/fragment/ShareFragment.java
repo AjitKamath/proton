@@ -2,6 +2,8 @@ package com.android.bookmybook.fragment;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -38,8 +40,15 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 import static android.app.Activity.RESULT_OK;
+import static com.android.bookmybook.util.Constants.BOOK;
+import static com.android.bookmybook.util.Constants.CAMERA_CHOICE;
+import static com.android.bookmybook.util.Constants.FRAGMENT_PICK_IMAGE;
+import static com.android.bookmybook.util.Constants.FRAGMENT_SHARE_BOOK;
+import static com.android.bookmybook.util.Constants.GALLERY_CHOICE;
+import static com.android.bookmybook.util.Constants.LOGGED_IN_USER;
 import static com.android.bookmybook.util.Constants.UI_FONT;
 
 
@@ -51,6 +60,18 @@ public class ShareFragment extends DialogFragment {
     private Context mContext;
 
     /*components*/
+    @InjectView(R.id.common_fragment_header_back_tv)
+    TextView common_fragment_header_back_tv;
+
+    @InjectView(R.id.common_fragment_header_next_tv)
+    TextView common_fragment_header_next_tv;
+
+    @InjectView(R.id.common_pick_book_iv)
+    ImageView common_pick_book_iv;
+
+    @InjectView(R.id.common_pick_no_book_ll)
+    LinearLayout common_pick_no_book_ll;
+
     @InjectView(R.id.share_book_vp)
     ViewPagerCustom share_book_vp;
     /*components*/
@@ -78,19 +99,55 @@ public class ShareFragment extends DialogFragment {
         initComps();
         setupPage();
 
-        //showPickImageDialog();
-
         return view;
     }
 
-    private void showPickGalleryImage() {
+    @OnClick({R.id.common_pick_no_book_ll,R.id.common_pick_book_iv})
+    public void onBookCoverPick(View view){
+        String fragmentNameStr = FRAGMENT_PICK_IMAGE;
+        String parentFragmentNameStr = FRAGMENT_SHARE_BOOK;
+
+        FragmentManager manager = getFragmentManager();
+        Fragment frag = manager.findFragmentByTag(fragmentNameStr);
+
+        if (frag != null) {
+            manager.beginTransaction().remove(frag).commit();
+        }
+
+        Fragment parentFragment = null;
+        if(parentFragmentNameStr != null && !parentFragmentNameStr.trim().isEmpty()){
+            parentFragment = manager.findFragmentByTag(parentFragmentNameStr);
+        }
+
+        ImagePickerFragment fragment = new ImagePickerFragment();
+        fragment.setStyle(android.support.v4.app.DialogFragment.STYLE_NORMAL, R.style.fragment_theme);
+
+        if (parentFragment != null) {
+            fragment.setTargetFragment(parentFragment, 0);
+        }
+
+        fragment.show(manager, fragmentNameStr);
+    }
+
+    private void setBookCover(Bitmap bitmap){
+        if(bitmap != null){
+            common_pick_no_book_ll.setVisibility(View.GONE);
+            common_pick_book_iv.setVisibility(View.VISIBLE);
+            common_pick_book_iv.setImageBitmap(bitmap);
+        }
+        else{
+            common_pick_no_book_ll.setVisibility(View.VISIBLE);
+            common_pick_book_iv.setVisibility(View.GONE);
+        }
+    }
+
+    private void showPickImageFromGallery() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         startActivityForResult(intent, REQUEST_GALLERY_PHOTO);
-
     }
 
-    private void showPickImageDialog() {
+    private void showPickImageFromCamera() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
@@ -98,17 +155,17 @@ public class ShareFragment extends DialogFragment {
             File photoFile = null;
             try {
                 photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(getActivity(),
-                        "com.example.android.fileprovider",
-                        photoFile);
 
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                // Continue only if the File was successfully created
+                if (photoFile != null) {
+                    Uri photoURI = FileProvider.getUriForFile(getActivity(), "com.example.android.fileprovider", photoFile);
+
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                    startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                }
+            }
+            catch (IOException ex) {
+                Log.e(CLASS_NAME, "An error occurred when getting image file from camera: ");
             }
         }
     }
@@ -116,27 +173,21 @@ public class ShareFragment extends DialogFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
             Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, options);
-            //share_book_iv.setImageBitmap(bitmap);
-
-           // mImageView.setImageBitmap(imageBitmap);
+            setBookCover(bitmap);
         }
 
         else if (requestCode == REQUEST_GALLERY_PHOTO && resultCode == RESULT_OK) {
             try {
                 InputStream inputStream = mContext.getContentResolver().openInputStream(data.getData());
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-
-                //share_book_iv.setImageBitmap(bitmap);
+                setBookCover(bitmap);
             }
             catch (Exception e){
                 Log.e(CLASS_NAME, "Error while getting the image from the user choice");
             }
-
-            // mImageView.setImageBitmap(imageBitmap);
         }
     }
 
@@ -145,58 +196,20 @@ public class ShareFragment extends DialogFragment {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
+        File image = File.createTempFile(imageFileName,  ".jpg", storageDir);
 
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
 
-
-
-
     public void getInputs(){
-        /*try{
-            transactionModelObj.setTRAN_DATE(UI_DATE_FORMAT_SDF.parse(String.valueOf(addUpdateDateTV.getText())));
-        }
-        catch (ParseException pe){
-            Log.e(CLASS_NAME, "Parse Exception "+pe);
-            return ;
-        }
 
-        transactionModelObj.setTRAN_AMT(Double.parseDouble(String.valueOf(transactionContentAmountTV.getText()).replaceAll(",", "")));
-        transactionModelObj.setTRAN_NAME(String.valueOf(addUpdateTranNameET.getText()));
-
-        transactionModelObj.setCAT_ID(((CategoryMO)transactionContentCategoryLL.getTag()).getCAT_ID());
-        transactionModelObj.setACC_ID(((AccountMO)transactionContentAccountLL.getTag()).getACC_ID());
-        transactionModelObj.setSPNT_ON_ID(((SpentOnMO)transactionContentSpentonLL.getTag()).getSPNT_ON_ID());
-
-        transactionModelObj.setTRAN_TYPE(String.valueOf(getView().findViewById(addUpdateTranExpIncRadioGrp.getCheckedRadioButtonId()).getTag()));
-        transactionModelObj.setTRAN_NOTE(String.valueOf(addUpdateNoteET.getText()));
-        transactionModelObj.setUSER_ID(loggedInUserObj.getUSER_ID());
-
-        if(transactionContentRepeatSwitch.isChecked()){
-            transactionModelObj.setREPEAT_ID(((RepeatMO)transactionContentRepeatLL.getTag()).getREPEAT_ID());
-            transactionModelObj.setNOTIFY(String.valueOf(getView().findViewById(transactionContentNotifyRG.getCheckedRadioButtonId()).getTag()));
-
-            if(R.id.transactionContentNotifyAddRBId == transactionContentNotifyRG.getCheckedRadioButtonId()){
-                transactionModelObj.setNOTIFY_TIME(String.valueOf(transactionContentNotifyAddTimeTV.getText()));
-            }
-            else if(R.id.transactionContentAutoAddRBId == transactionContentNotifyRG.getCheckedRadioButtonId()){
-                transactionModelObj.setNOTIFY_TIME(String.valueOf(transactionContentAutoAddTimeTV.getText()));
-            }
-
-            transactionModelObj.setSCHD_UPTO_DATE(String.valueOf(transactionContentScheduleUptoDateTV.getText()));
-        }*/
     }
 
     private void getDataFromBundle() {
-        /*transactionModelObj = (TransactionMO) getArguments().get(TRANSACTION_OBJECT);
-        loggedInUserObj = (UserMO) getArguments().get(LOGGED_IN_OBJECT);*/
+        book = (Book) getArguments().get(BOOK);
+        user = (User) getArguments().get(LOGGED_IN_USER);
     }
 
     private void setupPage() {
@@ -209,8 +222,21 @@ public class ShareFragment extends DialogFragment {
         }
     }
 
+    @OnClick({R.id.common_fragment_header_next_tv,R.id.common_fragment_header_back_tv})
+    public void onBackNext(View view){
+        if("DONE".equalsIgnoreCase(String.valueOf(((TextView)view).getText()))){
+            //TODO: POST THE BOOK
+        }
+        else if(R.id.common_fragment_header_next_tv == view.getId()){
+            share_book_vp.setCurrentItem(share_book_vp.getCurrentItem()+1);
+        }
+        else if(R.id.common_fragment_header_back_tv == view.getId()){
+            share_book_vp.setCurrentItem(share_book_vp.getCurrentItem()-1);
+        }
+    }
+
     private void setupSliders() {
-        List<Integer> viewPagerTabsList = new ArrayList<>();
+        final List<Integer> viewPagerTabsList = new ArrayList<>();
         viewPagerTabsList.add(R.layout.view_pager_share_book_1);
         viewPagerTabsList.add(R.layout.view_pager_share_book_2);
         viewPagerTabsList.add(R.layout.view_pager_share_book_3);
@@ -233,7 +259,21 @@ public class ShareFragment extends DialogFragment {
 
             @Override
             public void onPageSelected(int position) {
-
+                if(position == 0){
+                    common_fragment_header_back_tv.setVisibility(View.GONE);
+                    common_fragment_header_next_tv.setVisibility(View.VISIBLE);
+                    common_fragment_header_next_tv.setText("NEXT");
+                }
+                else if(position == viewPagerTabsList.size()-1){
+                    common_fragment_header_back_tv.setVisibility(View.VISIBLE);
+                    common_fragment_header_next_tv.setVisibility(View.VISIBLE);
+                    common_fragment_header_next_tv.setText("DONE");
+                }
+                else{
+                    common_fragment_header_back_tv.setVisibility(View.VISIBLE);
+                    common_fragment_header_next_tv.setVisibility(View.VISIBLE);
+                    common_fragment_header_next_tv.setText("NEXT");
+                }
             }
 
             @Override
@@ -241,8 +281,6 @@ public class ShareFragment extends DialogFragment {
 
             }
         });
-
-        //setUploginWithFacebook();
     }
 
     private void closeFragment(String messageStr){
@@ -278,7 +316,7 @@ public class ShareFragment extends DialogFragment {
         Dialog d = getDialog();
         if (d!=null) {
             int width = ViewGroup.LayoutParams.MATCH_PARENT;
-            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+            int height = ViewGroup.LayoutParams.WRAP_CONTENT;
             d.getWindow().setLayout(width, height);
 
         }
@@ -286,6 +324,16 @@ public class ShareFragment extends DialogFragment {
 
     public interface DialogResultListener {
         void onFinishUserDialog(String str);
+    }
+
+    public void onFinishDialog(Integer choice) {
+        if(GALLERY_CHOICE == choice){
+            showPickImageFromGallery();
+        }
+        else if(CAMERA_CHOICE == choice){
+            showPickImageFromCamera();
+        }
+
     }
 
     //method iterates over each component in the activity and when it finds a text view..sets its font

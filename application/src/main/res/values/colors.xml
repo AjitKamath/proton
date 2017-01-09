@@ -180,6 +180,7 @@
     <!--App Header-->
     <color name="appPrimaryLight">#3F51B5</color>
     <color name="appPrimaryDark">#303F9F</color>
+    <color name="appBackgroundLight">#e7e7e7</color>
 
     <!--Text-->
     <color name="textLightPrimary">#FFFFFF</color>
@@ -198,5 +199,8 @@
     <color name="share">#006400</color>
     <color name="seek">#9932CC</color>
     <color name="wish">#e33d1b</color>
+
+    <!--form-->
+    <color name="text_form_field_header">#303F9F</color>
 
 </resources>

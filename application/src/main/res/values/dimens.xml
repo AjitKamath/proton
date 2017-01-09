@@ -14,8 +14,8 @@
     <dimen name="divider_height">1dp</dimen>
 
     <!--pick book image -->
-    <dimen name="pick_book_image_width">180dp</dimen>
-    <dimen name="pick_book_image_height">240dp</dimen>
+    <dimen name="pick_book_image_width">120dp</dimen>
+    <dimen name="pick_book_image_height">180dp</dimen>
 
     <!--spinner-->
     <dimen name="spinner_img_size">20dp</dimen>
@@ -23,4 +23,7 @@
 
     <!--share book-->
     <dimen name="form_fields_width">250dp</dimen>
+    <dimen name="form_fields_height">25dp</dimen>
+    <dimen name="form_fields_header_text_size">10sp</dimen>
+    <dimen name="form_fields_header_text_margin_bottom">3dp</dimen>
 </resources>

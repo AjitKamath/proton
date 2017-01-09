@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/common_image_picker_ll"
+    android:layout_width="400dp"
+    android:gravity="center"
+    android:layout_gravity="center"
+    android:layout_height="400dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/common_image_picker_gallery_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/gallery"/>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/text_form_field_header"
+            android:text="PICK FROM PHOTOS"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/common_image_picker_camera_ll"
+        android:layout_marginLeft="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/camera"/>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/text_form_field_header"
+            android:text="TAKE A PHOTO"/>
+    </LinearLayout>
+
+</LinearLayout>

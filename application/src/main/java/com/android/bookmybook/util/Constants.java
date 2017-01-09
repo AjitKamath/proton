@@ -12,7 +12,9 @@ public final class Constants{
     public static final String SERVER_ADDRESS = SERVER_PROTOCOL+"://"+SERVER_IP+":"+SERVER_PORT+"/"+SERVER_PROJECT_DIRECTORY+"/";
     public static final String SERVER_CHARSET = "UTF-8";
 
-
+    //fragment keys
+    public static final int GALLERY_CHOICE = 1111;
+    public static final int CAMERA_CHOICE = 2222;
 
     /*Async Task Purpose Keys*/
     public static final String ASYNC_TASK_UPLOAD_FILES = "UPLOAD_FILES";
@@ -58,6 +60,7 @@ public final class Constants{
     //Bundle Keys, Shared Prefs, Intent, fragment names
     //FRAGMENT NAMES
     public static final String FRAGMENT_SHARE_BOOK = "FRAGMENT_SHARE_BOOK";
+    public static final String FRAGMENT_PICK_IMAGE = "FRAGMENT_PICK_IMAGE";
 
     //FRAGMENT OBJECT KEYS
     public static final String LOGGED_IN_USER = "LOGGED_IN_USER";
