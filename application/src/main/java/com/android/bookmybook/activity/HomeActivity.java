@@ -237,7 +237,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             //super.onBackPressed();
         }
 
-        layout.hide();
+        if(layout.isShown()){
+            layout.hide();
+        }
+        else{
+            super.onBackPressed();
+        }
     }
 
     @Override

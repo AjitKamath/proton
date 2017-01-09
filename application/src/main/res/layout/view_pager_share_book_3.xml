@@ -1,93 +1,103 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center"
-    android:layout_gravity="center"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/common_amount"
-        layout="@layout/common_amount" />
-
-    <TextView
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="SPECIFY THE RENT PER MIN. RENTAL DURATION"
-        android:textSize="7sp"
-        android:gravity="center"
-        android:textColor="@color/textLightTertiary"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="40dp" />
-
     <LinearLayout
-        android:layout_width="@dimen/form_fields_width"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_gravity="left"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="MIN. RENTAL DURATION"
-            android:textSize="10sp"
-            android:textColor="@color/black"/>
+            android:layout_marginBottom="@dimen/form_fields_header_text_margin_bottom"
+            android:text="RENT"
+            android:textColor="@color/text_form_field_header"
+            android:textSize="@dimen/form_fields_header_text_size" />
 
         <include
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/common_amount"
+            layout="@layout/common_amount" />
+
+        <TextView
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/common_spinner_category"
-            layout="@layout/common_spinner" />
+            android:text="SPECIFY THE RENT PER MIN. RENTAL DURATION"
+            android:textSize="7sp"
+            android:gravity="left"
+            android:textColor="@color/textLightTertiary"/>
 
     </LinearLayout>
 
-    <TextView
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="A BOOK SEEKER SHOULD RENT YOUR BOOK FOR AT LEAST THIS DURATION"
-        android:textSize="7sp"
-        android:textColor="@color/textLightTertiary"/>
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="25dp" />
-
     <LinearLayout
-        android:layout_width="@dimen/form_fields_width"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_gravity="left"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="MIN. RENTAL DURATION"
-            android:textSize="10sp"
-            android:textColor="@color/black"/>
+            android:layout_marginBottom="@dimen/form_fields_header_text_margin_bottom"
+            android:text="MIN. DURATION"
+            android:textColor="@color/text_form_field_header"
+            android:textSize="@dimen/form_fields_header_text_size" />
 
         <include
+            android:id="@+id/common_spinner_category"
+            layout="@layout/common_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/common_spinner_category"
-            layout="@layout/common_spinner" />
+            android:text="YOUR BOOK IS RENTED FOR AT LEAST THIS DURATION"
+            android:textSize="7sp"
+            android:gravity="left"
+            android:textColor="@color/textLightTertiary"/>
 
     </LinearLayout>
 
-    <TextView
-        android:layout_marginTop="5dp"
+    <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="A BOOK SEEKER CAN RENT YOUR BOOK FOR AT MOST THIS DURATION"
-        android:textSize="7sp"
-        android:gravity="center"
-        android:textColor="@color/textLightTertiary"/>
+        android:layout_gravity="left"
+        android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/form_fields_header_text_margin_bottom"
+            android:text="MAX. DURATION"
+            android:textColor="@color/text_form_field_header"
+            android:textSize="@dimen/form_fields_header_text_size" />
+
+        <include
+            android:id="@+id/common_spinner_category"
+            layout="@layout/common_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="YOUR BOOK IS RENTED FOR AT MOST THIS DURATION"
+            android:textSize="7sp"
+            android:gravity="left"
+            android:textColor="@color/textLightTertiary"/>
+
+    </LinearLayout>
 </LinearLayout>

@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/common_spinner_ll"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:gravity="center"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
@@ -8,14 +8,14 @@
     <ImageView
         android:layout_width="@dimen/spinner_img_size"
         android:layout_height="@dimen/spinner_img_size"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="5dp"
         android:background="@drawable/ic_list_grey600_48dp" />
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/common_spinner_iv"
         android:layout_width="@dimen/spinner_img_size"
         android:layout_height="@dimen/spinner_img_size"
-        android:background="@drawable/seek_book" />
+        android:background="@drawable/seek_book" />-->
 
     <TextView
         android:id="@+id/common_spinner_tv"

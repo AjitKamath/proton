@@ -41,7 +41,12 @@
 
 9-jan-2017
 1. restructured the project package
+2. updated the .gitignore to ignore gradle and library files
+3. ui construction for share fragment is complete.
+4. pick image from camera/gallery for book cover is complete.
 
 -------------------GIT PUSH ON 9-jan-17--------------------------
+
+
 
 

@@ -1,42 +1,89 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/common_fragment_header"
-    android:layout_marginTop="20dp"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal">
 
-    <include
-        android:id="@+id/common_pick_book"
-        layout="@layout/common_pick_book" />
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/share_title_et"
-        android:layout_width="@dimen/form_fields_width"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/edit_text_border_dark"
-        android:gravity="center"
-        android:hint="BOOK TITLE"
-        android:textAllCaps="true"
-        android:inputType="textAutoComplete|textAutoCorrect"
-        android:padding="5dp"
-        android:textSize="15sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/share_author_et"
-        android:layout_width="@dimen/form_fields_width"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edit_text_border_dark"
-        android:gravity="center"
-        android:hint="BY AUTHOR"
-        android:textAllCaps="true"
-        android:inputType="textAutoComplete|textAutoCorrect"
-        android:padding="5dp"
-        android:textSize="12sp" />
+            <TextView
+                android:layout_marginBottom="@dimen/form_fields_header_text_margin_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/form_fields_header_text_size"
+                android:textColor="@color/text_form_field_header"
+                android:text="BOOK TITLE"/>
+
+            <EditText
+                android:id="@+id/share_title_et"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/form_fields_height"
+                android:background="@drawable/edit_text_border_dark"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:textColor="@color/appPrimaryLight"
+                android:inputType="textAutoComplete|textAutoCorrect|textCapCharacters"
+                android:padding="5dp"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TITLE LETS BOOK SEEKERS FIND THE RIGHT BOOK"
+                android:textSize="7sp"
+                android:gravity="left"
+                android:textColor="@color/textLightTertiary"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginBottom="@dimen/form_fields_header_text_margin_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/form_fields_header_text_size"
+                android:textColor="@color/text_form_field_header"
+                android:text="BY AUTHOR"/>
+
+            <EditText
+                android:id="@+id/share_author_et"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/form_fields_height"
+                android:background="@drawable/edit_text_border_dark"
+                android:gravity="center"
+                android:textColor="@color/appPrimaryLight"
+                android:inputType="textAutoComplete|textAutoCorrect|textCapCharacters"
+                android:padding="5dp"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="BOOK SEEKERS MAY SEEK BOOKS BY THEIR AUTHORS"
+                android:textSize="7sp"
+                android:gravity="left"
+                android:textColor="@color/textLightTertiary"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
 </LinearLayout>
