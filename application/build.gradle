@@ -42,5 +42,8 @@ dependencies {
     //fab
     compile 'com.github.fafaldo:fab-toolbar:1.2.0'
 
+    //JSON
+    compile 'com.google.code.gson:gson:2.6.2'
+
     testCompile 'junit:junit:4.12'
 }
