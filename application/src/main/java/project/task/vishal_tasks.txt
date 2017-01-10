@@ -18,4 +18,9 @@
 
 ---------------------------------GIT PUSH ON JAN 8 2017-------------------------
 
+9-jan-2017
+1. Modify User Table alter column "USER_ID" as data_type INT and added attribute as AUTO_INCREMENT
+2. Commit updated DB structure
+3. Validation for User Registration.
+
 
