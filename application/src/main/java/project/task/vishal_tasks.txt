@@ -5,22 +5,32 @@
 ---------------------------------GIT PUSH ON JAN 6 2017-------------------------
 
 7-jan-2017
-1. modify and commit DB structure
+1. Modified and commit DB structure
 2. POC for file upload
 3. Test for Book post from app to DB
 
 ---------------------------------GIT PUSH ON JAN 7 2017-------------------------
 
 8-jan-2017
-1. Modify Book Table added new column as "REVIEWED"
+1. Modified Book Table added new column as "REVIEWED"
 2. Commit updated DB structure
 3. Registration screen and test for inserting registration data in DB
 
 ---------------------------------GIT PUSH ON JAN 8 2017-------------------------
 
 9-jan-2017
-1. Modify User Table alter column "USER_ID" as data_type INT and added attribute as AUTO_INCREMENT
+1. Modified User Table alter column "USER_ID" as data_type INT and added attribute as AUTO_INCREMENT
 2. Commit updated DB structure
 3. Validation for User Registration.
 
+---------------------------------GIT PUSH ON JAN 9 2017-------------------------
 
+12-jan-2017
+1. Modified User Table added column as "VERI_CODE, SSID, SALT".
+2. Modified Category and Tenure Table added column as "IS_DEF".
+3. Commit updated DB structure
+4. Validation for User Registration.
+5. Login screen with end to end data flow.
+6. Service for fetch_category and fetch_tenure.
+
+---------------------------------GIT PUSH ON JAN 12 2017-------------------------

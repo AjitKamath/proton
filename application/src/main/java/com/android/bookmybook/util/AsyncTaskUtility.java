@@ -222,6 +222,22 @@ public class AsyncTaskUtility extends Activity{
         return null;
     }
 
+    public static void login_authentication(String email,String password)
+    {
+        try {
+            MultipartUtility multipart = new MultipartUtility(SERVER_ADDRESS+SLASH+"login.php", SERVER_CHARSET);
+
+            multipart.addFormField("email", email);
+            multipart.addFormField("password", password);
+
+            String response = multipart.finish();// response from server.
+            System.out.println(response);
+        }
+        catch(Exception e) {
+            Log.e(CLASS_NAME, e.getMessage());
+        }
+    }
+
     public static void addNewUser(String mobile,String email,String password,String name,String gender,String city)
     {
         try {

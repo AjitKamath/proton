@@ -27,7 +27,6 @@ import com.android.bookmybook.adapter.ListViewAdapterCategorizedBooks;
 import com.android.bookmybook.fragment.ShareFragment;
 import com.android.bookmybook.model.Book;
 import com.android.bookmybook.model.BooksList;
-import com.android.bookmybook.model.User;
 import com.android.bookmybook.task.AsyncTaskManager;
 import com.android.bookmybook.util.CommonActivity;
 import com.android.bookmybook.util.Utility;
@@ -187,7 +186,7 @@ public class HomeActivity extends CommonActivity implements View.OnClickListener
     }
 
     private void setupPage(){
-        if(Utility.isNetworkAvailable(this)){
+        if(!Utility.isNetworkAvailable(this)){
             return;
         }
 
@@ -251,6 +250,11 @@ public class HomeActivity extends CommonActivity implements View.OnClickListener
         if(id == R.id.accountItem)
         {
             Intent i = new Intent(HomeActivity.this, RegistrationActivity.class);
+            startActivity(i);
+        }
+        else if(id == R.id.loginItem)
+        {
+            Intent i = new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(i);
         }
 

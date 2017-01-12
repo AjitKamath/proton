@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Book My Book</string>
+    <string name="app_name">PayPer Book</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -14,8 +14,8 @@
     <string name="prompt_city">City</string>
     <string name="prompt_password">Password</string>
     <string name="gender">Gender</string>
-    <string name="action_sign_in">Register</string>
-    <string name="action_sign_in_short">Sign in</string>
+    <string name="action_sign_up">Register</string>
+    <string name="action_sign_in">Sign in</string>
     <string name="prompt_user_id">User Name</string>
     <string name="register_head">Register Me..!!</string>
     <string name="error_invalid_email">This email address is invalid</string>
@@ -25,4 +25,5 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="title_activity_login">Sign in</string>
 </resources>
