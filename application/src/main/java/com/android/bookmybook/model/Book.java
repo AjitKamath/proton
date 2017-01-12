@@ -1,5 +1,7 @@
 package com.android.bookmybook.model;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 
 /**
@@ -10,6 +12,7 @@ public class Book implements Serializable {
     private String TITLE;
     private String AUTHOR;
     private Double RENT;
+    private Bitmap IMAGE;
 
     public String getTITLE() {
         return TITLE;
@@ -33,5 +36,13 @@ public class Book implements Serializable {
 
     public void setRENT(Double RENT) {
         this.RENT = RENT;
+    }
+
+    public Bitmap getIMAGE() {
+        return IMAGE;
+    }
+
+    public void setIMAGE(Bitmap IMAGE) {
+        this.IMAGE = IMAGE;
     }
 }

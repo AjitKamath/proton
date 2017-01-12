@@ -5,12 +5,17 @@ package com.android.bookmybook.util;
  */
 public final class Constants{
     /*server properties*/
+    public static final String SLASH = "/";
     public static final String SERVER_PROTOCOL = "http";
     public static final String SERVER_IP = "192.168.43.250";
     public static final String SERVER_PORT = "90";
     public static final String SERVER_PROJECT_DIRECTORY = "bmb";
-    public static final String SERVER_ADDRESS = SERVER_PROTOCOL+"://"+SERVER_IP+":"+SERVER_PORT+"/"+SERVER_PROJECT_DIRECTORY+"/";
+    public static final String SERVER_ADDRESS = SERVER_PROTOCOL+"://"+SERVER_IP+":"+SERVER_PORT+SLASH+SERVER_PROJECT_DIRECTORY;
     public static final String SERVER_CHARSET = "UTF-8";
+
+    //PHP
+    public static final String PHP_FETCH_ALL_CATEGORIES = "fetch_cat.php";
+    public static final String PHP_FETCH_ALL_TENURES = "fetch_tenures.php";
 
     //fragment keys
     public static final int GALLERY_CHOICE = 1111;
@@ -20,6 +25,8 @@ public final class Constants{
     public static final String ASYNC_TASK_UPLOAD_FILES = "UPLOAD_FILES";
     public static final String ASYNC_TASK_GET_BOOKS_ALL = "GET_BOOKS_ALL";
     public static final String ASYNC_TASK_REGISTER_USER = "REGISTER_USER";
+    public static final String ASYNC_TASK_GET_CATEGORIES_ALL = "GET_CATEGORIES_ALL";
+    public static final String ASYNC_TASK_GET_TENURES_ALL = "GET_TENURES_ALL";
 
 
     //DB
@@ -61,15 +68,21 @@ public final class Constants{
     //FRAGMENT NAMES
     public static final String FRAGMENT_SHARE_BOOK = "FRAGMENT_SHARE_BOOK";
     public static final String FRAGMENT_PICK_IMAGE = "FRAGMENT_PICK_IMAGE";
+    public static final String FRAGMENT_NO_INTERNET = "FRAGMENT_NO_INTERNET";
 
     //FRAGMENT OBJECT KEYS
     public static final String LOGGED_IN_USER = "LOGGED_IN_USER";
-
     public static final String BOOK = "BOOK";
+    public static final String MASTER = "MASTER";
+
+    //check master keys
+    public static final String CHECK_MASTER_FOR_CATEGORIES = "CHECK_MASTER_FOR_CATEGORIES";
+    public static final String CHECK_MASTER_FOR_TENURES = "CHECK_MASTER_FOR_TENURES";
+    public static final String CHECK_MASTER_FOR_ALL = "CHECK_MASTER_FOR_ALL";
 
 
     //SHARED PREFS KEYS
-    public static final String SHARED_PREF = "SHARED_PREFERENCE";
+    public static final String SHARED_PREF_FILE_NAME = "BMB_PREFS";
     public static final String SHARED_PREF_ACTIVE_USER_ID = "ACTIVE_USER_ID";
 
     //Messages
@@ -84,4 +97,7 @@ public final class Constants{
     public static final String OK = "OK";
     public static final String SAVED = "Saved";
     public static final String SOMETHING_WENT_WRONG = "Something Went Wrong";
+
+    public static final int REQUEST_TAKE_PHOTO = 1;
+    public static final int REQUEST_GALLERY_PHOTO = 2;
 }

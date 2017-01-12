@@ -4,20 +4,16 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -25,7 +21,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.bookmybook.R;
 import com.android.bookmybook.adapter.ListViewAdapterCategorizedBooks;
@@ -33,27 +28,23 @@ import com.android.bookmybook.fragment.ShareFragment;
 import com.android.bookmybook.model.Book;
 import com.android.bookmybook.model.BooksList;
 import com.android.bookmybook.model.User;
-import com.android.bookmybook.task.AsyncTaskImageLoader;
 import com.android.bookmybook.task.AsyncTaskManager;
-import com.android.bookmybook.util.AsyncTaskUtility;
+import com.android.bookmybook.util.CommonActivity;
 import com.android.bookmybook.util.Utility;
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 
-import java.io.File;
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-import static android.R.attr.fragment;
 import static com.android.bookmybook.util.Constants.ASYNC_TASK_GET_BOOKS_ALL;
 import static com.android.bookmybook.util.Constants.BOOK;
 import static com.android.bookmybook.util.Constants.FRAGMENT_SHARE_BOOK;
 import static com.android.bookmybook.util.Constants.LOGGED_IN_USER;
 import static com.android.bookmybook.util.Constants.OK;
-import static com.android.bookmybook.util.Constants.SERVER_ADDRESS;
 
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener,AsyncTaskImageLoader.Listener {
+public class HomeActivity extends CommonActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
     private static final String CLASS_NAME = HomeActivity.class.getName();
     private Context mContext = this;
 
@@ -86,12 +77,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout fab_share_ll;
     /*components*/
 
-    /*Async Task Manager*/
-    private AsyncTaskManager asyncTaskManager = new AsyncTaskManager(); //TODO: move this to a class
-
-    private User user;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,35 +85,18 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         initComponents();
 
-        if(!fetchUser()){
-            //TODO: force login
-            return;
-        }
-        
-        fetchBooks();
-    }
-
-    private boolean fetchUser() {
-        user = new User();
-        user.setUSER_ID("Ajit");
-
-        return true;
-    }
-
-    private void fetchBooks() {
-        BookTask bookTask = new BookTask();
-        bookTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, ASYNC_TASK_GET_BOOKS_ALL);
+        setupPage();
     }
 
     private void initComponents(){
-        initToolbar();
+        setupToolbar();
 
-        initNavigator();
+        setupNavigator();
 
-        initFab();
+        setupFab();
     }
 
-    private void initFab() {
+    private void setupFab() {
         fabtoolbar_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,7 +122,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if(R.id.fab_seek_ll == view.getId()){
-            new AsyncTaskImageLoader(this).execute(SERVER_ADDRESS+"bookim/SHERLOCK%20HOMES.jpeg");
         }
         else if(R.id.fab_share_ll == view.getId()){
             showFabToolbar(false);
@@ -200,17 +167,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         fragment.show(manager, fragmentNameStr);
     }
 
-    @Override
-    public void onImageLoaded(Bitmap bitmap) {
-        fabtoolbar_fab.setImageBitmap(bitmap);
-    }
-
-    @Override
-    public void onError() {
-        Toast.makeText(this, "Error Loading Image !", Toast.LENGTH_SHORT).show();
-    }
-
-    private void initNavigator() {
+    private void setupNavigator() {
         //drawer
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer_layout.setDrawerListener(toggle);
@@ -222,11 +179,29 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         nav_view.setNavigationItemSelectedListener(this);
     }
 
-    private void initToolbar() {
+    private void setupToolbar() {
         //toolbar
         toolbar.setTitle(getResources().getString(R.string.app_name));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+
+    private void setupPage(){
+        if(Utility.isNetworkAvailable(this)){
+            return;
+        }
+
+        //fetch books
+        new AsyncTaskManager(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, ASYNC_TASK_GET_BOOKS_ALL);
+    }
+
+    public void setupBooks(List<BooksList> booksList) {
+        if(booksList == null || (booksList != null && booksList.isEmpty())){
+            return;
+        }
+
+        ListViewAdapterCategorizedBooks adapter = new ListViewAdapterCategorizedBooks(mContext, booksList);
+        categorizedBooksLV.setAdapter(adapter);
     }
 
     @Override
@@ -237,7 +212,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             //super.onBackPressed();
         }
 
-        if(layout.isShown()){
+        if(layout.isToolbar()){
             layout.hide();
         }
         else{
@@ -283,25 +258,5 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         drawer_layout.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    private class BookTask extends AsyncTask<String, Void, List<BooksList>> {
-        @Override
-        protected List<BooksList> doInBackground(String... urls) {
-            if(ASYNC_TASK_GET_BOOKS_ALL.equalsIgnoreCase(urls[0])){
-                return AsyncTaskUtility.fetchAllBooks();
-            }
-            else{
-                //AsyncTaskUtility.getBook();
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(List<BooksList> result) {
-            ListViewAdapterCategorizedBooks adapter = new ListViewAdapterCategorizedBooks(mContext, result);
-            categorizedBooksLV.setAdapter(adapter);
-        }
     }
 }

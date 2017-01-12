@@ -47,6 +47,24 @@
 
 -------------------GIT PUSH ON 9-jan-17--------------------------
 
+10-jan-2017
+1. exit on double back button in home screen.
+2. common async task manager class to handle all async processes.
+3. added Access Network State permission in manifest
+4. common activity class to handle master data fetch, check user logged in and such common tasks.
+5. poc on conversion of json fetched from the server to a list.
+
+-------------------GIT PUSH ON 10-jan-17--------------------------
+
+11-jan-2017
+1. fix for slow performance after image is picked from cam or gallery in share book screen.
+2. No internet connection fragment on no internet availability.
+
+12-jan-2017
+1. no internet fragment on resume of common activity.
+2. check for no internet before async http connection.
+
+
 
 
 

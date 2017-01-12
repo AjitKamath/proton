@@ -28,7 +28,9 @@ import com.android.bookmybook.R;
 import com.android.bookmybook.adapter.ViewPagerAdapterShareBook;
 import com.android.bookmybook.component.ViewPagerCustom;
 import com.android.bookmybook.model.Book;
+import com.android.bookmybook.model.Master;
 import com.android.bookmybook.model.User;
+import com.android.bookmybook.util.Utility;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,10 +47,14 @@ import butterknife.OnClick;
 import static android.app.Activity.RESULT_OK;
 import static com.android.bookmybook.util.Constants.BOOK;
 import static com.android.bookmybook.util.Constants.CAMERA_CHOICE;
+import static com.android.bookmybook.util.Constants.CHECK_MASTER_FOR_ALL;
 import static com.android.bookmybook.util.Constants.FRAGMENT_PICK_IMAGE;
 import static com.android.bookmybook.util.Constants.FRAGMENT_SHARE_BOOK;
 import static com.android.bookmybook.util.Constants.GALLERY_CHOICE;
 import static com.android.bookmybook.util.Constants.LOGGED_IN_USER;
+import static com.android.bookmybook.util.Constants.MASTER;
+import static com.android.bookmybook.util.Constants.REQUEST_GALLERY_PHOTO;
+import static com.android.bookmybook.util.Constants.REQUEST_TAKE_PHOTO;
 import static com.android.bookmybook.util.Constants.UI_FONT;
 
 
@@ -78,14 +84,11 @@ public class ShareFragment extends DialogFragment {
 
     /*data from activity/fragment*/
     private User user;
-    private Book book;
+    private Book book = new Book();
+    private Master master;
     /*data from activity/fragment*/
 
-
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-    String mCurrentPhotoPath;
-    static final int REQUEST_TAKE_PHOTO = 1;
-    static final int REQUEST_GALLERY_PHOTO = 2;
+    private String imagePathStr;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -96,6 +99,14 @@ public class ShareFragment extends DialogFragment {
         d.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         getDataFromBundle();
+
+        if(!Utility.hasMasterData(master, CHECK_MASTER_FOR_ALL)){
+            FragmentManager manager = getFragmentManager();
+            Utility.showNoInternetFragment(manager);
+
+            dismiss();
+        }
+
         initComps();
         setupPage();
 
@@ -133,7 +144,12 @@ public class ShareFragment extends DialogFragment {
         if(bitmap != null){
             common_pick_no_book_ll.setVisibility(View.GONE);
             common_pick_book_iv.setVisibility(View.VISIBLE);
-            common_pick_book_iv.setImageBitmap(bitmap);
+
+            //set thumbnail for the image view for performance
+            common_pick_book_iv.setImageBitmap(Utility.fetchThumbnailFromImage(bitmap, getResources().getDimensionPixelSize(R.dimen.pick_book_image_width), getResources().getDimensionPixelSize(R.dimen.pick_book_image_height)));
+
+            //set real image in book object for real use
+            book.setIMAGE(bitmap);
         }
         else{
             common_pick_no_book_ll.setVisibility(View.VISIBLE);
@@ -172,10 +188,8 @@ public class ShareFragment extends DialogFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, options);
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
+            Bitmap bitmap = BitmapFactory.decodeFile(imagePathStr);
             setBookCover(bitmap);
         }
 
@@ -199,7 +213,7 @@ public class ShareFragment extends DialogFragment {
         File image = File.createTempFile(imageFileName,  ".jpg", storageDir);
 
         // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
+        imagePathStr = image.getAbsolutePath();
         return image;
     }
 
@@ -208,12 +222,16 @@ public class ShareFragment extends DialogFragment {
     }
 
     private void getDataFromBundle() {
-        book = (Book) getArguments().get(BOOK);
+        if(getArguments().get(BOOK) != null){
+            book = (Book) getArguments().get(BOOK);
+        }
+
+        master = (Master) getArguments().get(MASTER);
         user = (User) getArguments().get(LOGGED_IN_USER);
     }
 
     private void setupPage() {
-        if(book == null){
+        if(book == null || (book != null && book.getTITLE() == null)){
             //TODO: adding a new book
             setupSliders();
         }

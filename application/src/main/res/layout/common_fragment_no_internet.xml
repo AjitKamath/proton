@@ -1,0 +1,42 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/common_fragment_no_internet_ll"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/screen_padding"
+    android:padding="@dimen/screen_padding"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:gravity="center"
+    app:theme="@style/AppTheme">
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="@drawable/no_internet"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textLightTertiary"
+            android:textSize="12sp"
+            android:text="PROBLEM WITH THE INTERNET CONNECTION"/>
+
+        <TextView
+            android:id="@+id/common_fragment_no_internet_tv"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:background="@color/appPrimaryLight"
+            android:textSize="12sp"
+            android:text="TRY AGAIN"/>
+
+
+</LinearLayout>
