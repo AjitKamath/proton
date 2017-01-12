@@ -187,11 +187,19 @@ public class HomeActivity extends CommonActivity implements View.OnClickListener
     }
 
     private void setupPage(){
+        if(Utility.isNetworkAvailable(this)){
+            return;
+        }
+
         //fetch books
         new AsyncTaskManager(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, ASYNC_TASK_GET_BOOKS_ALL);
     }
 
     public void setupBooks(List<BooksList> booksList) {
+        if(booksList == null || (booksList != null && booksList.isEmpty())){
+            return;
+        }
+
         ListViewAdapterCategorizedBooks adapter = new ListViewAdapterCategorizedBooks(mContext, booksList);
         categorizedBooksLV.setAdapter(adapter);
     }

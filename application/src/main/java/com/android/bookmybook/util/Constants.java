@@ -68,11 +68,17 @@ public final class Constants{
     //FRAGMENT NAMES
     public static final String FRAGMENT_SHARE_BOOK = "FRAGMENT_SHARE_BOOK";
     public static final String FRAGMENT_PICK_IMAGE = "FRAGMENT_PICK_IMAGE";
+    public static final String FRAGMENT_NO_INTERNET = "FRAGMENT_NO_INTERNET";
 
     //FRAGMENT OBJECT KEYS
     public static final String LOGGED_IN_USER = "LOGGED_IN_USER";
-
     public static final String BOOK = "BOOK";
+    public static final String MASTER = "MASTER";
+
+    //check master keys
+    public static final String CHECK_MASTER_FOR_CATEGORIES = "CHECK_MASTER_FOR_CATEGORIES";
+    public static final String CHECK_MASTER_FOR_TENURES = "CHECK_MASTER_FOR_TENURES";
+    public static final String CHECK_MASTER_FOR_ALL = "CHECK_MASTER_FOR_ALL";
 
 
     //SHARED PREFS KEYS
@@ -91,4 +97,7 @@ public final class Constants{
     public static final String OK = "OK";
     public static final String SAVED = "Saved";
     public static final String SOMETHING_WENT_WRONG = "Something Went Wrong";
+
+    public static final int REQUEST_TAKE_PHOTO = 1;
+    public static final int REQUEST_GALLERY_PHOTO = 2;
 }

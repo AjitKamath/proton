@@ -1,5 +1,6 @@
 package com.android.bookmybook.util;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,14 +23,24 @@ public class CommonActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //check if the user is connected to the internet
         if(!Utility.isNetworkAvailable(mContext)){
-            //TODO:FRAGMENT PREVENTING USER TO CONTINUE UNTILL INTERNET
-
             return;
         }
 
         fetchMasterData();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        //check if the user is connected to the internet
+        if(!Utility.isNetworkAvailable(mContext)){
+            FragmentManager fragment = getFragmentManager();
+            Utility.showNoInternetFragment(fragment);
+
+            return;
+        }
     }
 
     private boolean fetchUser() {

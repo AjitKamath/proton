@@ -1,16 +1,30 @@
 package com.android.bookmybook.util;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.bookmybook.R;
+import com.android.bookmybook.fragment.NoInternetFragment;
+import com.android.bookmybook.fragment.ShareFragment;
 import com.android.bookmybook.model.Category;
+import com.android.bookmybook.model.Master;
 import com.android.bookmybook.model.Tenure;
 import com.android.bookmybook.task.AsyncTaskManager;
 import com.google.gson.Gson;
@@ -24,6 +38,13 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 import static com.android.bookmybook.util.Constants.ASYNC_TASK_GET_CATEGORIES_ALL;
+import static com.android.bookmybook.util.Constants.BOOK;
+import static com.android.bookmybook.util.Constants.CHECK_MASTER_FOR_ALL;
+import static com.android.bookmybook.util.Constants.CHECK_MASTER_FOR_CATEGORIES;
+import static com.android.bookmybook.util.Constants.CHECK_MASTER_FOR_TENURES;
+import static com.android.bookmybook.util.Constants.FRAGMENT_NO_INTERNET;
+import static com.android.bookmybook.util.Constants.FRAGMENT_SHARE_BOOK;
+import static com.android.bookmybook.util.Constants.LOGGED_IN_USER;
 import static com.android.bookmybook.util.Constants.OK;
 
 public class Utility extends Activity{
@@ -50,7 +71,16 @@ public class Utility extends Activity{
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        boolean hasInternet = activeNetworkInfo != null && activeNetworkInfo.isConnected();
+
+        if(!hasInternet){
+            Log.i(CLASS_NAME, "Internet connection is available");
+        }
+        else{
+            Log.i(CLASS_NAME, "No Internet connection available");
+        }
+
+        return hasInternet;
     }
 
     public static HttpURLConnection getHttpConnection(URL url, String method) throws Exception{
@@ -115,6 +145,11 @@ public class Utility extends Activity{
     }
 
     public static void fetchMasterData(Activity activity) {
+        if(!isNetworkAvailable(activity)){
+            Log.e(CLASS_NAME, "Internet connection unavailable.");
+            return;
+        }
+
         //fetch book categories
         new AsyncTaskManager(activity).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, ASYNC_TASK_GET_CATEGORIES_ALL);
 
@@ -124,5 +159,73 @@ public class Utility extends Activity{
 
     public static String escapePath(String str){
         return str.replace("\\", "\\\\").replaceAll("/", Matcher.quoteReplacement("\\/"));
+    }
+
+    public static Bitmap fetchThumbnailFromImage(Bitmap bitmap, int width, int height){
+        return ThumbnailUtils.extractThumbnail(bitmap, width, height);
+    }
+
+    public String getRealPathFromURI(Uri contentURI) {
+        String result;
+        Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) {
+            result = contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx);
+            cursor.close();
+        }
+        return result;
+    }
+
+    public static boolean hasMasterData(Master master, String purposeStr){
+        if(master == null){
+            Log.i(CLASS_NAME, "Master Data is null");
+            return false;
+        }
+
+        boolean hasCategories = false;
+        boolean hasTenures = false;
+
+        if(master.getCategoriesList() != null && !master.getCategoriesList().isEmpty()){
+            hasCategories = true;
+        }
+
+        if(master.getTenuresList() != null && !master.getTenuresList().isEmpty()){
+            hasTenures = true;
+        }
+
+        Log.i(CLASS_NAME, "Master Data contains : ");
+        Log.i(CLASS_NAME, "Categories("+hasCategories+")");
+        Log.i(CLASS_NAME, "Tenures("+hasTenures+")");
+
+        if(CHECK_MASTER_FOR_ALL.equalsIgnoreCase(purposeStr)){
+            return hasCategories && hasTenures;
+        }
+        else if(CHECK_MASTER_FOR_CATEGORIES.equalsIgnoreCase(purposeStr)){
+            return hasCategories;
+        }
+        else if(CHECK_MASTER_FOR_TENURES.equalsIgnoreCase(purposeStr)){
+            return hasTenures;
+        }
+        else{
+            Log.e(CLASS_NAME, "Invalid Purpose("+purposeStr+") passed to check master data");
+        }
+        return false;
+    }
+
+    public static void showNoInternetFragment(FragmentManager manager){
+        String fragmentNameStr = FRAGMENT_NO_INTERNET;
+
+        Fragment frag = manager.findFragmentByTag(fragmentNameStr);
+
+        if (frag != null) {
+            manager.beginTransaction().remove(frag).commit();
+        }
+
+        NoInternetFragment fragment = new NoInternetFragment();
+        fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.fragment_theme);
+        fragment.show(manager, fragmentNameStr);
     }
 }
