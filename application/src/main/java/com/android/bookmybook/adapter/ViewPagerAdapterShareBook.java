@@ -6,9 +6,21 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.bookmybook.R;
+import com.android.bookmybook.model.Category;
+import com.android.bookmybook.model.Master;
+import com.android.bookmybook.model.Tenure;
+import com.android.bookmybook.util.Utility;
+
+import org.w3c.dom.Text;
+
 import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 import static com.android.bookmybook.util.Constants.UI_FONT;
 
@@ -19,13 +31,21 @@ public class ViewPagerAdapterShareBook extends PagerAdapter {
     private final String CLASS_NAME = this.getClass().getName();
     private Context mContext;
 
+    /*components*/
+    private LinearLayout common_spinner_ll_category;
+    private LinearLayout common_spinner_ll_min_duration;
+    private LinearLayout common_spinner_ll_max_duration;
+    /*components*/
+
     private List<Integer> layoutsList;
+    private Master master;
     public int activePageIndex = 0;
 
 
-    public ViewPagerAdapterShareBook(Context context, List<Integer> layoutsList) {
+    public ViewPagerAdapterShareBook(Context context, List<Integer> layoutsList, Master master) {
         this.mContext = context;
         this.layoutsList = layoutsList;
+        this.master = master;
     }
 
     @Override
@@ -45,6 +65,8 @@ public class ViewPagerAdapterShareBook extends PagerAdapter {
 
         collection.addView(layout);
 
+        //ButterKnife.bind(this, layout);
+
         return layout;
     }
 
@@ -52,9 +74,35 @@ public class ViewPagerAdapterShareBook extends PagerAdapter {
     }
 
     private void setupShareBook2(ViewGroup layout) {
+        //set up default selected category
+        common_spinner_ll_category = (LinearLayout) layout.findViewById(R.id.common_spinner_category);
+        setupCategory((Category) Utility.fetchDefault(master.getCategoriesList()));
+
     }
 
     private void setupShareBook3(ViewGroup layout) {
+        //set up min duration
+        common_spinner_ll_min_duration = (LinearLayout) layout.findViewById(R.id.common_spinner_min_duration);
+        setupMinDuration(((Tenure)Utility.fetchDefault(master.getTenuresList())));
+
+        //set up max duration
+        common_spinner_ll_max_duration = (LinearLayout) layout.findViewById(R.id.common_spinner_max_duration);
+        setupMaxDuration(((Tenure)Utility.fetchDefault(master.getTenuresList())));
+    }
+
+    public void setupCategory(Category category){
+        common_spinner_ll_category.setTag(category);
+        ((TextView)common_spinner_ll_category.findViewById(R.id.common_spinner_tv)).setText(category.getCTGRY_NAME());
+    }
+
+    public void setupMinDuration(Tenure tenure){
+        common_spinner_ll_min_duration.setTag(tenure);
+        ((TextView)common_spinner_ll_min_duration.findViewById(R.id.common_spinner_tv)).setText(tenure.getTENURE_NAME());
+    }
+
+    public void setupMaxDuration(Tenure tenure){
+        common_spinner_ll_max_duration.setTag(tenure);
+        ((TextView)common_spinner_ll_max_duration.findViewById(R.id.common_spinner_tv)).setText(tenure.getTENURE_NAME());
     }
 
     @Override

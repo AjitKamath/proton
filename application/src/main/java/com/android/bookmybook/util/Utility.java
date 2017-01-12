@@ -34,10 +34,13 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 
+import static com.android.bookmybook.util.Constants.AFFIRMATIVE;
 import static com.android.bookmybook.util.Constants.ASYNC_TASK_GET_CATEGORIES_ALL;
+import static com.android.bookmybook.util.Constants.ASYNC_TASK_GET_TENURES_ALL;
 import static com.android.bookmybook.util.Constants.BOOK;
 import static com.android.bookmybook.util.Constants.CHECK_MASTER_FOR_ALL;
 import static com.android.bookmybook.util.Constants.CHECK_MASTER_FOR_CATEGORIES;
@@ -144,19 +147,6 @@ public class Utility extends Activity{
         return null;
     }
 
-    public static void fetchMasterData(Activity activity) {
-        if(!isNetworkAvailable(activity)){
-            Log.e(CLASS_NAME, "Internet connection unavailable.");
-            return;
-        }
-
-        //fetch book categories
-        new AsyncTaskManager(activity).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, ASYNC_TASK_GET_CATEGORIES_ALL);
-
-        //fetch tenures
-        //new AsyncTaskManager(activity).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, ASYNC_TASK_GET_TENURES_ALL);
-    }
-
     public static String escapePath(String str){
         return str.replace("\\", "\\\\").replaceAll("/", Matcher.quoteReplacement("\\/"));
     }
@@ -227,5 +217,31 @@ public class Utility extends Activity{
         NoInternetFragment fragment = new NoInternetFragment();
         fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.fragment_theme);
         fragment.show(manager, fragmentNameStr);
+    }
+
+    public static Object fetchDefault(List<? extends Object> list){
+        if(list == null || !(list instanceof ArrayList)){
+            Log.e(CLASS_NAME, "List is null or the passed object is not of type arraylist");
+            return null;
+        }
+
+        for(Object iterList : list){
+            if(iterList instanceof Category){
+                if(AFFIRMATIVE.equalsIgnoreCase(((Category)iterList).getIS_DEF())){
+                    return iterList;
+                }
+            }
+            else if(iterList instanceof Tenure){
+                if(AFFIRMATIVE.equalsIgnoreCase(((Tenure)iterList).getIS_DEF())){
+                    return iterList;
+                }
+            }
+            else {
+                Log.e(CLASS_NAME, "Could not identify the object type of the list");
+                break;
+            }
+        }
+
+        return null;
     }
 }

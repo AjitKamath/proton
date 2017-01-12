@@ -1,13 +1,24 @@
 package com.android.bookmybook.model;
 
+import java.io.Serializable;
+
 /**
  * Created by ajit on 10/1/17.
  */
 
-public class Tenure {
+public class Tenure implements Serializable{
     private String TENURE_ID;
     private String TENURE_NAME;
     private Integer NO_OF_DAYS;
+    private String IS_DEF;
+
+    public String getIS_DEF() {
+        return IS_DEF;
+    }
+
+    public void setIS_DEF(String IS_DEF) {
+        this.IS_DEF = IS_DEF;
+    }
 
     public String getTENURE_ID() {
         return TENURE_ID;

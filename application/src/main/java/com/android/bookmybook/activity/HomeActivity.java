@@ -40,8 +40,10 @@ import butterknife.InjectView;
 
 import static com.android.bookmybook.util.Constants.ASYNC_TASK_GET_BOOKS_ALL;
 import static com.android.bookmybook.util.Constants.BOOK;
+import static com.android.bookmybook.util.Constants.CHECK_MASTER_FOR_ALL;
 import static com.android.bookmybook.util.Constants.FRAGMENT_SHARE_BOOK;
 import static com.android.bookmybook.util.Constants.LOGGED_IN_USER;
+import static com.android.bookmybook.util.Constants.MASTER;
 import static com.android.bookmybook.util.Constants.OK;
 
 public class HomeActivity extends CommonActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
@@ -134,11 +136,28 @@ public class HomeActivity extends CommonActivity implements View.OnClickListener
     }
 
     private void showShareFragment(Book book) {
+        //check for internet
+        if(!Utility.isNetworkAvailable(this)){
+            FragmentManager fragMan = getFragmentManager();
+            Utility.showNoInternetFragment(fragMan);
+            return;
+        }else{
+            fetchMasterData();
+        }
+
+        //check for master data
+        if(!Utility.hasMasterData(master, CHECK_MASTER_FOR_ALL)){
+            FragmentManager manager = getFragmentManager();
+            Utility.showNoInternetFragment(manager);
+            return;
+        }
+
         String fragmentNameStr = FRAGMENT_SHARE_BOOK;
         String parentFragmentNameStr = null;
 
         Bundle bundle = new Bundle();
         bundle.putSerializable(LOGGED_IN_USER, user);
+        bundle.putSerializable(MASTER, master);
 
         if(book != null){
             bundle.putSerializable(BOOK, book);
@@ -187,7 +206,7 @@ public class HomeActivity extends CommonActivity implements View.OnClickListener
     }
 
     private void setupPage(){
-        if(Utility.isNetworkAvailable(this)){
+        if(!Utility.isNetworkAvailable(this)){
             return;
         }
 

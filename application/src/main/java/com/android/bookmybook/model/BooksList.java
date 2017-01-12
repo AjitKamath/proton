@@ -1,12 +1,13 @@
 package com.android.bookmybook.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by ajit on 3/1/17.
  */
 
-public class BooksList{
+public class BooksList implements Serializable{
     private String category;
     private List<Book> booksList;
 

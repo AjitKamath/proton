@@ -1,5 +1,6 @@
 package com.android.bookmybook.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by ajit on 10/1/17.
  */
 
-public class Master {
+public class Master implements Serializable {
     private List<Category> categoriesList = new ArrayList<>();
     private List<Tenure> tenuresList = new ArrayList<>();
 

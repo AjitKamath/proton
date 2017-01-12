@@ -266,7 +266,7 @@ public class AsyncTaskUtility extends Activity{
             return Utility.jsonToObject(jsonStr, Tenure.class);
         }
         catch (Exception e){
-            Log.e(CLASS_NAME, "Could not fetch Categories from the server : "+e);
+            Log.e(CLASS_NAME, "Could not fetch Tenures from the server : "+e);
         }
 
         return null;

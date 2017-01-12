@@ -63,6 +63,8 @@
 12-jan-2017
 1. no internet fragment on resume of common activity.
 2. check for no internet before async http connection.
+3. fetch categories and tenure from the server.
+4. set server data(categories and tenure) into the dropdown in share book fragment.
 
 
 

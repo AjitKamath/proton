@@ -100,13 +100,6 @@ public class ShareFragment extends DialogFragment {
 
         getDataFromBundle();
 
-        if(!Utility.hasMasterData(master, CHECK_MASTER_FOR_ALL)){
-            FragmentManager manager = getFragmentManager();
-            Utility.showNoInternetFragment(manager);
-
-            dismiss();
-        }
-
         initComps();
         setupPage();
 
@@ -259,7 +252,7 @@ public class ShareFragment extends DialogFragment {
         viewPagerTabsList.add(R.layout.view_pager_share_book_2);
         viewPagerTabsList.add(R.layout.view_pager_share_book_3);
 
-        ViewPagerAdapterShareBook viewPagerAdapter = new ViewPagerAdapterShareBook(mContext, viewPagerTabsList);
+        ViewPagerAdapterShareBook viewPagerAdapter = new ViewPagerAdapterShareBook(mContext, viewPagerTabsList, master);
 
         int activePageIndex = 0;
         if(share_book_vp != null && share_book_vp.getAdapter() != null){

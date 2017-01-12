@@ -15,7 +15,7 @@ public final class Constants{
 
     //PHP
     public static final String PHP_FETCH_ALL_CATEGORIES = "fetch_cat.php";
-    public static final String PHP_FETCH_ALL_TENURES = "fetch_tenures.php";
+    public static final String PHP_FETCH_ALL_TENURES = "fetch_tenure.php";
 
     //fragment keys
     public static final int GALLERY_CHOICE = 1111;
@@ -33,36 +33,11 @@ public final class Constants{
     public static final String DB_NAME = "FINAPPL.db";
     public static final int DB_VERSION = 87;
 
-    //DB flag value for affirmative/non affirmative
-    public static final String DB_AFFIRMATIVE = "Y";
-    public static final String DB_NONAFFIRMATIVE = "N";
+    //flag value for affirmative/non affirmative
+    public static final String AFFIRMATIVE = "Y";
+    public static final String NON_AFFIRMATIVE = "N";
 
     public static final String UI_FONT = "Roboto-Light.ttf";
-
-    //DB Tables
-    public static final String DB_TABLE_USER = "USERS";
-    public static final String DB_TABLE_ACCOUNT = "ACCOUNTS";
-    public static final String DB_TABLE_CATEGORY = "CATEGORIES";
-    public static final String DB_TABLE_SPENTON = "SPENT_ONS";
-    public static final String DB_TABLE_TRANSACTION = "TRANSACTIONS";
-    public static final String DB_TABLE_BUDGET = "BUDGETS";
-    public static final String DB_TABLE_TRANSFER = "TRANSFERS";
-    public static final String DB_TABLE_REPEAT = "REPEATS";
-    public static final String DB_TABLE_COUNTRY = "COUNTRIES";
-    public static final String DB_TABLE_NOTIFICATION = "NOTIFICATIONS";
-    public static final String DB_TABLE_SETTING = "SETTINGS";
-    public static final String DB_TABLE_TAGS = "DB_TABLE_TAGS";
-    //DB
-
-    //Date formats
-    public static final String JAVA_DATE_FORMAT = "dd-MM-yyyy";
-    public static final String JAVA_DATE_FORMAT_1 = "MM-yyyy";
-    public static final String DB_DATE_FORMAT = "yyyy-MM-dd";
-    public static final String DB_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    public static final String DB_TIME_FORMAT = "HH:mm";
-    public static final String UI_DATE_TIME_FORMAT = "d MMM ''yy H:mm:ss a";
-    public static final String UI_DATE_FORMAT = "d MMM yyyy";
-    public static final String UI_TIME_FORMAT = "hh:mm a";
 
     //Bundle Keys, Shared Prefs, Intent, fragment names
     //FRAGMENT NAMES

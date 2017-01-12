@@ -52,7 +52,7 @@
             android:textSize="@dimen/form_fields_header_text_size" />
 
         <include
-            android:id="@+id/common_spinner_category"
+            android:id="@+id/common_spinner_min_duration"
             layout="@layout/common_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -84,7 +84,7 @@
             android:textSize="@dimen/form_fields_header_text_size" />
 
         <include
-            android:id="@+id/common_spinner_category"
+            android:id="@+id/common_spinner_max_duration"
             layout="@layout/common_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
