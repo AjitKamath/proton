@@ -32,6 +32,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 
 import static com.android.bookmybook.R.id.gender;
+import static com.android.bookmybook.R.id.login;
 import static com.android.bookmybook.R.id.mobile;
 import static com.android.bookmybook.R.id.password;
 import static com.android.bookmybook.R.id.snackbar_action;
@@ -39,17 +40,14 @@ import static com.android.bookmybook.util.Constants.ASYNC_TASK_GET_BOOKS_ALL;
 import static com.android.bookmybook.util.Constants.SERVER_ADDRESS;
 import static com.android.bookmybook.util.Constants.SERVER_CHARSET;
 
-public class RegistrationActivity extends AppCompatActivity {
-    private static final String CLASS_NAME = RegistrationActivity.class.getName();
+public class LoginActivity extends AppCompatActivity {
+    private static final String CLASS_NAME = LoginActivity.class.getName();
     private Context mContext = this;
 
     /*components*/
 
-    @InjectView(R.id.act_full)
+    @InjectView(R.id.login_act)
     LinearLayout act;
-
-    @InjectView(R.id.mobile)
-    EditText mobile;
 
     @InjectView(R.id.email)
     EditText email;
@@ -57,89 +55,54 @@ public class RegistrationActivity extends AppCompatActivity {
     @InjectView(R.id.password)
     EditText password;
 
-    @InjectView(R.id.name)
-    EditText name;
-
-    @InjectView(R.id.gender)
-    RadioGroup gender;
-
-    @InjectView(R.id.city)
-    EditText city;
-
-    @InjectView(R.id.sign_up_button)
-    Button sign_up;
+    @InjectView(R.id.sign_in_button)
+    Button sign_in;
 
     /*components*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration);
+        setContentView(R.layout.activity_login);
         ButterKnife.inject(this);
 
     }
 
-    @OnClick(R.id.sign_up_button)
+    @OnClick(R.id.sign_in_button)
     public void onSignup(View view) {
-        if (validate_inputs()) {
-            register();
+        if (validate_user()) {
+            login();
         } else {
-            Toast.makeText(getApplicationContext(), "Registration Failed..!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Login Failed..!!", Toast.LENGTH_SHORT).show();
         }
 
     }
 
-    String mble;
     String mail;
     String pwd;
-    String nm;
-    String gnd;
-    String cty;
 
-    public boolean validate_inputs() {
+    public boolean validate_user() {
 
-        mble = String.valueOf(mobile.getText());
         mail = String.valueOf(email.getText());
         pwd = String.valueOf(password.getText());
-        nm = String.valueOf(name.getText());
-        int gnd_id = gender.getCheckedRadioButtonId();
-        RadioButton rd = (RadioButton)findViewById(gnd_id);
-        gnd = String.valueOf(rd.getText());
-        cty = String.valueOf(city.getText());
 
 
-        if (mble.isEmpty()) {
-            Utility.showSnacks(act,"PLEASE ENTER MOBILE","OK", Snackbar.LENGTH_INDEFINITE);
-        } else if (mble.length() < 10) {
-            Utility.showSnacks(act,"INVALID MOBILE NUMBER","OK", Snackbar.LENGTH_INDEFINITE);
-        } else if (!isValidMobile(mble)) {
-            Utility.showSnacks(act,"INVALID MOBILE NUMBER","OK", Snackbar.LENGTH_INDEFINITE);
-        } else if (mail.isEmpty()) {
+        if (mail.isEmpty()) {
             Utility.showSnacks(act,"PLEASE ENTER EMAIL","OK", Snackbar.LENGTH_INDEFINITE);
         } else if (!isValidMail(mail)) {
             Utility.showSnacks(act,"INVALID EMAIL","OK", Snackbar.LENGTH_INDEFINITE);
         } else if (pwd.isEmpty()) {
             Utility.showSnacks(act,"PLEASE ENTER PASSWORD","OK", Snackbar.LENGTH_INDEFINITE);
-        } else if (nm.isEmpty()) {
-            Utility.showSnacks(act,"PLEASE ENTER NAME","OK", Snackbar.LENGTH_INDEFINITE);
-        } else if (gnd.isEmpty()) {
-            Utility.showSnacks(act,"PLEASE SELECT GENDER","OK", Snackbar.LENGTH_INDEFINITE);
-        } else if (cty.isEmpty()) {
-            Utility.showSnacks(act,"PLEASE ENTER CITY","OK", Snackbar.LENGTH_INDEFINITE);
         }
-
         return true;
     }
 
-    private boolean isValidMobile(String phone) {
-        return android.util.Patterns.PHONE.matcher(phone).matches();
-    }
 
     private boolean isValidMail(String email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    public void register()
+    public void login()
     {
         new BookTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "k");
     }
@@ -151,7 +114,7 @@ public class RegistrationActivity extends AppCompatActivity {
             if (ASYNC_TASK_GET_BOOKS_ALL.equalsIgnoreCase(urls[0])) {
                 return AsyncTaskUtility.fetchAllBooks();
             } else {
-                AsyncTaskUtility.addNewUser(mble, mail, pwd, nm, gnd, cty);
+                AsyncTaskUtility.login_authentication(mail, pwd);
             }
 
             return null;
@@ -159,7 +122,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(List<BooksList> result) {
-            Toast.makeText(getApplicationContext(), "Registration Successfull..!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Login Successfull..!!", Toast.LENGTH_SHORT).show();
         }
 
     }
