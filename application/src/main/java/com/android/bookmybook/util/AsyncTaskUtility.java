@@ -215,15 +215,14 @@ public class AsyncTaskUtility extends Activity{
         return null;
     }
 
-    public static void addNewUser(String user_id,String mobile,String email,String password,String name,String gender,String city)
+    public static void addNewUser(String mobile,String email,String password,String name,String gender,String city)
     {
         try {
             MultipartUtility multipart = new MultipartUtility(SERVER_ADDRESS+"register.php", SERVER_CHARSET);
 
             multipart.addFormField("code", "1");
-            multipart.addFormField("user_id", user_id);
-            multipart.addFormField("email", mobile);
-            multipart.addFormField("mobile", email);
+            multipart.addFormField("email", email);
+            multipart.addFormField("mobile", mobile);
             multipart.addFormField("password", password);
             multipart.addFormField("name", name);
             multipart.addFormField("gender", gender);

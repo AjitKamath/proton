@@ -5,12 +5,15 @@ import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +34,7 @@ import butterknife.OnClick;
 import static com.android.bookmybook.R.id.gender;
 import static com.android.bookmybook.R.id.mobile;
 import static com.android.bookmybook.R.id.password;
+import static com.android.bookmybook.R.id.snackbar_action;
 import static com.android.bookmybook.util.Constants.ASYNC_TASK_GET_BOOKS_ALL;
 import static com.android.bookmybook.util.Constants.SERVER_ADDRESS;
 import static com.android.bookmybook.util.Constants.SERVER_CHARSET;
@@ -40,8 +44,9 @@ public class RegistrationActivity extends AppCompatActivity {
     private Context mContext = this;
 
     /*components*/
-    @InjectView(R.id.user_id)
-    EditText user_id;
+
+    @InjectView(R.id.act_full)
+    LinearLayout act;
 
     @InjectView(R.id.mobile)
     EditText mobile;
@@ -84,41 +89,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
     }
 
-    public boolean validate_inputs() {
-        if (user_id.equals(null)) {
-            Toast.makeText(getApplicationContext(), "ENTER USER NAME", Toast.LENGTH_SHORT).show();
-        } else if (mobile.equals(null)) {
-            Toast.makeText(getApplicationContext(), "ENTER MOBILE NUMBER", Toast.LENGTH_SHORT).show();
-        } else if (email.equals(null)) {
-            Toast.makeText(getApplicationContext(), "ENTER EMAIL ID", Toast.LENGTH_SHORT).show();
-        } else if (password.equals(null)) {
-            Toast.makeText(getApplicationContext(), "ENTER PASSWORD", Toast.LENGTH_SHORT).show();
-        } else if (name.equals(null)) {
-            Toast.makeText(getApplicationContext(), "ENTER NAME", Toast.LENGTH_SHORT).show();
-        } else if (gender.equals(null)) {
-            Toast.makeText(getApplicationContext(), "CHOOSE gender", Toast.LENGTH_SHORT).show();
-        } else if (city.equals(null)) {
-            Toast.makeText(getApplicationContext(), "ENTER CITY", Toast.LENGTH_SHORT).show();
-        }
-
-        return true;
-    }
-
-    public void register() {
-
-        userid = String.valueOf(user_id.getText());
-        mble = String.valueOf(mobile.getText());
-        mail = String.valueOf(email.getText());
-        pwd = String.valueOf(password.getText());
-        nm = String.valueOf(name.getText());
-        gnd = String.valueOf(gender.getCheckedRadioButtonId());
-        cty = String.valueOf(city.getText());
-
-        new BookTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "k");
-
-    }
-
-    String userid;
     String mble;
     String mail;
     String pwd;
@@ -126,13 +96,62 @@ public class RegistrationActivity extends AppCompatActivity {
     String gnd;
     String cty;
 
+    public boolean validate_inputs() {
+
+        mble = String.valueOf(mobile.getText());
+        mail = String.valueOf(email.getText());
+        pwd = String.valueOf(password.getText());
+        nm = String.valueOf(name.getText());
+        int gnd_id = gender.getCheckedRadioButtonId();
+        RadioButton rd = (RadioButton)findViewById(gnd_id);
+        gnd = String.valueOf(rd.getText());
+        cty = String.valueOf(city.getText());
+
+
+        if (mble.isEmpty()) {
+            Utility.showSnacks(act,"PLEASE ENTER MOBILE","OK", Snackbar.LENGTH_INDEFINITE);
+        } else if (mble.length() < 10) {
+            Utility.showSnacks(act,"INVALID MOBILE NUMBER","OK", Snackbar.LENGTH_INDEFINITE);
+        } else if (!isValidMobile(mble)) {
+            Utility.showSnacks(act,"INVALID MOBILE NUMBER","OK", Snackbar.LENGTH_INDEFINITE);
+        } else if (mail.isEmpty()) {
+            Utility.showSnacks(act,"PLEASE ENTER EMAIL","OK", Snackbar.LENGTH_INDEFINITE);
+        } else if (!isValidMail(mail)) {
+            Utility.showSnacks(act,"INVALID EMAIL","OK", Snackbar.LENGTH_INDEFINITE);
+        } else if (pwd.isEmpty()) {
+            Utility.showSnacks(act,"PLEASE ENTER PASSWORD","OK", Snackbar.LENGTH_INDEFINITE);
+        } else if (nm.isEmpty()) {
+            Utility.showSnacks(act,"PLEASE ENTER NAME","OK", Snackbar.LENGTH_INDEFINITE);
+        } else if (gnd.isEmpty()) {
+            Utility.showSnacks(act,"PLEASE SELECT GENDER","OK", Snackbar.LENGTH_INDEFINITE);
+        } else if (cty.isEmpty()) {
+            Utility.showSnacks(act,"PLEASE ENTER CITY","OK", Snackbar.LENGTH_INDEFINITE);
+        }
+
+        return true;
+    }
+
+    private boolean isValidMobile(String phone) {
+        return android.util.Patterns.PHONE.matcher(phone).matches();
+    }
+
+    private boolean isValidMail(String email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    public void register()
+    {
+        new BookTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "k");
+    }
+
+
     private class BookTask extends AsyncTask<String, Void, List<BooksList>> {
         @Override
         protected List<BooksList> doInBackground(String... urls) {
             if (ASYNC_TASK_GET_BOOKS_ALL.equalsIgnoreCase(urls[0])) {
                 return AsyncTaskUtility.fetchAllBooks();
             } else {
-                AsyncTaskUtility.addNewUser(userid, mble, mail, pwd, nm, gnd, cty);
+                AsyncTaskUtility.addNewUser(mble, mail, pwd, nm, gnd, cty);
             }
 
             return null;
