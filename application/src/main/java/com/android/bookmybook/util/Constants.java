@@ -16,6 +16,7 @@ public final class Constants{
     //PHP
     public static final String PHP_FETCH_ALL_CATEGORIES = "fetch_cat.php";
     public static final String PHP_FETCH_ALL_TENURES = "fetch_tenure.php";
+    public static final String PHP_POST_BOOK = "imupload.php";
 
     //fragment keys
     public static final int GALLERY_CHOICE = 1111;
@@ -44,11 +45,18 @@ public final class Constants{
     public static final String FRAGMENT_SHARE_BOOK = "FRAGMENT_SHARE_BOOK";
     public static final String FRAGMENT_PICK_IMAGE = "FRAGMENT_PICK_IMAGE";
     public static final String FRAGMENT_NO_INTERNET = "FRAGMENT_NO_INTERNET";
+    public static final String FRAGMENT_COMMON_SPINNER = "FRAGMENT_COMMON_SPINNER";
 
     //FRAGMENT OBJECT KEYS
     public static final String LOGGED_IN_USER = "LOGGED_IN_USER";
     public static final String BOOK = "BOOK";
     public static final String MASTER = "MASTER";
+    public static final String LIST_DATA = "LIST_DATA";
+    public static final String SELECTED_ITEM = "SELECTED_ITEM";
+    public static final String MIN_DURATION = "MIN_DURATION";
+    public static final String MAX_DURATION = "MAX_DURATION";
+    public static final String DURATION_TYPE = "DURATION_TYPE";
+    public static final String CATEGORY = "CATEGORY";
 
     //check master keys
     public static final String CHECK_MASTER_FOR_CATEGORIES = "CHECK_MASTER_FOR_CATEGORIES";
@@ -64,8 +72,6 @@ public final class Constants{
     public static final String UN_IDENTIFIED_PARENT_FRAGMENT = "Target Fragment hasn't been set before calling the current fragment";
     public static final String UN_IDENTIFIED_OBJECT_TYPE = "Object Type could not be identified for the object : ";
     public static final String UN_IDENTIFIED_VIEW = "Could not identify the view which has been clicked";
-    public static final String EMAIL_NOT_VERIFIED = "EMAIL NOT VERIFIED";
-    public static final String VERIFICATION_EMAIL_SENT = " VERIFICATION MAIL SENT";
 
     //Snacks
     public static final String VERIFY_EMAIL = "VERIFY";

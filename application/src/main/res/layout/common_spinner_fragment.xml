@@ -3,10 +3,13 @@
     android:layout_width="match_parent"
     android:gravity="center"
     android:layout_height="match_parent"
-    android:padding="@dimen/screen_padding"
-    android:orientation="horizontal">
+    android:orientation="vertical">
+
+    <include android:id="@+id/common_spinner_fragment_header"
+        layout="@layout/common_fragment_header" />
 
     <ListView
+        android:padding="@dimen/screen_padding"
         android:divider="@color/divider"
         android:id="@+id/common_spinner_fragment_lv"
         android:layout_width="match_parent"

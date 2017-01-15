@@ -3,6 +3,7 @@ package com.android.bookmybook.util;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -19,6 +20,8 @@ import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.bookmybook.R;
 import com.android.bookmybook.fragment.NoInternetFragment;
@@ -31,6 +34,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -243,5 +250,58 @@ public class Utility extends Activity{
         }
 
         return null;
+    }
+
+    public static ProgressDialog getProgressDiealog(Context context, String messageStr){
+        ProgressDialog progress = new ProgressDialog(context);
+        progress.setMessage(messageStr);
+        progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progress.setIndeterminate(true);
+        progress.setCancelable(false);
+        return progress;
+    }
+
+    public static String fetchTextFromView(View view){
+        if(view == null){
+            return "";
+        }
+
+        if(view instanceof EditText){
+            return ((EditText) view).getText().toString();
+        }
+        else if(view instanceof TextView){
+            return String.valueOf(((TextView) view).getText());
+        }
+
+        return "";
+    }
+
+    public static File bitmapToFile(Bitmap bitmap){
+        File file = null;
+        if (bitmap != null) {
+            file = new File("/");
+            try {
+                FileOutputStream outputStream = null;
+                try {
+                    outputStream = new FileOutputStream("/"); //here is set your file path where you want to save or also here you can set file object directly
+
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream); // bitmap is your Bitmap instance, if you want to compress it you can compress reduce percentage
+                    // PNG is a lossless format, the compression factor (100) is ignored
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (outputStream != null) {
+                            outputStream.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return file;
     }
 }

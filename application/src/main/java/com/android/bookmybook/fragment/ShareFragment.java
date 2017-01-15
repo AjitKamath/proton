@@ -10,9 +10,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -28,13 +30,19 @@ import com.android.bookmybook.R;
 import com.android.bookmybook.adapter.ViewPagerAdapterShareBook;
 import com.android.bookmybook.component.ViewPagerCustom;
 import com.android.bookmybook.model.Book;
+import com.android.bookmybook.model.Category;
 import com.android.bookmybook.model.Master;
+import com.android.bookmybook.model.Tenure;
 import com.android.bookmybook.model.User;
+import com.android.bookmybook.util.AsyncTaskUtility;
 import com.android.bookmybook.util.Utility;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,14 +55,21 @@ import butterknife.OnClick;
 import static android.app.Activity.RESULT_OK;
 import static com.android.bookmybook.util.Constants.BOOK;
 import static com.android.bookmybook.util.Constants.CAMERA_CHOICE;
-import static com.android.bookmybook.util.Constants.CHECK_MASTER_FOR_ALL;
+import static com.android.bookmybook.util.Constants.CATEGORY;
+import static com.android.bookmybook.util.Constants.DURATION_TYPE;
+import static com.android.bookmybook.util.Constants.FRAGMENT_COMMON_SPINNER;
 import static com.android.bookmybook.util.Constants.FRAGMENT_PICK_IMAGE;
 import static com.android.bookmybook.util.Constants.FRAGMENT_SHARE_BOOK;
 import static com.android.bookmybook.util.Constants.GALLERY_CHOICE;
+import static com.android.bookmybook.util.Constants.LIST_DATA;
 import static com.android.bookmybook.util.Constants.LOGGED_IN_USER;
 import static com.android.bookmybook.util.Constants.MASTER;
+import static com.android.bookmybook.util.Constants.MAX_DURATION;
+import static com.android.bookmybook.util.Constants.MIN_DURATION;
+import static com.android.bookmybook.util.Constants.OK;
 import static com.android.bookmybook.util.Constants.REQUEST_GALLERY_PHOTO;
 import static com.android.bookmybook.util.Constants.REQUEST_TAKE_PHOTO;
+import static com.android.bookmybook.util.Constants.SELECTED_ITEM;
 import static com.android.bookmybook.util.Constants.UI_FONT;
 
 
@@ -66,6 +81,9 @@ public class ShareFragment extends DialogFragment {
     private Context mContext;
 
     /*components*/
+    @InjectView(R.id.share_ll)
+    LinearLayout share_ll;
+
     @InjectView(R.id.common_fragment_header_back_tv)
     TextView common_fragment_header_back_tv;
 
@@ -100,7 +118,6 @@ public class ShareFragment extends DialogFragment {
 
         getDataFromBundle();
 
-        initComps();
         setupPage();
 
         return view;
@@ -191,6 +208,21 @@ public class ShareFragment extends DialogFragment {
                 InputStream inputStream = mContext.getContentResolver().openInputStream(data.getData());
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                 setBookCover(bitmap);
+
+                File photoFile = createImageFile();
+
+                OutputStream outputStream =  new FileOutputStream(photoFile);
+
+                int read = 0;
+                byte[] bytes = new byte[1024];
+
+                InputStream is = mContext.getContentResolver().openInputStream(data.getData());
+
+                while ((read = is.read(bytes)) != -1) {
+                    outputStream.write(bytes, 0, read);
+                }
+
+                imagePathStr = photoFile.getAbsolutePath();
             }
             catch (Exception e){
                 Log.e(CLASS_NAME, "Error while getting the image from the user choice");
@@ -201,9 +233,9 @@ public class ShareFragment extends DialogFragment {
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
+        String imageFileName = timeStamp + "_";
         File storageDir = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(imageFileName,  ".jpg", storageDir);
+        File image = File.createTempFile(imageFileName,  "", storageDir);
 
         // Save a file: path for use with ACTION_VIEW intents
         imagePathStr = image.getAbsolutePath();
@@ -233,10 +265,86 @@ public class ShareFragment extends DialogFragment {
         }
     }
 
+    public void setupCategory(Category category){
+        ((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).setupCategory(category);
+    }
+
+    public void setupMinDuration(Tenure tenure){
+        ((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).setupMinDuration(tenure);
+    }
+
+    public void setupMaxDuration(Tenure tenure){
+        ((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).setupMaxDuration(tenure);
+    }
+
     @OnClick({R.id.common_fragment_header_next_tv,R.id.common_fragment_header_back_tv})
     public void onBackNext(View view){
+        //validations
+        if(R.id.common_fragment_header_next_tv == view.getId()){
+            if(share_book_vp.getCurrentItem() == 0){
+                String bookTitleStr = Utility.fetchTextFromView(((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).getShare_title_et());
+                String bookAuthorStr = Utility.fetchTextFromView(((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).getShare_author_et());
+
+                if(bookTitleStr == null || bookTitleStr.trim().isEmpty()){
+                    Utility.showSnacks(share_ll, "BOOK TITLE IS EMPTY", OK, Snackbar.LENGTH_LONG);
+                    return;
+                }
+                else if(bookAuthorStr == null || bookAuthorStr.trim().isEmpty()){
+                    Utility.showSnacks(share_ll, "AUTHOR OF THE BOOK IS EMPTY", OK, Snackbar.LENGTH_LONG);
+                    return;
+                }
+
+                book.setTITLE(bookTitleStr);
+                book.setAUTHOR(bookAuthorStr);
+            }
+            else if(share_book_vp.getCurrentItem() == 1){
+                String bookCategoryIdStr = ((Category)((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).getCommon_spinner_ll_category().getTag()).getCTGRY_ID();
+                String bookPublisherStr = Utility.fetchTextFromView(((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).getShare_publisher_et());
+                String bookDescStr = Utility.fetchTextFromView(((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).getShare_description_et());
+
+                book.setCTGRY_ID(bookCategoryIdStr);
+                book.setPUBLICATION(bookPublisherStr);
+                book.setDESCRIPTION(bookDescStr);
+            }
+        }
+
         if("DONE".equalsIgnoreCase(String.valueOf(((TextView)view).getText()))){
-            //TODO: POST THE BOOK
+            if(share_book_vp.getCurrentItem() == 2){
+                String bookRentStr = Utility.fetchTextFromView(((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).getCommon_amount_et());
+                String bookMinDurationIdStr = ((Tenure)((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).getCommon_spinner_ll_min_duration().getTag()).getTENURE_ID();
+                String bookMaxDurationIdStr = ((Tenure)((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).getCommon_spinner_ll_max_duration().getTag()).getTENURE_ID();
+
+                //validation
+                Integer rent = 0;
+                try{
+                    rent = Integer.parseInt(bookRentStr);
+                }
+                catch (Exception e){
+                    Log.e(CLASS_NAME, "Could not parse("+bookRentStr+") into Integer type");
+                    Utility.showSnacks(share_ll, "INVALID RENT AMOUNT", OK, Snackbar.LENGTH_LONG);
+                    return;
+                }
+
+                if(rent == 0){
+                    Utility.showSnacks(share_ll, "RENT AMOUNT CANNOT BE ZERO", OK, Snackbar.LENGTH_LONG);
+                    return;
+                }
+
+                //validate image
+                if(!common_pick_book_iv.isShown()){
+                    Utility.showSnacks(share_ll, "BOOK COVER NOT FOUND", OK, Snackbar.LENGTH_LONG);
+                    return;
+                }
+
+                book.setRENT(rent);
+                book.setMIN_DURATION(bookMinDurationIdStr);
+                book.setMAX_DURATION(bookMaxDurationIdStr);
+                book.setImagePath(imagePathStr);
+
+                new BookUploadTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+                //TODO:POST THE BOOK HERE
+            }
         }
         else if(R.id.common_fragment_header_next_tv == view.getId()){
             share_book_vp.setCurrentItem(share_book_vp.getCurrentItem()+1);
@@ -252,7 +360,7 @@ public class ShareFragment extends DialogFragment {
         viewPagerTabsList.add(R.layout.view_pager_share_book_2);
         viewPagerTabsList.add(R.layout.view_pager_share_book_3);
 
-        ViewPagerAdapterShareBook viewPagerAdapter = new ViewPagerAdapterShareBook(mContext, viewPagerTabsList, master);
+        final ViewPagerAdapterShareBook viewPagerAdapter = new ViewPagerAdapterShareBook(getActivity(), mContext, viewPagerTabsList, master);
 
         int activePageIndex = 0;
         if(share_book_vp != null && share_book_vp.getAdapter() != null){
@@ -285,6 +393,33 @@ public class ShareFragment extends DialogFragment {
                     common_fragment_header_next_tv.setVisibility(View.VISIBLE);
                     common_fragment_header_next_tv.setText("NEXT");
                 }
+
+                //listeners
+                if(position == 1){
+                    viewPagerAdapter.getCommon_spinner_ll_category().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            showSpinner(view, CATEGORY);
+                        }
+                    });
+                }
+                else if(position == 2){
+                    //min duration
+                    viewPagerAdapter.getCommon_spinner_ll_min_duration().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            showSpinner(view, MIN_DURATION);
+                        }
+                    });
+
+                    //max duration
+                    viewPagerAdapter.getCommon_spinner_ll_max_duration().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            showSpinner(view, MAX_DURATION);
+                        }
+                    });
+                }
             }
 
             @Override
@@ -294,22 +429,32 @@ public class ShareFragment extends DialogFragment {
         });
     }
 
-    private void closeFragment(String messageStr){
-        dismiss();
-    }
+    private void showSpinner(View view, String whichSpinnerStr){
+        FragmentManager manager = getActivity().getFragmentManager();
+        Fragment frag = manager.findFragmentByTag(FRAGMENT_COMMON_SPINNER);
+        if (frag != null) {
+            manager.beginTransaction().remove(frag).commit();
+        }
 
-    private void getMasterData() {
-        /*categoriesList = calendarDbService.getAllCategories(loggedInUserObj.getUSER_ID());
-        accountList = calendarDbService.getAllAccounts(loggedInUserObj.getUSER_ID());
-        spentOnList = calendarDbService.getAllSpentOns(loggedInUserObj.getUSER_ID());
+        Bundle bundle = new Bundle();
 
-        repeatsList = calendarDbService.getAllRepeats();*/
-    }
+        if(CATEGORY.equalsIgnoreCase(whichSpinnerStr)){
+            bundle.putSerializable(LIST_DATA, (Serializable) master.getCategoriesList());
+            bundle.putSerializable(SELECTED_ITEM, ((Category)view.getTag()).getCTGRY_ID());
+        }
+        else if((MIN_DURATION+MAX_DURATION).contains(whichSpinnerStr)){
+            bundle.putSerializable(LIST_DATA, (Serializable) master.getTenuresList());
+            bundle.putSerializable(SELECTED_ITEM, ((Tenure)view.getTag()).getTENURE_ID());
+            bundle.putSerializable(DURATION_TYPE, whichSpinnerStr);
+        }
 
-    private void initComps(){
+        Fragment currentFrag = manager.findFragmentByTag(FRAGMENT_SHARE_BOOK);
 
-
-       /* setFont(addUpdateTransactionRL);*/
+        CommonSpinnerFragment fragment = new CommonSpinnerFragment();
+        fragment.setArguments(bundle);
+        fragment.setTargetFragment(currentFrag, 0);
+        fragment.setStyle(android.support.v4.app.DialogFragment.STYLE_NORMAL, R.style.fragment_theme);
+        fragment.show(manager, FRAGMENT_COMMON_SPINNER);
     }
 
     // Empty constructor required for DialogFragment
@@ -329,22 +474,20 @@ public class ShareFragment extends DialogFragment {
             int width = ViewGroup.LayoutParams.MATCH_PARENT;
             int height = ViewGroup.LayoutParams.WRAP_CONTENT;
             d.getWindow().setLayout(width, height);
-
+            d.setCancelable(false);
         }
     }
 
-    public interface DialogResultListener {
-        void onFinishUserDialog(String str);
-    }
-
     public void onFinishDialog(Integer choice) {
-        if(GALLERY_CHOICE == choice){
+        if(choice == null){
+            return;
+        }
+        else if(GALLERY_CHOICE == choice){
             showPickImageFromGallery();
         }
         else if(CAMERA_CHOICE == choice){
             showPickImageFromCamera();
         }
-
     }
 
     //method iterates over each component in the activity and when it finds a text view..sets its font
@@ -363,6 +506,18 @@ public class ShareFragment extends DialogFragment {
             else if(v instanceof ViewGroup) {
                 setFont((ViewGroup) v);
             }
+        }
+    }
+
+    private class BookUploadTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            return AsyncTaskUtility.shareBook(book);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.i(CLASS_NAME, result);
         }
     }
 }

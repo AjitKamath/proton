@@ -58,10 +58,10 @@ public class AsyncTaskManager extends AsyncTask<String, Void, Object> {
 
     @Override
     protected void onPostExecute(Object result) {
-        if(result == null){
+        /*if(result == null){
             Log.i(CLASS_NAME, PURPOSE+" returned null");
             return;
-        }
+        }*/
 
         if(PURPOSE.equalsIgnoreCase(ASYNC_TASK_GET_BOOKS_ALL)){
             if(activity != null){

@@ -66,7 +66,16 @@
 3. fetch categories and tenure from the server.
 4. set server data(categories and tenure) into the dropdown in share book fragment.
 
+-------------------GIT PUSH ON 12-jan-17--------------------------
 
+14-jan-2017
+1. custom common spinner for category, minimum duration and maximum duration.
+2. created the branch 'ajit'
+3. adjusting min. and max. dustation spinners according to the user selection.
+
+-------------------GIT PUSH ON 15-jan-17--------------------------
+
+15-jan-2017
 
 
 

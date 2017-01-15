@@ -1,11 +1,13 @@
 package com.android.bookmybook.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,13 +17,10 @@ import com.android.bookmybook.model.Master;
 import com.android.bookmybook.model.Tenure;
 import com.android.bookmybook.util.Utility;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-
+import static com.android.bookmybook.util.Constants.MAX_DURATION;
+import static com.android.bookmybook.util.Constants.MIN_DURATION;
 import static com.android.bookmybook.util.Constants.UI_FONT;
 
 /**
@@ -29,20 +28,30 @@ import static com.android.bookmybook.util.Constants.UI_FONT;
  */
 public class ViewPagerAdapterShareBook extends PagerAdapter {
     private final String CLASS_NAME = this.getClass().getName();
-    private Context mContext;
 
     /*components*/
+    //page 1
+    private EditText share_title_et;
+    private EditText share_author_et;
+
+    //page 2
     private LinearLayout common_spinner_ll_category;
+    private EditText share_publisher_et;
+    private EditText share_description_et;
+
+    //page 3
+    private EditText common_amount_et;
     private LinearLayout common_spinner_ll_min_duration;
     private LinearLayout common_spinner_ll_max_duration;
     /*components*/
 
+    private Context mContext;
     private List<Integer> layoutsList;
     private Master master;
     public int activePageIndex = 0;
 
 
-    public ViewPagerAdapterShareBook(Context context, List<Integer> layoutsList, Master master) {
+    public ViewPagerAdapterShareBook(Activity activity, Context context, List<Integer> layoutsList, Master master) {
         this.mContext = context;
         this.layoutsList = layoutsList;
         this.master = master;
@@ -65,12 +74,12 @@ public class ViewPagerAdapterShareBook extends PagerAdapter {
 
         collection.addView(layout);
 
-        //ButterKnife.bind(this, layout);
-
         return layout;
     }
 
     private void setupShareBook1(ViewGroup layout) {
+        share_title_et = (EditText) layout.findViewById(R.id.share_title_et);
+        share_author_et = (EditText) layout.findViewById(R.id.share_author_et);
     }
 
     private void setupShareBook2(ViewGroup layout) {
@@ -78,6 +87,8 @@ public class ViewPagerAdapterShareBook extends PagerAdapter {
         common_spinner_ll_category = (LinearLayout) layout.findViewById(R.id.common_spinner_category);
         setupCategory((Category) Utility.fetchDefault(master.getCategoriesList()));
 
+        share_publisher_et = (EditText) layout.findViewById(R.id.share_publisher_et);
+        share_description_et = (EditText) layout.findViewById(R.id.share_description_et);
     }
 
     private void setupShareBook3(ViewGroup layout) {
@@ -88,6 +99,8 @@ public class ViewPagerAdapterShareBook extends PagerAdapter {
         //set up max duration
         common_spinner_ll_max_duration = (LinearLayout) layout.findViewById(R.id.common_spinner_max_duration);
         setupMaxDuration(((Tenure)Utility.fetchDefault(master.getTenuresList())));
+
+        common_amount_et = (EditText) layout.findViewById(R.id.common_amount_et);
     }
 
     public void setupCategory(Category category){
@@ -98,11 +111,43 @@ public class ViewPagerAdapterShareBook extends PagerAdapter {
     public void setupMinDuration(Tenure tenure){
         common_spinner_ll_min_duration.setTag(tenure);
         ((TextView)common_spinner_ll_min_duration.findViewById(R.id.common_spinner_tv)).setText(tenure.getTENURE_NAME());
+
+        adjustMinMaxTenure(MAX_DURATION);
     }
 
     public void setupMaxDuration(Tenure tenure){
         common_spinner_ll_max_duration.setTag(tenure);
         ((TextView)common_spinner_ll_max_duration.findViewById(R.id.common_spinner_tv)).setText(tenure.getTENURE_NAME());
+
+        adjustMinMaxTenure(MIN_DURATION);
+    }
+
+    private void adjustMinMaxTenure(String whichToAdjustStr){
+        if(common_spinner_ll_min_duration == null || common_spinner_ll_min_duration.getTag() == null || common_spinner_ll_max_duration == null || common_spinner_ll_max_duration.getTag() == null){
+            return;
+        }
+
+        Tenure minTenure = (Tenure) common_spinner_ll_min_duration.getTag();
+        Tenure maxTenure = (Tenure) common_spinner_ll_max_duration.getTag();
+
+        if(minTenure.getNO_OF_DAYS() > maxTenure.getNO_OF_DAYS()){
+            if(MIN_DURATION.equalsIgnoreCase(whichToAdjustStr)){
+                for(Tenure iterList : master.getTenuresList()){
+                    if(iterList.getNO_OF_DAYS() == maxTenure.getNO_OF_DAYS()){
+                        setupMinDuration(iterList);
+                        break;
+                    }
+                }
+            }
+            else if(MAX_DURATION.equalsIgnoreCase(whichToAdjustStr)){
+                for(Tenure iterList : master.getTenuresList()){
+                    if(iterList.getNO_OF_DAYS() == minTenure.getNO_OF_DAYS()){
+                        setupMaxDuration(iterList);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     @Override
@@ -123,6 +168,38 @@ public class ViewPagerAdapterShareBook extends PagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return mContext.getString(layoutsList.get(position));
+    }
+
+    public LinearLayout getCommon_spinner_ll_category() {
+        return common_spinner_ll_category;
+    }
+
+    public LinearLayout getCommon_spinner_ll_min_duration() {
+        return common_spinner_ll_min_duration;
+    }
+
+    public LinearLayout getCommon_spinner_ll_max_duration() {
+        return common_spinner_ll_max_duration;
+    }
+
+    public EditText getShare_title_et() {
+        return share_title_et;
+    }
+
+    public EditText getShare_author_et() {
+        return share_author_et;
+    }
+
+    public EditText getShare_publisher_et() {
+        return share_publisher_et;
+    }
+
+    public EditText getShare_description_et() {
+        return share_description_et;
+    }
+
+    public EditText getCommon_amount_et() {
+        return common_amount_et;
     }
 
     //method iterates over each component in the activity and when it finds a text view..sets its font

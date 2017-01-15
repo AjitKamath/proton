@@ -1,32 +1,26 @@
 package com.android.bookmybook.util;
 
 import android.app.Activity;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.android.bookmybook.model.Book;
 import com.android.bookmybook.model.BooksList;
 import com.android.bookmybook.model.Category;
 import com.android.bookmybook.model.Tenure;
 
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.File;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.android.bookmybook.R.id.mobile;
-import static com.android.bookmybook.util.Constants.OK;
 import static com.android.bookmybook.util.Constants.PHP_FETCH_ALL_CATEGORIES;
 import static com.android.bookmybook.util.Constants.PHP_FETCH_ALL_TENURES;
+import static com.android.bookmybook.util.Constants.PHP_POST_BOOK;
 import static com.android.bookmybook.util.Constants.SERVER_ADDRESS;
 import static com.android.bookmybook.util.Constants.SERVER_CHARSET;
-import static com.android.bookmybook.util.Constants.SERVER_PROJECT_DIRECTORY;
 import static com.android.bookmybook.util.Constants.SLASH;
 
 public class AsyncTaskUtility extends Activity{
@@ -96,31 +90,33 @@ public class AsyncTaskUtility extends Activity{
         return uploadFail;
     }
 
-    public static boolean test(){
-        File file = new File("/storage/emulated/0/DCIM/Flipkart/IMG_1419894120735.jpeg");
-        boolean uploadFail = false;
+    public static String shareBook(Book book){
         try {
-            MultipartUtility multipart = new MultipartUtility(SERVER_ADDRESS+"imupload.php", SERVER_CHARSET);
+            File file = new File(book.getImagePath());
 
+            MultipartUtility multipart = new MultipartUtility(SERVER_ADDRESS+SLASH+PHP_POST_BOOK, SERVER_CHARSET);
             multipart.addFilePart("image", file);
-            multipart.addFormField("book_id", "7");
-            multipart.addFormField("title", "SHERLOCK HOMES");
-            multipart.addFormField("category_id", "1");
-            multipart.addFormField("author", "DANNY BOYLE");
-            multipart.addFormField("publication", "DEEPA PUBLICATIONS");
-            multipart.addFormField("description", "WORST BOOK EVER");
-            multipart.addFormField("user_id", "Ajit");
-            multipart.addFormField("rent", "200");
-            multipart.addFormField("min_duration", "1");
-            multipart.addFormField("max_duration", "1");
+            multipart.addFormField("title", book.getTITLE());
+            multipart.addFormField("category_id", book.getCTGRY_ID());
+            multipart.addFormField("author", book.getAUTHOR());
+            multipart.addFormField("publication", book.getPUBLICATION());
+            multipart.addFormField("description", book.getDESCRIPTION());
+            multipart.addFormField("user_id", "8");  //TODO: Hard code
+            multipart.addFormField("rent", String.valueOf(book.getRENT()));
+            multipart.addFormField("min_duration", book.getMIN_DURATION());
+            multipart.addFormField("max_duration", book.getMAX_DURATION());
 
-            String response = multipart.finish(); // response from server.
+            return multipart.finish(); // response from server.
+        }
+        catch(EOFException e){
+            Log.e(CLASS_NAME, e.getMessage()+" .. retrying");
+            shareBook(book);
         }
         catch(Exception e){
             Log.e(CLASS_NAME, e.getMessage());
         }
 
-        return uploadFail;
+        return "";
     }
 
     public static List<BooksList> fetchAllBooks(){
@@ -156,25 +152,25 @@ public class AsyncTaskUtility extends Activity{
             book = new Book();
             book.setTITLE("MELUHA");
             book.setAUTHOR("AMISH");
-            book.setRENT(45.0);
+            book.setRENT(45);
             booksList.add(book);
 
             book = new Book();
             book.setTITLE("THREE MISTAKES OF MY LIFE");
             book.setAUTHOR("CHETAN BHAGAT");
-            book.setRENT(25.0);
+            book.setRENT(25);
             booksList.add(book);
 
             book = new Book();
             book.setTITLE("BRIEF HISTORY OF TIME");
             book.setAUTHOR("STEPHEN HAWKINGS");
-            book.setRENT(80.0);
+            book.setRENT(80);
             booksList.add(book);
 
             book = new Book();
             book.setTITLE("ALICE IN WONDERLAND");
             book.setAUTHOR("LEWIS CARL");
-            book.setRENT(12.0);
+            book.setRENT(12);
             booksList.add(book);
             categoryBooksList.setBooksList(booksList);
             categorizedBooksList.add(categoryBooksList);
@@ -188,25 +184,25 @@ public class AsyncTaskUtility extends Activity{
             book = new Book();
             book.setTITLE("ARE YOU AFRAID OF THE DARK");
             book.setAUTHOR("SYDNEY SHELDON");
-            book.setRENT(120.0);
+            book.setRENT(120);
             booksList.add(book);
 
             book = new Book();
             book.setTITLE("SYMBOLS");
             book.setAUTHOR("DAN BROWN");
-            book.setRENT(25.0);
+            book.setRENT(25);
             booksList.add(book);
 
             book = new Book();
             book.setTITLE("KITE RUNNER");
             book.setAUTHOR("PAULO COELHO");
-            book.setRENT(75.0);
+            book.setRENT(75);
             booksList.add(book);
 
             book = new Book();
             book.setTITLE("ANGELS & DEMONS");
             book.setAUTHOR("DAN BROWN");
-            book.setRENT(200.0);
+            book.setRENT(200);
             booksList.add(book);
 
             categoryBooksList.setBooksList(booksList);

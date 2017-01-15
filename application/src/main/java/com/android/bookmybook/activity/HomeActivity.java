@@ -2,6 +2,7 @@ package com.android.bookmybook.activity;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -78,6 +79,8 @@ public class HomeActivity extends CommonActivity implements View.OnClickListener
     LinearLayout fab_share_ll;
     /*components*/
 
+    private ProgressDialog progress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,19 +138,11 @@ public class HomeActivity extends CommonActivity implements View.OnClickListener
     }
 
     private void showShareFragment(Book book) {
-        //check for internet
-        if(!Utility.isNetworkAvailable(this)){
-            FragmentManager fragMan = getFragmentManager();
-            Utility.showNoInternetFragment(fragMan);
-            return;
-        }else{
-            fetchMasterData();
-        }
-
         //check for master data
         if(!Utility.hasMasterData(master, CHECK_MASTER_FOR_ALL)){
             FragmentManager manager = getFragmentManager();
             Utility.showNoInternetFragment(manager);
+            fetchMasterData();
             return;
         }
 
@@ -209,9 +204,15 @@ public class HomeActivity extends CommonActivity implements View.OnClickListener
             return;
         }
 
+        //show progress dialog untill page loads
+        progress = Utility.getProgressDiealog(mContext, "loading books ..");
+        showProgress(progress);
+
         //fetch books
         new AsyncTaskManager(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, ASYNC_TASK_GET_BOOKS_ALL);
     }
+
+
 
     public void setupBooks(List<BooksList> booksList) {
         if(booksList == null || (booksList != null && booksList.isEmpty())){
@@ -220,6 +221,8 @@ public class HomeActivity extends CommonActivity implements View.OnClickListener
 
         ListViewAdapterCategorizedBooks adapter = new ListViewAdapterCategorizedBooks(mContext, booksList);
         categorizedBooksLV.setAdapter(adapter);
+
+        closeProgress(progress);
     }
 
     @Override

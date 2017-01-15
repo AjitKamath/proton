@@ -145,7 +145,7 @@ public class BooksActivity extends AppCompatActivity implements NavigationView.O
     private class BookTask extends AsyncTask<String, Void, List<BooksList>> {
         @Override
         protected List<BooksList> doInBackground(String... urls) {
-             AsyncTaskUtility.test();
+             //AsyncTaskUtility.test();
 
             return null;
         }

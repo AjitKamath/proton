@@ -1,5 +1,6 @@
 package com.android.bookmybook.util;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import java.io.BufferedReader;

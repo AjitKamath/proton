@@ -4,43 +4,48 @@
     android:layout_width="match_parent"
     android:layout_height="45dp"
     android:layout_gravity="center"
-    android:gravity="left"
     android:background="@color/appPrimaryDark"
+    android:gravity="left"
     android:orientation="vertical"
     app:theme="@style/AppTheme">
 
     <TextView
-        android:padding="@dimen/screen_padding"
-        android:layout_centerVertical="true"
+        android:id="@+id/common_fragment_header_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/screen_padding"
+        android:text="SHARE A BOOK"
         android:textColor="@color/white"
-        android:textSize="15sp"
-        android:text="SHARE A BOOK"/>
+        android:textSize="15sp" />
 
-    <TextView
-        android:id="@+id/common_fragment_header_back_tv"
+    <LinearLayout
+        android:id="@+id/common_fragment_header_navigation_ll"
         android:layout_marginRight="5dp"
-        android:layout_toLeftOf="@+id/common_fragment_header_next_tv"
-        android:padding="@dimen/screen_padding"
-        android:layout_centerVertical="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        android:visibility="gone"
-        android:text="BACK"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="right|center_vertical"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/common_fragment_header_next_tv"
-        android:layout_marginRight="5dp"
-        android:layout_alignParentRight="true"
-        android:padding="@dimen/screen_padding"
-        android:layout_centerVertical="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        android:text="NEXT"/>
+        <TextView
+            android:id="@+id/common_fragment_header_back_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/screen_padding"
+            android:text="BACK"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:visibility="visible" />
 
+        <TextView
+            android:id="@+id/common_fragment_header_next_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:padding="@dimen/screen_padding"
+            android:text="NEXT"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+    </LinearLayout>
 </RelativeLayout>

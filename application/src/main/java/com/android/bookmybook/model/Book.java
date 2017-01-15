@@ -2,17 +2,30 @@ package com.android.bookmybook.model;
 
 import android.graphics.Bitmap;
 
+import com.android.bookmybook.util.Rent;
+
 import java.io.Serializable;
 
 /**
  * Created by ajit on 3/1/17.
  */
 
-public class Book implements Serializable {
+public class Book extends Rent implements Serializable{
     private String TITLE;
     private String AUTHOR;
-    private Double RENT;
+    private String CTGRY_ID;
+    private String PUBLICATION;
+    private String DESCRIPTION;
     private Bitmap IMAGE;
+    private String imagePath;
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 
     public String getTITLE() {
         return TITLE;
@@ -30,19 +43,35 @@ public class Book implements Serializable {
         this.AUTHOR = AUTHOR;
     }
 
-    public Double getRENT() {
-        return RENT;
-    }
-
-    public void setRENT(Double RENT) {
-        this.RENT = RENT;
-    }
-
     public Bitmap getIMAGE() {
         return IMAGE;
     }
 
     public void setIMAGE(Bitmap IMAGE) {
         this.IMAGE = IMAGE;
+    }
+
+    public String getCTGRY_ID() {
+        return CTGRY_ID;
+    }
+
+    public void setCTGRY_ID(String CTGRY_ID) {
+        this.CTGRY_ID = CTGRY_ID;
+    }
+
+    public String getPUBLICATION() {
+        return PUBLICATION;
+    }
+
+    public void setPUBLICATION(String PUBLICATION) {
+        this.PUBLICATION = PUBLICATION;
+    }
+
+    public String getDESCRIPTION() {
+        return DESCRIPTION;
+    }
+
+    public void setDESCRIPTION(String DESCRIPTION) {
+        this.DESCRIPTION = DESCRIPTION;
     }
 }
