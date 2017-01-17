@@ -12,7 +12,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.android.bookmybook.activity.LoginActivity">
 
-    <!-- Login progress -->
+    <!-- Response progress -->
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"

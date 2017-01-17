@@ -29,6 +29,7 @@ public final class Constants{
     public static final String ASYNC_TASK_GET_TENURES_ALL = "GET_TENURES_ALL";
 
 
+
     //DB
     public static final String DB_NAME = "FINAPPL.db";
     public static final int DB_VERSION = 87;
@@ -44,6 +45,8 @@ public final class Constants{
     public static final String FRAGMENT_SHARE_BOOK = "FRAGMENT_SHARE_BOOK";
     public static final String FRAGMENT_PICK_IMAGE = "FRAGMENT_PICK_IMAGE";
     public static final String FRAGMENT_NO_INTERNET = "FRAGMENT_NO_INTERNET";
+    public static final String FRAGMENT_LOGIN = "FRAGMENT_LOGIN";
+    public static final String FRAGMENT_REGISTRATION = "FRAGMENT_REGISTRATION";
 
     //FRAGMENT OBJECT KEYS
     public static final String LOGGED_IN_USER = "LOGGED_IN_USER";
