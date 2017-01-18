@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.android.bookmybook.R;
 import com.android.bookmybook.fragment.CommonInfoFragment;
 import com.android.bookmybook.fragment.CommonNoInternetFragment;
+import com.android.bookmybook.fragment.LoginFragment;
 import com.android.bookmybook.model.Category;
 import com.android.bookmybook.model.Master;
 import com.android.bookmybook.model.Tenure;
@@ -47,6 +48,7 @@ import static com.android.bookmybook.util.Constants.CHECK_MASTER_FOR_CATEGORIES;
 import static com.android.bookmybook.util.Constants.CHECK_MASTER_FOR_TENURES;
 import static com.android.bookmybook.util.Constants.DISCOUNT_FACTOR;
 import static com.android.bookmybook.util.Constants.FRAGMENT_COMMON_INFO;
+import static com.android.bookmybook.util.Constants.FRAGMENT_LOGIN;
 import static com.android.bookmybook.util.Constants.FRAGMENT_NO_INTERNET;
 import static com.android.bookmybook.util.Constants.INFO_MESSAGE_PRIMARY;
 import static com.android.bookmybook.util.Constants.INFO_MESSAGE_SECONDARY;
@@ -340,6 +342,34 @@ public class Utility extends Activity{
         fragment.setArguments(bundle);
         fragment.setStyle(android.support.v4.app.DialogFragment.STYLE_NORMAL, R.style.fragment_theme);
 
+        fragment.show(manager, fragmentNameStr);
+    }
+
+    public static void showRegistrationFragment(FragmentManager manager){
+        String fragmentNameStr = FRAGMENT_LOGIN;
+
+        Fragment frag = manager.findFragmentByTag(fragmentNameStr);
+
+        if (frag != null) {
+            manager.beginTransaction().remove(frag).commit();
+        }
+
+        LoginFragment fragment = new LoginFragment();
+        fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.fragment_theme);
+        fragment.show(manager, fragmentNameStr);
+    }
+
+    public static void showLoginFragment(FragmentManager manager){
+        String fragmentNameStr = FRAGMENT_LOGIN;
+
+        Fragment frag = manager.findFragmentByTag(fragmentNameStr);
+
+        if (frag != null) {
+            manager.beginTransaction().remove(frag).commit();
+        }
+
+        LoginFragment fragment = new LoginFragment();
+        fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.fragment_theme);
         fragment.show(manager, fragmentNameStr);
     }
 }
