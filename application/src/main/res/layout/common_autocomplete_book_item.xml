@@ -1,0 +1,53 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/common_autocomplete_book_item_ll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/screen_padding">
+
+    <include
+        android:id="@+id/common_pick_book"
+        layout="@layout/common_pick_book"
+        android:layout_width="30dp"
+        android:layout_height="50dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="A BRIEF HISTORY OF TIME"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BY"
+                android:textColor="@color/textLightTertiary"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="STEPHEN HAWKINGS"
+                android:textColor="@color/textLightTertiary"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

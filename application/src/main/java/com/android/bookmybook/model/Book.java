@@ -17,7 +17,11 @@ public class Book extends Rent implements Serializable{
     private String PUBLICATION;
     private String DESCRIPTION;
     private Bitmap IMAGE;
+
     private String imagePath;
+    private Category category;
+    private Tenure minDuration;
+    private Tenure maxDuration;
 
     public String getImagePath() {
         return imagePath;
@@ -73,5 +77,29 @@ public class Book extends Rent implements Serializable{
 
     public void setDESCRIPTION(String DESCRIPTION) {
         this.DESCRIPTION = DESCRIPTION;
+    }
+
+    public Tenure getMinDuration() {
+        return minDuration;
+    }
+
+    public void setMinDuration(Tenure minDuration) {
+        this.minDuration = minDuration;
+    }
+
+    public Tenure getMaxDuration() {
+        return maxDuration;
+    }
+
+    public void setMaxDuration(Tenure maxDuration) {
+        this.maxDuration = maxDuration;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

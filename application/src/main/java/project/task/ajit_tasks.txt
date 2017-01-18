@@ -76,6 +76,20 @@
 -------------------GIT PUSH ON 15-jan-17--------------------------
 
 15-jan-2017
+1. able to share a book.
+2. codeanywhere set up for php development.
+3. codeanywhere static ip set up.
+
+16-jan-2017
+1. share details fragment implemented.
+2. max duration rent calculator with discount factor.
+
+17-jan-2017
+1. share book design change
+2. message screen after the share book is completed.
+3. basic design on condition of a book on share details fragment implemented.
+4. common info fragment ui.
+
 
 
 

@@ -48,7 +48,7 @@ public class TestData {
             }
 
             tenure.setTENURE_ID(String.valueOf(i));
-            tenure.setNO_OF_DAYS(i);
+            tenure.setNO_OF_DAYS(i+1);
             tenure.setTENURE_NAME(baseValueStr+i);
             tenureList.add(tenure);
         }

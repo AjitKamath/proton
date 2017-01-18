@@ -1,0 +1,364 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/share_details_ll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/screen_padding"
+    android:background="@color/white"
+    android:orientation="vertical"
+    app:theme="@style/AppTheme">
+
+    <include
+        android:id="@+id/common_fragment_header"
+        layout="@layout/common_fragment_header" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="@dimen/screen_padding">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <include
+                    android:id="@+id/common_pick_book"
+                    layout="@layout/common_pick_book" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/form_fields_label_text_width"
+                    android:layout_height="wrap_content"
+                    android:text="TITLE"
+                    android:textColor="@color/appPrimaryLight"
+                    android:textSize="@dimen/form_fields_text_size" />
+
+                <TextView
+                    android:id="@+id/fragment_share_title_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="A BRIEF HISTORY OF TIME"
+                    android:textColor="@color/textLightTertiary"
+                    android:textSize="@dimen/form_fields_text_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/form_fields_label_text_width"
+                    android:layout_height="wrap_content"
+                    android:text="AUTHOR"
+                    android:textColor="@color/appPrimaryLight"
+                    android:textSize="@dimen/form_fields_text_size" />
+
+                <TextView
+                    android:id="@+id/fragment_share_author_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="STEPHEN HAWKINGS"
+                    android:textColor="@color/textLightTertiary"
+                    android:textSize="@dimen/form_fields_text_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/form_fields_label_text_width"
+                    android:layout_height="wrap_content"
+                    android:text="CATEGORY"
+                    android:textColor="@color/appPrimaryLight"
+                    android:textSize="@dimen/form_fields_text_size" />
+
+                <TextView
+                    android:id="@+id/fragment_share_category_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ASTRO PHYSICS"
+                    android:textColor="@color/textLightTertiary"
+                    android:textSize="@dimen/form_fields_text_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/form_fields_label_text_width"
+                    android:layout_height="wrap_content"
+                    android:text="PUBLICATION"
+                    android:textColor="@color/appPrimaryLight"
+                    android:textSize="@dimen/form_fields_text_size" />
+
+                <TextView
+                    android:id="@+id/fragment_share_publication_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-NA-"
+                    android:textColor="@color/textLightTertiary"
+                    android:textSize="@dimen/form_fields_text_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/form_fields_label_text_width"
+                    android:layout_height="wrap_content"
+                    android:text="DESCRIPTION"
+                    android:textColor="@color/appPrimaryLight"
+                    android:textSize="@dimen/form_fields_text_size" />
+
+                <TextView
+                    android:id="@+id/fragment_share_description_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="-NA-"
+                    android:textColor="@color/textLightTertiary"
+                    android:textSize="@dimen/form_fields_text_size" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_height"
+                android:layout_marginTop="10dp"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/form_fields_label_text_width"
+                    android:layout_height="wrap_content"
+                    android:text="RENT"
+                    android:textColor="@color/appPrimaryLight"
+                    android:textSize="@dimen/form_fields_text_size" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="2dp"
+                    android:text="@string/rupee"
+                    android:textColor="@color/text_currency"
+                    android:textSize="@dimen/form_fields_text_size" />
+
+                <TextView
+                    android:id="@+id/fragment_share_min_rent_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="230"
+                    android:textColor="@color/textLightTertiary"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:text="/"
+                    android:textColor="@color/textLightTertiary"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/fragment_share_min_rent_duration_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MONTH"
+                    android:textColor="@color/textLightTertiary"
+                    android:textSize="10sp" />
+
+                <LinearLayout
+                    android:id="@+id/fragment_share_max_rent__ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="2dp"
+                        android:text="@string/rupee"
+                        android:textColor="@color/text_currency"
+                        android:textSize="@dimen/form_fields_text_size" />
+
+                    <TextView
+                        android:id="@+id/fragment_share_max_rent_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="925"
+                        android:textColor="@color/textLightTertiary"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
+                        android:text="/"
+                        android:textColor="@color/textLightTertiary"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/fragment_share_max_rent_duration_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="YEAR"
+                        android:textColor="@color/textLightTertiary"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/fragment_share_max_rent_info_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/question"
+                        android:textColor="@color/text_currency"
+                        android:textSize="@dimen/form_fields_text_size" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/form_fields_label_text_width"
+                    android:layout_height="wrap_content"
+                    android:text="MIN. DURATION"
+                    android:textColor="@color/appPrimaryLight"
+                    android:textSize="@dimen/form_fields_text_size" />
+
+                <TextView
+                    android:id="@+id/fragment_share_min_duration_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MONTH"
+                    android:textColor="@color/textLightTertiary"
+                    android:textSize="@dimen/form_fields_text_size" />
+
+                <TextView
+                    android:id="@+id/fragment_share_min_duration_info_tv"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/question"
+                    android:textColor="@color/appPrimaryDark"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="@dimen/form_fields_label_text_width"
+                    android:layout_height="wrap_content"
+                    android:text="MAX. DURATION"
+                    android:textColor="@color/appPrimaryLight"
+                    android:textSize="@dimen/form_fields_text_size" />
+
+                <TextView
+                    android:id="@+id/fragment_share_max_duration_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="YEAR"
+                    android:textColor="@color/textLightTertiary"
+                    android:textSize="@dimen/form_fields_text_size" />
+
+                <TextView
+                    android:id="@+id/fragment_share_max_duration_info_tv"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/question"
+                    android:textColor="@color/appPrimaryDark"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_height"
+                android:layout_marginTop="10dp"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="right|center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ADD BOOK CONDITION"
+                    android:textColor="@color/textLightTertiary"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/fragment_share_condition_info_tv"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/question"
+                    android:textColor="@color/appPrimaryDark"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/horizontal_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -7,11 +7,14 @@ public final class Constants{
     /*server properties*/
     public static final String SLASH = "/";
     public static final String SERVER_PROTOCOL = "http";
-    public static final String SERVER_IP = "192.168.43.250";
+    public static final String SERVER_CODEANYWHERE_IP = "bookmybookphp-ajitkamathk452607.codeanyapp.com";
+    public static final String SERVER_DADDY_IP = "192.168.43.250";
+    public static final String SERVER_IP = SERVER_DADDY_IP;
     public static final String SERVER_PORT = "90";
     public static final String SERVER_PROJECT_DIRECTORY = "bmb";
     public static final String SERVER_ADDRESS = SERVER_PROTOCOL+"://"+SERVER_IP+":"+SERVER_PORT+SLASH+SERVER_PROJECT_DIRECTORY;
     public static final String SERVER_CHARSET = "UTF-8";
+    public static final int SERVER_TIMEOUT = 5000;  //in milliseconds
 
     //PHP
     public static final String PHP_FETCH_ALL_CATEGORIES = "fetch_cat.php";
@@ -29,11 +32,6 @@ public final class Constants{
     public static final String ASYNC_TASK_GET_CATEGORIES_ALL = "GET_CATEGORIES_ALL";
     public static final String ASYNC_TASK_GET_TENURES_ALL = "GET_TENURES_ALL";
 
-
-    //DB
-    public static final String DB_NAME = "FINAPPL.db";
-    public static final int DB_VERSION = 87;
-
     //flag value for affirmative/non affirmative
     public static final String AFFIRMATIVE = "Y";
     public static final String NON_AFFIRMATIVE = "N";
@@ -43,9 +41,11 @@ public final class Constants{
     //Bundle Keys, Shared Prefs, Intent, fragment names
     //FRAGMENT NAMES
     public static final String FRAGMENT_SHARE_BOOK = "FRAGMENT_SHARE_BOOK";
+    public static final String FRAGMENT_SHARE_BOOK_DETAILS = "FRAGMENT_SHARE_BOOK_DETAILS";
     public static final String FRAGMENT_PICK_IMAGE = "FRAGMENT_PICK_IMAGE";
     public static final String FRAGMENT_NO_INTERNET = "FRAGMENT_NO_INTERNET";
     public static final String FRAGMENT_COMMON_SPINNER = "FRAGMENT_COMMON_SPINNER";
+    public static final String FRAGMENT_COMMON_INFO = "FRAGMENT_COMMON_INFO";
 
     //FRAGMENT OBJECT KEYS
     public static final String LOGGED_IN_USER = "LOGGED_IN_USER";
@@ -57,6 +57,9 @@ public final class Constants{
     public static final String MAX_DURATION = "MAX_DURATION";
     public static final String DURATION_TYPE = "DURATION_TYPE";
     public static final String CATEGORY = "CATEGORY";
+    public static final String INFO_MESSAGE_PRIMARY = "INFO_MESSAGE_PRIMARY";
+    public static final String INFO_MESSAGE_SECONDARY = "INFO_MESSAGE_SECONDARY";
+    public static final String HEADER = "HEADER";
 
     //check master keys
     public static final String CHECK_MASTER_FOR_CATEGORIES = "CHECK_MASTER_FOR_CATEGORIES";
@@ -81,4 +84,7 @@ public final class Constants{
 
     public static final int REQUEST_TAKE_PHOTO = 1;
     public static final int REQUEST_GALLERY_PHOTO = 2;
+
+    //Discount factor
+    public static final Double DISCOUNT_FACTOR = 0.15;      //15% discount must be written as 0.15 //TODO: this must be removed as there will be variable discount instead of fixed discount
 }

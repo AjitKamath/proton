@@ -26,4 +26,17 @@
         completions."
     </string>
     <string name="title_activity_login">Sign in</string>
+
+    <!--rupee-->
+    <string name="rupee">₹</string>
+
+    <!--question mark-->
+    <string name="question">[\?]</string>
+
+    <!--share book tips-->
+    <string-array name="share_tips">
+        <item>EXACT TITLE ENSURES THAT A SEEKER FINDS THE RIGHT BOOK</item>
+        <item>A SEEKER MAY FIND THE BOOK BY ITS PUBLISHER</item>
+        <item>RIGHT RENT = RIGHT SEEKERS</item>
+    </string-array>
 </resources>

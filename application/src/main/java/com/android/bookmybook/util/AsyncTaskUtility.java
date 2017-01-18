@@ -21,6 +21,7 @@ import static com.android.bookmybook.util.Constants.PHP_FETCH_ALL_TENURES;
 import static com.android.bookmybook.util.Constants.PHP_POST_BOOK;
 import static com.android.bookmybook.util.Constants.SERVER_ADDRESS;
 import static com.android.bookmybook.util.Constants.SERVER_CHARSET;
+import static com.android.bookmybook.util.Constants.SERVER_TIMEOUT;
 import static com.android.bookmybook.util.Constants.SLASH;
 
 public class AsyncTaskUtility extends Activity{
@@ -37,7 +38,7 @@ public class AsyncTaskUtility extends Activity{
             urlConnection.setRequestMethod("POST");
             urlConnection.setRequestProperty("USER-AGENT", "Mozilla/5.0");
             urlConnection.setRequestProperty("ACCEPT-LANGUAGE", "en-US,en;0.5");
-
+            urlConnection.setConnectTimeout(SERVER_TIMEOUT);
 
             urlConnection.setDoOutput(true);
             DataOutputStream ds = new DataOutputStream(urlConnection.getOutputStream());
@@ -101,7 +102,7 @@ public class AsyncTaskUtility extends Activity{
             multipart.addFormField("author", book.getAUTHOR());
             multipart.addFormField("publication", book.getPUBLICATION());
             multipart.addFormField("description", book.getDESCRIPTION());
-            multipart.addFormField("user_id", "8");  //TODO: Hard code
+            multipart.addFormField("user_id", book.getUSER_ID());
             multipart.addFormField("rent", String.valueOf(book.getRENT()));
             multipart.addFormField("min_duration", book.getMIN_DURATION());
             multipart.addFormField("max_duration", book.getMAX_DURATION());
@@ -110,7 +111,7 @@ public class AsyncTaskUtility extends Activity{
         }
         catch(EOFException e){
             Log.e(CLASS_NAME, e.getMessage()+" .. retrying");
-            shareBook(book);
+            //shareBook(book);
         }
         catch(Exception e){
             Log.e(CLASS_NAME, e.getMessage());

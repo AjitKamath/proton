@@ -2,43 +2,10 @@
     android:layout_width="match_parent"
     android:background="@color/white"
     android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
+    android:gravity="center"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="left">
-
-        <TextView
-            android:layout_marginBottom="@dimen/form_fields_header_text_margin_bottom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/form_fields_header_text_size"
-            android:textColor="@color/text_form_field_header"
-            android:text="BOOK CATEGORY"/>
-
-        <include
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/common_spinner_category"
-            layout="@layout/common_spinner" />
-
-        <TextView
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="CATEGORY PUTS YOUR BOOK APPEAR IN THE RIGHT GENRE"
-            android:textSize="7sp"
-            android:gravity="left"
-            android:textColor="@color/textLightTertiary"/>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -62,19 +29,10 @@
             android:padding="5dp"
             android:textSize="15sp" />
 
-        <TextView
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="BOOK SEEKERS MAY USE PUBLICATION TO FILTER THE BOOKS"
-            android:textSize="7sp"
-            android:gravity="left"
-            android:textColor="@color/textLightTertiary"/>
-
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -97,15 +55,6 @@
             android:inputType="textAutoComplete|textAutoCorrect|textCapCharacters"
             android:padding="5dp"
             android:textSize="15sp" />
-
-        <TextView
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="DESCRIBE YOUR BOOK IN YOUR OWN WORDS"
-            android:textSize="7sp"
-            android:gravity="left"
-            android:textColor="@color/textLightTertiary"/>
 
     </LinearLayout>
 

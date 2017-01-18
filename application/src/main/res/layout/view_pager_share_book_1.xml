@@ -24,7 +24,7 @@
                 android:textColor="@color/text_form_field_header"
                 android:text="BOOK TITLE"/>
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/share_title_et"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/form_fields_height"
@@ -36,16 +36,7 @@
                 android:padding="5dp"
                 android:textSize="15sp" />
 
-            <TextView
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TITLE LETS BOOK SEEKERS FIND THE RIGHT BOOK"
-                android:textSize="7sp"
-                android:gravity="left"
-                android:textColor="@color/textLightTertiary"/>
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_marginTop="30dp"
@@ -72,14 +63,28 @@
                 android:padding="5dp"
                 android:textSize="15sp" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="left">
+
             <TextView
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
+                android:layout_marginBottom="@dimen/form_fields_header_text_margin_bottom"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="BOOK SEEKERS MAY SEEK BOOKS BY THEIR AUTHORS"
-                android:textSize="7sp"
-                android:gravity="left"
-                android:textColor="@color/textLightTertiary"/>
+                android:textSize="@dimen/form_fields_header_text_size"
+                android:textColor="@color/text_form_field_header"
+                android:text="BOOK CATEGORY"/>
+
+            <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/common_spinner_category"
+                layout="@layout/common_spinner" />
 
         </LinearLayout>
 

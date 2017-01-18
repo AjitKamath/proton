@@ -7,12 +7,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
@@ -24,17 +22,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.bookmybook.R;
-import com.android.bookmybook.fragment.NoInternetFragment;
-import com.android.bookmybook.fragment.ShareFragment;
+import com.android.bookmybook.fragment.CommonInfoFragment;
+import com.android.bookmybook.fragment.CommonNoInternetFragment;
 import com.android.bookmybook.model.Category;
 import com.android.bookmybook.model.Master;
 import com.android.bookmybook.model.Tenure;
-import com.android.bookmybook.task.AsyncTaskManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -46,16 +42,16 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 import static com.android.bookmybook.util.Constants.AFFIRMATIVE;
-import static com.android.bookmybook.util.Constants.ASYNC_TASK_GET_CATEGORIES_ALL;
-import static com.android.bookmybook.util.Constants.ASYNC_TASK_GET_TENURES_ALL;
-import static com.android.bookmybook.util.Constants.BOOK;
 import static com.android.bookmybook.util.Constants.CHECK_MASTER_FOR_ALL;
 import static com.android.bookmybook.util.Constants.CHECK_MASTER_FOR_CATEGORIES;
 import static com.android.bookmybook.util.Constants.CHECK_MASTER_FOR_TENURES;
+import static com.android.bookmybook.util.Constants.DISCOUNT_FACTOR;
+import static com.android.bookmybook.util.Constants.FRAGMENT_COMMON_INFO;
 import static com.android.bookmybook.util.Constants.FRAGMENT_NO_INTERNET;
-import static com.android.bookmybook.util.Constants.FRAGMENT_SHARE_BOOK;
-import static com.android.bookmybook.util.Constants.LOGGED_IN_USER;
+import static com.android.bookmybook.util.Constants.INFO_MESSAGE_PRIMARY;
+import static com.android.bookmybook.util.Constants.INFO_MESSAGE_SECONDARY;
 import static com.android.bookmybook.util.Constants.OK;
+import static com.android.bookmybook.util.Constants.SERVER_TIMEOUT;
 
 public class Utility extends Activity{
 
@@ -98,6 +94,7 @@ public class Utility extends Activity{
         urlConnection.setRequestMethod(method);
         urlConnection.setRequestProperty("Content-length", "0");
         urlConnection.setUseCaches(false);
+        urlConnection.setConnectTimeout(SERVER_TIMEOUT);
         urlConnection.setAllowUserInteraction(false);
         urlConnection.connect();
         return urlConnection;
@@ -221,7 +218,7 @@ public class Utility extends Activity{
             manager.beginTransaction().remove(frag).commit();
         }
 
-        NoInternetFragment fragment = new NoInternetFragment();
+        CommonNoInternetFragment fragment = new CommonNoInternetFragment();
         fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.fragment_theme);
         fragment.show(manager, fragmentNameStr);
     }
@@ -252,7 +249,7 @@ public class Utility extends Activity{
         return null;
     }
 
-    public static ProgressDialog getProgressDiealog(Context context, String messageStr){
+    public static ProgressDialog getProgressDialog(Context context, String messageStr){
         ProgressDialog progress = new ProgressDialog(context);
         progress.setMessage(messageStr);
         progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -303,5 +300,46 @@ public class Utility extends Activity{
             }
         }
         return file;
+    }
+
+    public static Integer calculateMaxRent(int minDurationRent, int minDurationInDays, int maxDurationInDays){
+        //minDurationInDays -------> minDurationRent
+        //maxDurationInDays--------> ?
+        Integer maxRent = (maxDurationInDays *minDurationRent)/minDurationInDays;
+
+        //apply DISCOUNT_FACTOR
+        return  ((Double)(maxRent - (maxRent*DISCOUNT_FACTOR))).intValue();
+    }
+
+    public static void showProgress(ProgressDialog progress) {
+        if(progress != null && !progress.isShowing()){
+            progress.show();
+        }
+    }
+
+    public static void closeProgress(ProgressDialog progress){
+        if(progress != null && progress.isShowing()){
+            progress.dismiss();
+        }
+    }
+
+    public static void showInfoFragment(FragmentManager manager, String primaryMessageStr, String secondaryMessageStr){
+        String fragmentNameStr = FRAGMENT_COMMON_INFO;
+        CommonInfoFragment fragment = new CommonInfoFragment();
+
+        Fragment frag = manager.findFragmentByTag(fragmentNameStr);
+
+        if (frag != null) {
+            manager.beginTransaction().remove(frag).commit();
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(INFO_MESSAGE_PRIMARY, primaryMessageStr);
+        bundle.putSerializable(INFO_MESSAGE_SECONDARY, secondaryMessageStr);
+
+        fragment.setArguments(bundle);
+        fragment.setStyle(android.support.v4.app.DialogFragment.STYLE_NORMAL, R.style.fragment_theme);
+
+        fragment.show(manager, fragmentNameStr);
     }
 }
