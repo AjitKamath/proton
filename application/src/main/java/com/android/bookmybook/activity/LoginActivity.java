@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         if (validate_user()) {
             login();
         } else {
-            Toast.makeText(getApplicationContext(), "Login Failed..!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Response Failed..!!", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -122,7 +122,7 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(List<BooksList> result) {
-            Toast.makeText(getApplicationContext(), "Login Successfull..!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Response Successfull..!!", Toast.LENGTH_SHORT).show();
         }
 
     }

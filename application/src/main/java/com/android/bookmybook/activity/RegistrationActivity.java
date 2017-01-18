@@ -151,7 +151,7 @@ public class RegistrationActivity extends AppCompatActivity {
             if (ASYNC_TASK_GET_BOOKS_ALL.equalsIgnoreCase(urls[0])) {
                 return AsyncTaskUtility.fetchAllBooks();
             } else {
-                AsyncTaskUtility.addNewUser(mble, mail, pwd, nm, gnd, cty);
+                AsyncTaskUtility.addNewUser(mble, mail, pwd);
             }
 
             return null;

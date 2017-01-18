@@ -32,6 +32,7 @@ public final class Constants{
     public static final String ASYNC_TASK_GET_CATEGORIES_ALL = "GET_CATEGORIES_ALL";
     public static final String ASYNC_TASK_GET_TENURES_ALL = "GET_TENURES_ALL";
 
+
     //flag value for affirmative/non affirmative
     public static final String AFFIRMATIVE = "Y";
     public static final String NON_AFFIRMATIVE = "N";
@@ -46,6 +47,8 @@ public final class Constants{
     public static final String FRAGMENT_NO_INTERNET = "FRAGMENT_NO_INTERNET";
     public static final String FRAGMENT_COMMON_SPINNER = "FRAGMENT_COMMON_SPINNER";
     public static final String FRAGMENT_COMMON_INFO = "FRAGMENT_COMMON_INFO";
+    public static final String FRAGMENT_LOGIN = "FRAGMENT_LOGIN";
+    public static final String FRAGMENT_REGISTRATION = "FRAGMENT_REGISTRATION";
 
     //FRAGMENT OBJECT KEYS
     public static final String LOGGED_IN_USER = "LOGGED_IN_USER";
@@ -75,6 +78,8 @@ public final class Constants{
     public static final String UN_IDENTIFIED_PARENT_FRAGMENT = "Target Fragment hasn't been set before calling the current fragment";
     public static final String UN_IDENTIFIED_OBJECT_TYPE = "Object Type could not be identified for the object : ";
     public static final String UN_IDENTIFIED_VIEW = "Could not identify the view which has been clicked";
+    public static final String EMAIL_NOT_VERIFIED = "EMAIL NOT VERIFIED";
+    public static final String VERIFICATION_EMAIL_SENT = " VERIFICATION MAIL SENT";
 
     //Snacks
     public static final String VERIFY_EMAIL = "VERIFY";
@@ -86,5 +91,5 @@ public final class Constants{
     public static final int REQUEST_GALLERY_PHOTO = 2;
 
     //Discount factor
-    public static final Double DISCOUNT_FACTOR = 0.15;      //15% discount must be written as 0.15 //TODO: this must be removed as there will be variable discount instead of fixed discount
+    public static final Double DISCOUNT_FACTOR = 0.15;
 }
