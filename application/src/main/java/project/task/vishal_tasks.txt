@@ -45,3 +45,5 @@
 1. imupload.php with transaction.
 2. added CONDITIONS table.
 3. added TENURE.DISCOUNT column.
+
+---------------------------------GIT PUSH ON JAN 18 2017-------------------------
