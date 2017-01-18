@@ -34,3 +34,14 @@
 6. Service for fetch_category and fetch_tenure.
 
 ---------------------------------GIT PUSH ON JAN 12 2017-------------------------
+
+17-jan-2017
+1. Added Response model class
+2. Branch Created to prevent code conflicts.
+
+---------------------------------GIT PUSH ON JAN 17 2017-------------------------
+
+18-jan-2017
+1. imupload.php with transaction.
+2. added CONDITIONS table.
+3. added TENURE.DISCOUNT column.
