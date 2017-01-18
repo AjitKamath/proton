@@ -7,13 +7,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
@@ -24,12 +21,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.bookmybook.R;
+import com.android.bookmybook.fragment.LoginFragment;
 import com.android.bookmybook.fragment.NoInternetFragment;
-import com.android.bookmybook.fragment.ShareFragment;
+import com.android.bookmybook.fragment.RegistrationFragment;
 import com.android.bookmybook.model.Category;
+import com.android.bookmybook.model.Response;
 import com.android.bookmybook.model.Master;
 import com.android.bookmybook.model.Tenure;
-import com.android.bookmybook.task.AsyncTaskManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -46,15 +44,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 import static com.android.bookmybook.util.Constants.AFFIRMATIVE;
-import static com.android.bookmybook.util.Constants.ASYNC_TASK_GET_CATEGORIES_ALL;
-import static com.android.bookmybook.util.Constants.ASYNC_TASK_GET_TENURES_ALL;
-import static com.android.bookmybook.util.Constants.BOOK;
 import static com.android.bookmybook.util.Constants.CHECK_MASTER_FOR_ALL;
 import static com.android.bookmybook.util.Constants.CHECK_MASTER_FOR_CATEGORIES;
 import static com.android.bookmybook.util.Constants.CHECK_MASTER_FOR_TENURES;
+import static com.android.bookmybook.util.Constants.FRAGMENT_LOGIN;
 import static com.android.bookmybook.util.Constants.FRAGMENT_NO_INTERNET;
-import static com.android.bookmybook.util.Constants.FRAGMENT_SHARE_BOOK;
-import static com.android.bookmybook.util.Constants.LOGGED_IN_USER;
+import static com.android.bookmybook.util.Constants.FRAGMENT_REGISTRATION;
 import static com.android.bookmybook.util.Constants.OK;
 
 public class Utility extends Activity{
@@ -143,6 +138,11 @@ public class Utility extends Activity{
                 List<Tenure> list = gson.fromJson(jsonStr, new TypeToken<List<Tenure>>(){}.getType());
                 return list;
             }
+            else  if(mappingClass.equals(Response.class)){
+                Gson gson = new Gson();
+                Response response = gson.fromJson(jsonStr, new TypeToken<Response>(){}.getType());
+                return response;
+            }
             else{
                 Log.e(CLASS_NAME, mappingClass+" is not identified for parsing JSON");
             }
@@ -210,6 +210,34 @@ public class Utility extends Activity{
             Log.e(CLASS_NAME, "Invalid Purpose("+purposeStr+") passed to check master data");
         }
         return false;
+    }
+
+    public static void showRegistrationFragment(FragmentManager manager){
+        String fragmentNameStr = FRAGMENT_REGISTRATION;
+
+        Fragment frag = manager.findFragmentByTag(fragmentNameStr);
+
+        if (frag != null) {
+            manager.beginTransaction().remove(frag).commit();
+        }
+
+        RegistrationFragment fragment = new RegistrationFragment();
+        fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.fragment_theme);
+        fragment.show(manager, fragmentNameStr);
+    }
+
+    public static void showLoginFragment(FragmentManager manager){
+        String fragmentNameStr = FRAGMENT_LOGIN;
+
+        Fragment frag = manager.findFragmentByTag(fragmentNameStr);
+
+        if (frag != null) {
+            manager.beginTransaction().remove(frag).commit();
+        }
+
+        LoginFragment fragment = new LoginFragment();
+        fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.fragment_theme);
+        fragment.show(manager, fragmentNameStr);
     }
 
     public static void showNoInternetFragment(FragmentManager manager){

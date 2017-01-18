@@ -131,9 +131,38 @@ public class HomeActivity extends CommonActivity implements View.OnClickListener
             showFabToolbar(false);
             showShareFragment(null);
         }
+       /* else if(R.id.loginItem == view.getId()){
+            showLoginFragment(null);
+        }*/
         else{
             Log.e(CLASS_NAME, "Could not identify the view");
             Utility.showSnacks(wrapper_home_cl, "Could not identify the view", OK, Snackbar.LENGTH_INDEFINITE);
+        }
+    }
+
+    private void showRegistrationFragment(Book book) {
+        //check for internet
+        if (!Utility.isNetworkAvailable(this)) {
+            FragmentManager fragMan = getFragmentManager();
+            Utility.showNoInternetFragment(fragMan);
+            return;
+        } else {
+            FragmentManager fragMan = getFragmentManager();
+            Utility.showRegistrationFragment(fragMan);
+            return;
+        }
+    }
+
+    private void showLoginFragment(Book book) {
+        //check for internet
+        if (!Utility.isNetworkAvailable(this)) {
+            FragmentManager fragMan = getFragmentManager();
+            Utility.showNoInternetFragment(fragMan);
+            return;
+        } else {
+            FragmentManager fragMan = getFragmentManager();
+            Utility.showLoginFragment(fragMan);
+            return;
         }
     }
 
@@ -271,13 +300,15 @@ public class HomeActivity extends CommonActivity implements View.OnClickListener
 
         if(id == R.id.accountItem)
         {
-            Intent i = new Intent(HomeActivity.this, RegistrationActivity.class);
-            startActivity(i);
+            showRegistrationFragment(null);
+            //Intent i = new Intent(HomeActivity.this, RegistrationActivity.class);
+            //startActivity(i);
         }
-        else if(id == R.id.loginItem)
+       else if(id == R.id.loginItem)
         {
-            Intent i = new Intent(HomeActivity.this, LoginActivity.class);
-            startActivity(i);
+            showLoginFragment(null);
+            //Intent i = new Intent(HomeActivity.this, LoginActivity.class);
+            //startActivity(i);
         }
 
         /*asyncTaskManager.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "REGISTER_USER");*/

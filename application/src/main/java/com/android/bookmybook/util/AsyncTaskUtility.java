@@ -218,7 +218,7 @@ public class AsyncTaskUtility extends Activity{
         return null;
     }
 
-    public static void login_authentication(String email,String password)
+    public static String login_authentication(String email,String password)
     {
         try {
             MultipartUtility multipart = new MultipartUtility(SERVER_ADDRESS+SLASH+"login.php", SERVER_CHARSET);
@@ -228,13 +228,15 @@ public class AsyncTaskUtility extends Activity{
 
             String response = multipart.finish();// response from server.
             System.out.println(response);
+            return response;
         }
         catch(Exception e) {
             Log.e(CLASS_NAME, e.getMessage());
         }
+        return "";
     }
 
-    public static void addNewUser(String mobile,String email,String password,String name,String gender,String city)
+    public static String addNewUser(String mobile,String email,String password)
     {
         try {
             MultipartUtility multipart = new MultipartUtility(SERVER_ADDRESS+SLASH+"register.php", SERVER_CHARSET);
@@ -243,16 +245,15 @@ public class AsyncTaskUtility extends Activity{
             multipart.addFormField("email", email);
             multipart.addFormField("mobile", mobile);
             multipart.addFormField("password", password);
-            multipart.addFormField("name", name);
-            multipart.addFormField("gender", gender);
-            multipart.addFormField("city", city);
 
             String response = multipart.finish();// response from server.
             System.out.println(response);
+            return  response;
         }
         catch(Exception e) {
             Log.e(CLASS_NAME, e.getMessage());
         }
+        return null;
     }
 
     public static Object fetchAllCategories() {
