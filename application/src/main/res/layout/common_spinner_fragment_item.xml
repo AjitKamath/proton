@@ -17,7 +17,7 @@
         android:layout_gravity="center"
         android:id="@+id/common_spinner_fragment_item_tv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:textColor="@color/textLightTertiary"
         android:textSize="18sp"

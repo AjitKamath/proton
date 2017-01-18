@@ -10,27 +10,35 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.bookmybook.R;
 
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import butterknife.OnClick;
 
 import static com.android.bookmybook.util.Constants.CAMERA_CHOICE;
 import static com.android.bookmybook.util.Constants.GALLERY_CHOICE;
+import static com.android.bookmybook.util.Constants.HEADER;
 import static com.android.bookmybook.util.Constants.UI_FONT;
 import static com.android.bookmybook.util.Constants.UN_IDENTIFIED_PARENT_FRAGMENT;
 
 /**
  * Created by ajit on 21/3/16.
  */
-public class ImagePickerFragment extends DialogFragment{
+public class CommonImagePickerFragment extends DialogFragment{
     private final String CLASS_NAME = this.getClass().getName();
     private Context mContext;
 
-    //components
-    //end of components
+    /*components*/
+    @InjectView(R.id.common_fragment_header_navigation_ll)
+    LinearLayout common_fragment_header_navigation_ll;
+
+    @InjectView(R.id.common_fragment_header_tv)
+    TextView common_fragment_header_tv;
+    /*components*/
 
     private Integer choice = null;
 
@@ -42,7 +50,19 @@ public class ImagePickerFragment extends DialogFragment{
         Dialog d = getDialog();
         d.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+        setupPage();
+
         return view;
+    }
+
+    private void setupPage() {
+        if(getArguments() != null){
+            if(getArguments().get(HEADER) != null){
+                common_fragment_header_tv.setText(String.valueOf(getArguments().get(HEADER)));
+            }
+        }
+
+        common_fragment_header_navigation_ll.setVisibility(View.INVISIBLE);
     }
 
     @OnClick({R.id.common_image_picker_gallery_ll, R.id.common_image_picker_camera_ll})
@@ -57,7 +77,7 @@ public class ImagePickerFragment extends DialogFragment{
     }
 
     // Empty constructor required for DialogFragment
-    public ImagePickerFragment() {}
+    public CommonImagePickerFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,8 +104,8 @@ public class ImagePickerFragment extends DialogFragment{
 
         Dialog d = getDialog();
         if (d!=null) {
-            int width = 700;
-            int height = 400;;
+            int width = ViewGroup.LayoutParams.MATCH_PARENT;
+            int height = 500;;
             d.getWindow().setLayout(width, height);
         }
     }

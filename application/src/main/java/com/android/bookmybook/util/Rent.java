@@ -1,5 +1,7 @@
 package com.android.bookmybook.util;
 
+import com.android.bookmybook.model.Tenure;
+
 import java.io.Serializable;
 
 /**

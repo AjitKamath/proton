@@ -17,7 +17,7 @@
         android:padding="@dimen/screen_padding"
         android:text="SHARE A BOOK"
         android:textColor="@color/white"
-        android:textSize="15sp" />
+        android:textSize="14sp" />
 
     <LinearLayout
         android:id="@+id/common_fragment_header_navigation_ll"

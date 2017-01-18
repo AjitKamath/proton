@@ -20,24 +20,15 @@
             android:textSize="@dimen/form_fields_header_text_size" />
 
         <include
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/common_amount"
             layout="@layout/common_amount" />
 
-        <TextView
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="SPECIFY THE RENT PER MIN. RENTAL DURATION"
-            android:textSize="7sp"
-            android:gravity="left"
-            android:textColor="@color/textLightTertiary"/>
-
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
@@ -57,19 +48,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="YOUR BOOK IS RENTED FOR AT LEAST THIS DURATION"
-            android:textSize="7sp"
-            android:gravity="left"
-            android:textColor="@color/textLightTertiary"/>
-
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="left"
@@ -88,16 +70,6 @@
             layout="@layout/common_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-
-
-        <TextView
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="YOUR BOOK IS RENTED FOR AT MOST THIS DURATION"
-            android:textSize="7sp"
-            android:gravity="left"
-            android:textColor="@color/textLightTertiary"/>
 
     </LinearLayout>
 </LinearLayout>

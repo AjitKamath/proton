@@ -11,6 +11,7 @@ import android.media.ThumbnailUtils;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
@@ -21,18 +22,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.android.bookmybook.R;
-import com.android.bookmybook.fragment.LoginFragment;
-import com.android.bookmybook.fragment.NoInternetFragment;
-import com.android.bookmybook.fragment.RegistrationFragment;
+import com.android.bookmybook.fragment.CommonInfoFragment;
+import com.android.bookmybook.fragment.CommonNoInternetFragment;
 import com.android.bookmybook.model.Category;
-import com.android.bookmybook.model.Response;
 import com.android.bookmybook.model.Master;
 import com.android.bookmybook.model.Tenure;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -47,10 +45,13 @@ import static com.android.bookmybook.util.Constants.AFFIRMATIVE;
 import static com.android.bookmybook.util.Constants.CHECK_MASTER_FOR_ALL;
 import static com.android.bookmybook.util.Constants.CHECK_MASTER_FOR_CATEGORIES;
 import static com.android.bookmybook.util.Constants.CHECK_MASTER_FOR_TENURES;
-import static com.android.bookmybook.util.Constants.FRAGMENT_LOGIN;
+import static com.android.bookmybook.util.Constants.DISCOUNT_FACTOR;
+import static com.android.bookmybook.util.Constants.FRAGMENT_COMMON_INFO;
 import static com.android.bookmybook.util.Constants.FRAGMENT_NO_INTERNET;
-import static com.android.bookmybook.util.Constants.FRAGMENT_REGISTRATION;
+import static com.android.bookmybook.util.Constants.INFO_MESSAGE_PRIMARY;
+import static com.android.bookmybook.util.Constants.INFO_MESSAGE_SECONDARY;
 import static com.android.bookmybook.util.Constants.OK;
+import static com.android.bookmybook.util.Constants.SERVER_TIMEOUT;
 
 public class Utility extends Activity{
 
@@ -93,6 +94,7 @@ public class Utility extends Activity{
         urlConnection.setRequestMethod(method);
         urlConnection.setRequestProperty("Content-length", "0");
         urlConnection.setUseCaches(false);
+        urlConnection.setConnectTimeout(SERVER_TIMEOUT);
         urlConnection.setAllowUserInteraction(false);
         urlConnection.connect();
         return urlConnection;
@@ -137,11 +139,6 @@ public class Utility extends Activity{
                 Gson gson = new Gson();
                 List<Tenure> list = gson.fromJson(jsonStr, new TypeToken<List<Tenure>>(){}.getType());
                 return list;
-            }
-            else  if(mappingClass.equals(Response.class)){
-                Gson gson = new Gson();
-                Response response = gson.fromJson(jsonStr, new TypeToken<Response>(){}.getType());
-                return response;
             }
             else{
                 Log.e(CLASS_NAME, mappingClass+" is not identified for parsing JSON");
@@ -212,34 +209,6 @@ public class Utility extends Activity{
         return false;
     }
 
-    public static void showRegistrationFragment(FragmentManager manager){
-        String fragmentNameStr = FRAGMENT_REGISTRATION;
-
-        Fragment frag = manager.findFragmentByTag(fragmentNameStr);
-
-        if (frag != null) {
-            manager.beginTransaction().remove(frag).commit();
-        }
-
-        RegistrationFragment fragment = new RegistrationFragment();
-        fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.fragment_theme);
-        fragment.show(manager, fragmentNameStr);
-    }
-
-    public static void showLoginFragment(FragmentManager manager){
-        String fragmentNameStr = FRAGMENT_LOGIN;
-
-        Fragment frag = manager.findFragmentByTag(fragmentNameStr);
-
-        if (frag != null) {
-            manager.beginTransaction().remove(frag).commit();
-        }
-
-        LoginFragment fragment = new LoginFragment();
-        fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.fragment_theme);
-        fragment.show(manager, fragmentNameStr);
-    }
-
     public static void showNoInternetFragment(FragmentManager manager){
         String fragmentNameStr = FRAGMENT_NO_INTERNET;
 
@@ -249,7 +218,7 @@ public class Utility extends Activity{
             manager.beginTransaction().remove(frag).commit();
         }
 
-        NoInternetFragment fragment = new NoInternetFragment();
+        CommonNoInternetFragment fragment = new CommonNoInternetFragment();
         fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.fragment_theme);
         fragment.show(manager, fragmentNameStr);
     }
@@ -280,7 +249,7 @@ public class Utility extends Activity{
         return null;
     }
 
-    public static ProgressDialog getProgressDiealog(Context context, String messageStr){
+    public static ProgressDialog getProgressDialog(Context context, String messageStr){
         ProgressDialog progress = new ProgressDialog(context);
         progress.setMessage(messageStr);
         progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -331,5 +300,46 @@ public class Utility extends Activity{
             }
         }
         return file;
+    }
+
+    public static Integer calculateMaxRent(int minDurationRent, int minDurationInDays, int maxDurationInDays){
+        //minDurationInDays -------> minDurationRent
+        //maxDurationInDays--------> ?
+        Integer maxRent = (maxDurationInDays *minDurationRent)/minDurationInDays;
+
+        //apply DISCOUNT_FACTOR
+        return  ((Double)(maxRent - (maxRent*DISCOUNT_FACTOR))).intValue();
+    }
+
+    public static void showProgress(ProgressDialog progress) {
+        if(progress != null && !progress.isShowing()){
+            progress.show();
+        }
+    }
+
+    public static void closeProgress(ProgressDialog progress){
+        if(progress != null && progress.isShowing()){
+            progress.dismiss();
+        }
+    }
+
+    public static void showInfoFragment(FragmentManager manager, String primaryMessageStr, String secondaryMessageStr){
+        String fragmentNameStr = FRAGMENT_COMMON_INFO;
+        CommonInfoFragment fragment = new CommonInfoFragment();
+
+        Fragment frag = manager.findFragmentByTag(fragmentNameStr);
+
+        if (frag != null) {
+            manager.beginTransaction().remove(frag).commit();
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(INFO_MESSAGE_PRIMARY, primaryMessageStr);
+        bundle.putSerializable(INFO_MESSAGE_SECONDARY, secondaryMessageStr);
+
+        fragment.setArguments(bundle);
+        fragment.setStyle(android.support.v4.app.DialogFragment.STYLE_NORMAL, R.style.fragment_theme);
+
+        fragment.show(manager, fragmentNameStr);
     }
 }

@@ -28,6 +28,7 @@ import com.android.bookmybook.adapter.ListViewAdapterCategorizedBooks;
 import com.android.bookmybook.fragment.ShareFragment;
 import com.android.bookmybook.model.Book;
 import com.android.bookmybook.model.BooksList;
+import com.android.bookmybook.model.User;
 import com.android.bookmybook.task.AsyncTaskManager;
 import com.android.bookmybook.util.CommonActivity;
 import com.android.bookmybook.util.Utility;
@@ -234,8 +235,8 @@ public class HomeActivity extends CommonActivity implements View.OnClickListener
         }
 
         //show progress dialog untill page loads
-        progress = Utility.getProgressDiealog(mContext, "loading books ..");
-        showProgress(progress);
+        progress = Utility.getProgressDialog(mContext, "loading books ..");
+        Utility.showProgress(progress);
 
         //fetch books
         new AsyncTaskManager(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, ASYNC_TASK_GET_BOOKS_ALL);
@@ -251,7 +252,7 @@ public class HomeActivity extends CommonActivity implements View.OnClickListener
         ListViewAdapterCategorizedBooks adapter = new ListViewAdapterCategorizedBooks(mContext, booksList);
         categorizedBooksLV.setAdapter(adapter);
 
-        closeProgress(progress);
+        Utility.closeProgress(progress);
     }
 
     @Override

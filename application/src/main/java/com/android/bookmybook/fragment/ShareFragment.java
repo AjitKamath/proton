@@ -10,7 +10,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -34,7 +33,6 @@ import com.android.bookmybook.model.Category;
 import com.android.bookmybook.model.Master;
 import com.android.bookmybook.model.Tenure;
 import com.android.bookmybook.model.User;
-import com.android.bookmybook.util.AsyncTaskUtility;
 import com.android.bookmybook.util.Utility;
 
 import java.io.File;
@@ -60,7 +58,9 @@ import static com.android.bookmybook.util.Constants.DURATION_TYPE;
 import static com.android.bookmybook.util.Constants.FRAGMENT_COMMON_SPINNER;
 import static com.android.bookmybook.util.Constants.FRAGMENT_PICK_IMAGE;
 import static com.android.bookmybook.util.Constants.FRAGMENT_SHARE_BOOK;
+import static com.android.bookmybook.util.Constants.FRAGMENT_SHARE_BOOK_DETAILS;
 import static com.android.bookmybook.util.Constants.GALLERY_CHOICE;
+import static com.android.bookmybook.util.Constants.HEADER;
 import static com.android.bookmybook.util.Constants.LIST_DATA;
 import static com.android.bookmybook.util.Constants.LOGGED_IN_USER;
 import static com.android.bookmybook.util.Constants.MASTER;
@@ -98,6 +98,9 @@ public class ShareFragment extends DialogFragment {
 
     @InjectView(R.id.share_book_vp)
     ViewPagerCustom share_book_vp;
+
+    @InjectView(R.id.share_book_tips_tv)
+    TextView share_book_tips_tv;
     /*components*/
 
     /*data from activity/fragment*/
@@ -127,6 +130,9 @@ public class ShareFragment extends DialogFragment {
     public void onBookCoverPick(View view){
         String fragmentNameStr = FRAGMENT_PICK_IMAGE;
         String parentFragmentNameStr = FRAGMENT_SHARE_BOOK;
+        CommonImagePickerFragment fragment = new CommonImagePickerFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(HEADER, "CHOOSE YOUR BOOK COVER");
 
         FragmentManager manager = getFragmentManager();
         Fragment frag = manager.findFragmentByTag(fragmentNameStr);
@@ -140,13 +146,13 @@ public class ShareFragment extends DialogFragment {
             parentFragment = manager.findFragmentByTag(parentFragmentNameStr);
         }
 
-        ImagePickerFragment fragment = new ImagePickerFragment();
         fragment.setStyle(android.support.v4.app.DialogFragment.STYLE_NORMAL, R.style.fragment_theme);
 
         if (parentFragment != null) {
             fragment.setTargetFragment(parentFragment, 0);
         }
 
+        fragment.setArguments(bundle);
         fragment.show(manager, fragmentNameStr);
     }
 
@@ -256,13 +262,13 @@ public class ShareFragment extends DialogFragment {
     }
 
     private void setupPage() {
-        if(book == null || (book != null && book.getTITLE() == null)){
-            //TODO: adding a new book
-            setupSliders();
+        if(book != null){
+            setBookCover(book.getIMAGE());
         }
-        else{
-            //TODO: adding an existing book
-        }
+
+        setupSliders();
+
+        share_book_tips_tv.setText(getResources().getTextArray(R.array.share_tips)[0]);
     }
 
     public void setupCategory(Category category){
@@ -280,9 +286,10 @@ public class ShareFragment extends DialogFragment {
     @OnClick({R.id.common_fragment_header_next_tv,R.id.common_fragment_header_back_tv})
     public void onBackNext(View view){
         //validations
+
         if(R.id.common_fragment_header_next_tv == view.getId()){
             if(share_book_vp.getCurrentItem() == 0){
-                String bookTitleStr = Utility.fetchTextFromView(((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).getShare_title_et());
+                String bookTitleStr = Utility.fetchTextFromView(((ViewPagerAdapterShareBook) share_book_vp.getAdapter()).getShare_title_et());
                 String bookAuthorStr = Utility.fetchTextFromView(((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).getShare_author_et());
 
                 if(bookTitleStr == null || bookTitleStr.trim().isEmpty()){
@@ -293,26 +300,18 @@ public class ShareFragment extends DialogFragment {
                     Utility.showSnacks(share_ll, "AUTHOR OF THE BOOK IS EMPTY", OK, Snackbar.LENGTH_LONG);
                     return;
                 }
-
-                book.setTITLE(bookTitleStr);
-                book.setAUTHOR(bookAuthorStr);
             }
             else if(share_book_vp.getCurrentItem() == 1){
-                String bookCategoryIdStr = ((Category)((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).getCommon_spinner_ll_category().getTag()).getCTGRY_ID();
-                String bookPublisherStr = Utility.fetchTextFromView(((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).getShare_publisher_et());
-                String bookDescStr = Utility.fetchTextFromView(((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).getShare_description_et());
-
-                book.setCTGRY_ID(bookCategoryIdStr);
-                book.setPUBLICATION(bookPublisherStr);
-                book.setDESCRIPTION(bookDescStr);
+                /*String bookPublisherStr = Utility.fetchTextFromView(((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).getShare_publisher_et());
+                String bookDescStr = Utility.fetchTextFromView(((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).getShare_description_et());*/
             }
         }
 
         if("DONE".equalsIgnoreCase(String.valueOf(((TextView)view).getText()))){
             if(share_book_vp.getCurrentItem() == 2){
+                Tenure minDuration = (Tenure)((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).getCommon_spinner_ll_min_duration().getTag();
+                Tenure maxDuration = (Tenure)((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).getCommon_spinner_ll_max_duration().getTag();
                 String bookRentStr = Utility.fetchTextFromView(((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).getCommon_amount_et());
-                String bookMinDurationIdStr = ((Tenure)((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).getCommon_spinner_ll_min_duration().getTag()).getTENURE_ID();
-                String bookMaxDurationIdStr = ((Tenure)((ViewPagerAdapterShareBook)share_book_vp.getAdapter()).getCommon_spinner_ll_max_duration().getTag()).getTENURE_ID();
 
                 //validation
                 Integer rent = 0;
@@ -336,14 +335,29 @@ public class ShareFragment extends DialogFragment {
                     return;
                 }
 
-                book.setRENT(rent);
-                book.setMIN_DURATION(bookMinDurationIdStr);
-                book.setMAX_DURATION(bookMaxDurationIdStr);
+                if(book == null){
+                    book = new Book();
+                }
+
                 book.setImagePath(imagePathStr);
 
-                new BookUploadTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                book.setTITLE(Utility.fetchTextFromView(((ViewPagerAdapterShareBook) share_book_vp.getAdapter()).getShare_title_et()));
+                book.setAUTHOR(Utility.fetchTextFromView(((ViewPagerAdapterShareBook) share_book_vp.getAdapter()).getShare_author_et()));
+                book.setCTGRY_ID(((Category)((ViewPagerAdapterShareBook) share_book_vp.getAdapter()).getCommon_spinner_ll_category().getTag()).getCTGRY_ID());
+                book.setCategory((Category)((ViewPagerAdapterShareBook) share_book_vp.getAdapter()).getCommon_spinner_ll_category().getTag());
 
-                //TODO:POST THE BOOK HERE
+                book.setPUBLICATION(Utility.fetchTextFromView(((ViewPagerAdapterShareBook) share_book_vp.getAdapter()).getShare_publisher_et()));
+                book.setDESCRIPTION(Utility.fetchTextFromView(((ViewPagerAdapterShareBook) share_book_vp.getAdapter()).getShare_description_et()));
+
+                book.setRENT(rent);
+                book.setMIN_DURATION(minDuration.getTENURE_ID());
+                book.setMAX_DURATION(maxDuration.getTENURE_ID());
+
+                book.setMinDuration(minDuration);
+                book.setMaxDuration(maxDuration);
+                book.setUSER_ID(user.getUSER_ID());
+
+                showShareDetailsFragment();
             }
         }
         else if(R.id.common_fragment_header_next_tv == view.getId()){
@@ -354,13 +368,43 @@ public class ShareFragment extends DialogFragment {
         }
     }
 
+    private void showShareDetailsFragment() {
+        String fragmentNameStr = FRAGMENT_SHARE_BOOK_DETAILS;
+        String parentFragmentNameStr = FRAGMENT_SHARE_BOOK;
+        ShareDetailsFragment fragment = new ShareDetailsFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(BOOK, book);
+
+        FragmentManager manager = getFragmentManager();
+        Fragment frag = manager.findFragmentByTag(fragmentNameStr);
+
+        if (frag != null) {
+            manager.beginTransaction().remove(frag).commit();
+        }
+
+        Fragment parentFragment = null;
+        if(parentFragmentNameStr != null && !parentFragmentNameStr.trim().isEmpty()){
+            parentFragment = manager.findFragmentByTag(parentFragmentNameStr);
+        }
+
+        fragment.setArguments(bundle);
+        fragment.setStyle(android.support.v4.app.DialogFragment.STYLE_NORMAL, R.style.fragment_theme);
+
+        if (parentFragment != null) {
+            fragment.setTargetFragment(parentFragment, 0);
+        }
+
+        fragment.show(manager, fragmentNameStr);
+    }
+
     private void setupSliders() {
         final List<Integer> viewPagerTabsList = new ArrayList<>();
         viewPagerTabsList.add(R.layout.view_pager_share_book_1);
         viewPagerTabsList.add(R.layout.view_pager_share_book_2);
         viewPagerTabsList.add(R.layout.view_pager_share_book_3);
 
-        final ViewPagerAdapterShareBook viewPagerAdapter = new ViewPagerAdapterShareBook(getActivity(), mContext, viewPagerTabsList, master);
+        final ViewPagerAdapterShareBook viewPagerAdapter = new ViewPagerAdapterShareBook(mContext, viewPagerTabsList, master, book);
 
         int activePageIndex = 0;
         if(share_book_vp != null && share_book_vp.getAdapter() != null){
@@ -393,6 +437,8 @@ public class ShareFragment extends DialogFragment {
                     common_fragment_header_next_tv.setVisibility(View.VISIBLE);
                     common_fragment_header_next_tv.setText("NEXT");
                 }
+
+                share_book_tips_tv.setText(getResources().getStringArray(R.array.share_tips)[position]);
 
                 //listeners
                 if(position == 1){
@@ -474,7 +520,7 @@ public class ShareFragment extends DialogFragment {
             int width = ViewGroup.LayoutParams.MATCH_PARENT;
             int height = ViewGroup.LayoutParams.WRAP_CONTENT;
             d.getWindow().setLayout(width, height);
-            d.setCancelable(false);
+            d.setCanceledOnTouchOutside(false);
         }
     }
 
@@ -506,18 +552,6 @@ public class ShareFragment extends DialogFragment {
             else if(v instanceof ViewGroup) {
                 setFont((ViewGroup) v);
             }
-        }
-    }
-
-    private class BookUploadTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... urls) {
-            return AsyncTaskUtility.shareBook(book);
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            Log.i(CLASS_NAME, result);
         }
     }
 }

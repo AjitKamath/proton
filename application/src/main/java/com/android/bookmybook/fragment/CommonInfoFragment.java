@@ -10,11 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.bookmybook.R;
-import com.android.bookmybook.util.Utility;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -22,26 +20,29 @@ import butterknife.OnClick;
 
 import static com.android.bookmybook.util.Constants.CAMERA_CHOICE;
 import static com.android.bookmybook.util.Constants.GALLERY_CHOICE;
+import static com.android.bookmybook.util.Constants.INFO_MESSAGE_PRIMARY;
+import static com.android.bookmybook.util.Constants.INFO_MESSAGE_SECONDARY;
 import static com.android.bookmybook.util.Constants.UI_FONT;
 import static com.android.bookmybook.util.Constants.UN_IDENTIFIED_PARENT_FRAGMENT;
 
 /**
  * Created by ajit on 21/3/16.
  */
-public class NoInternetFragment extends DialogFragment{
+public class CommonInfoFragment extends DialogFragment{
     private final String CLASS_NAME = this.getClass().getName();
     private Context mContext;
 
     /*components*/
-    @InjectView(R.id.common_fragment_no_internet_ll)
-    LinearLayout common_fragment_no_internet_ll;
-    /*components*/
+    @InjectView(R.id.common_fragment_info_primary_tv)
+    TextView common_fragment_info_primary_tv;
 
-    private Integer choice = null;
+    @InjectView(R.id.common_fragment_info_secondary_tv)
+    TextView common_fragment_info_secondary;
+    /*components*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.common_fragment_no_internet, container);
+        View view = inflater.inflate(R.layout.common_fragment_info, container);
         ButterKnife.inject(this, view);
 
         Dialog d = getDialog();
@@ -52,18 +53,21 @@ public class NoInternetFragment extends DialogFragment{
         return view;
     }
 
-    @OnClick(R.id.common_fragment_no_internet_tv)
-    public void onRetry(View view){
-        if(Utility.isNetworkAvailable(mContext)){
-            dismiss();
+    private void setupPage() {
+        if(getArguments().get(INFO_MESSAGE_PRIMARY) != null){
+            common_fragment_info_primary_tv.setText(String.valueOf(getArguments().get(INFO_MESSAGE_PRIMARY)));
+        }
+
+        if(getArguments().get(INFO_MESSAGE_SECONDARY) != null){
+            common_fragment_info_secondary.setText(String.valueOf(getArguments().get(INFO_MESSAGE_SECONDARY)));
         }
     }
 
-    private void setupPage() {
-        setFont(common_fragment_no_internet_ll);
+    private void getDataFromBundle() {
     }
 
-    public NoInternetFragment() {}
+    // Empty constructor required for DialogFragment
+    public CommonInfoFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,10 +86,9 @@ public class NoInternetFragment extends DialogFragment{
 
         Dialog d = getDialog();
         if (d!=null) {
-            int width = ViewGroup.LayoutParams.WRAP_CONTENT;
+            int width = ViewGroup.LayoutParams.MATCH_PARENT;
             int height = ViewGroup.LayoutParams.WRAP_CONTENT;;
             d.getWindow().setLayout(width, height);
-            d.setCancelable(false);
         }
     }
 

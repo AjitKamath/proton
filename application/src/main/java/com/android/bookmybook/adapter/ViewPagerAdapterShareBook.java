@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.bookmybook.R;
+import com.android.bookmybook.model.Book;
 import com.android.bookmybook.model.Category;
 import com.android.bookmybook.model.Master;
 import com.android.bookmybook.model.Tenure;
@@ -33,9 +34,9 @@ public class ViewPagerAdapterShareBook extends PagerAdapter {
     //page 1
     private EditText share_title_et;
     private EditText share_author_et;
+    private LinearLayout common_spinner_ll_category;
 
     //page 2
-    private LinearLayout common_spinner_ll_category;
     private EditText share_publisher_et;
     private EditText share_description_et;
 
@@ -48,13 +49,15 @@ public class ViewPagerAdapterShareBook extends PagerAdapter {
     private Context mContext;
     private List<Integer> layoutsList;
     private Master master;
+    private Book book;
     public int activePageIndex = 0;
 
 
-    public ViewPagerAdapterShareBook(Activity activity, Context context, List<Integer> layoutsList, Master master) {
+    public ViewPagerAdapterShareBook(Context context, List<Integer> layoutsList, Master master, Book book) {
         this.mContext = context;
         this.layoutsList = layoutsList;
         this.master = master;
+        this.book = book;
     }
 
     @Override
@@ -77,21 +80,84 @@ public class ViewPagerAdapterShareBook extends PagerAdapter {
         return layout;
     }
 
+    private Category getCategoryOnId(String categoryIdStr){
+        for(Category iterList : master.getCategoriesList()){
+            if(iterList.getCTGRY_ID().equalsIgnoreCase(categoryIdStr)){
+                return iterList;
+            }
+        }
+        return null;
+    }
+
+    private Tenure getTenureOnId(String tenureIdStr){
+        for(Tenure iterList : master.getTenuresList()){
+            if(iterList.getTENURE_ID().equalsIgnoreCase(tenureIdStr)){
+                return iterList;
+            }
+        }
+        return null;
+    }
+
+    private void setupPage() {
+        if(book != null){
+            //page 1
+            if(book.getTITLE() != null){
+                share_title_et.setText(book.getTITLE());
+            }
+
+            if(book.getAUTHOR() != null){
+                share_author_et.setText(book.getAUTHOR());
+            }
+
+            if(book.getCategory() != null){
+                setupCategory(book.getCategory());
+            }
+
+            //page 2
+            if(book.getPUBLICATION() != null){
+                share_publisher_et.setText(book.getPUBLICATION());
+            }
+
+            if(book.getDESCRIPTION() != null){
+                share_description_et.setText(book.getDESCRIPTION());
+            }
+
+            //page 3
+            if(book.getRENT() != null){
+                common_amount_et.setText(String.valueOf(book.getRENT()));
+            }
+
+            if(book.getMinDuration() != null){
+                setupMinDuration(book.getMinDuration());
+            }
+
+            if(book.getMaxDuration() != null){
+                setupMaxDuration(book.getMaxDuration());
+            }
+        }
+    }
+
     private void setupShareBook1(ViewGroup layout) {
         share_title_et = (EditText) layout.findViewById(R.id.share_title_et);
         share_author_et = (EditText) layout.findViewById(R.id.share_author_et);
-    }
 
-    private void setupShareBook2(ViewGroup layout) {
         //set up default selected category
         common_spinner_ll_category = (LinearLayout) layout.findViewById(R.id.common_spinner_category);
         setupCategory((Category) Utility.fetchDefault(master.getCategoriesList()));
 
+        setupPage();
+    }
+
+    private void setupShareBook2(ViewGroup layout) {
         share_publisher_et = (EditText) layout.findViewById(R.id.share_publisher_et);
         share_description_et = (EditText) layout.findViewById(R.id.share_description_et);
+
+        setupPage();
     }
 
     private void setupShareBook3(ViewGroup layout) {
+        common_amount_et = (EditText) layout.findViewById(R.id.common_amount_et);
+
         //set up min duration
         common_spinner_ll_min_duration = (LinearLayout) layout.findViewById(R.id.common_spinner_min_duration);
         setupMinDuration(((Tenure)Utility.fetchDefault(master.getTenuresList())));
@@ -100,7 +166,7 @@ public class ViewPagerAdapterShareBook extends PagerAdapter {
         common_spinner_ll_max_duration = (LinearLayout) layout.findViewById(R.id.common_spinner_max_duration);
         setupMaxDuration(((Tenure)Utility.fetchDefault(master.getTenuresList())));
 
-        common_amount_et = (EditText) layout.findViewById(R.id.common_amount_et);
+        setupPage();
     }
 
     public void setupCategory(Category category){
@@ -182,10 +248,6 @@ public class ViewPagerAdapterShareBook extends PagerAdapter {
         return common_spinner_ll_max_duration;
     }
 
-    public EditText getShare_title_et() {
-        return share_title_et;
-    }
-
     public EditText getShare_author_et() {
         return share_author_et;
     }
@@ -200,6 +262,14 @@ public class ViewPagerAdapterShareBook extends PagerAdapter {
 
     public EditText getCommon_amount_et() {
         return common_amount_et;
+    }
+
+    public EditText getShare_title_et() {
+        return share_title_et;
+    }
+
+    public Book getBook() {
+        return book;
     }
 
     //method iterates over each component in the activity and when it finds a text view..sets its font

@@ -15,6 +15,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
+import static com.android.bookmybook.util.Constants.SERVER_TIMEOUT;
+
 /**
  * Created by ajit on 7/1/17.
  */
@@ -47,6 +49,7 @@ public class MultipartUtility {
         Log.e("URL", "URL : " + requestURL.toString());
         httpConn = (HttpURLConnection) url.openConnection();
         httpConn.setUseCaches(false);
+        httpConn.setConnectTimeout(SERVER_TIMEOUT);
         httpConn.setDoOutput(true); // indicates POST method
         httpConn.setDoInput(true);
         httpConn.setRequestProperty("Content-Type",

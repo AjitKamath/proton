@@ -1,0 +1,78 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_share_message_ll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/screen_padding"
+    android:background="@color/white"
+    android:orientation="vertical"
+    app:theme="@style/AppTheme">
+
+    <include
+        android:id="@+id/common_fragment_header"
+        layout="@layout/common_fragment_header" />
+
+    <LinearLayout
+        android:padding="@dimen/screen_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <include
+            android:id="@+id/common_pick_book"
+            layout="@layout/common_pick_book" />
+
+        <LinearLayout
+            android:padding="@dimen/screen_padding"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/fragment_share_message_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:textColor="@color/textLightTertiary"
+                android:text="YOUR BOOK XXX HAS BEEN POSTED"/>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="8sp"
+                    android:textColor="@color/textLightTertiary"
+                    android:text="SIT BACK UNTIL SOMEONE SEEKS IT"/>
+
+                <TextView
+                    android:id="@+id/fragment_share_info_tv"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="10sp"
+                    android:textColor="@color/appPrimaryDark"
+                    android:text="@string/question"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/fragment_share_iv"
+                android:layout_marginTop="20dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/tick"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

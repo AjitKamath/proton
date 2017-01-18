@@ -46,12 +46,14 @@ public class CommonActivity extends AppCompatActivity{
             return;
         }
 
+        fetchUser();
+
         fetchMasterData();
     }
 
     private boolean fetchUser() {
         user = new User();
-        user.setUSER_ID("Ajit");
+        user.setUSER_ID("8");
 
         return true;
     }
@@ -65,8 +67,8 @@ public class CommonActivity extends AppCompatActivity{
         }
 
         //show progress bar when loading master data
-        progress = Utility.getProgressDiealog(mContext, "loading app data ..");
-        showProgress(progress);
+        progress = Utility.getProgressDialog(mContext, "loading app data ..");
+        Utility.showProgress(progress);
 
         //monitor master
         monitorMasterData();
@@ -86,24 +88,12 @@ public class CommonActivity extends AppCompatActivity{
             public void run(){
                 if(master != null && master.getTenuresList() != null && !master.getTenuresList().isEmpty() && master.getCategoriesList() != null && !master.getCategoriesList().isEmpty()){
                     h.removeCallbacks(this);
-                    closeProgress(progress);
+                    Utility.closeProgress(progress);
                     return;
                 }
                 h.postDelayed(this, delay);
             }
         }, delay);
-    }
-
-    public void showProgress(ProgressDialog progress) {
-        if(progress != null && !progress.isShowing()){
-            progress.show();
-        }
-    }
-
-    public void closeProgress(ProgressDialog progress){
-        if(progress != null && progress.isShowing()){
-            progress.dismiss();
-        }
     }
 
     public void setupCategories(List<Category> categoriesList){
