@@ -17,13 +17,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.bookmybook.R;
+import com.android.bookmybook.activity.CommonActivity;
 import com.android.bookmybook.model.Response;
+import com.android.bookmybook.model.User;
 import com.android.bookmybook.util.AsyncTaskUtility;
+import com.android.bookmybook.util.SharedPrefUtility;
+import com.android.bookmybook.util.TestData;
 import com.android.bookmybook.util.Utility;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+
+import static com.android.bookmybook.util.Constants.SSID;
 
 
 public class LoginFragment extends DialogFragment{
@@ -145,22 +151,28 @@ public class LoginFragment extends DialogFragment{
             return AsyncTaskUtility.login_authentication(mail, pwd);
         }
 
-
-
         @Override
         protected void onPostExecute(String result) {
             Response data = (Response) Utility.jsonToObject(result, Response.class);
-            if(data.getErrorCode().isEmpty())
-            {
+
+            /*not for prod*/
+            data = new Response();
+            data.setUser(TestData.getUser());
+            data.setIS_ERROR(false);
+            /*not for prod*/
+
+            if(data == null || data.IS_ERROR()){
                 Utility.showSnacks(act,"Something went wrong..!!","OK", Snackbar.LENGTH_INDEFINITE);
             }
-            else if(data.getErrorCode().equals("102"))
-            {
-                Utility.showSnacks(act,data.getErrorMessage(),"OK", Snackbar.LENGTH_INDEFINITE);
-            }
-            else
-            {
+            else{
                 dismiss();
+
+                //save ssid in shared prefs
+                new SharedPrefUtility(mContext).save(SSID, data.getUser().getSSID());
+
+                if(getActivity() instanceof CommonActivity){
+                    ((CommonActivity) getActivity()).fetchMasterData();
+                }
             }
         }
 

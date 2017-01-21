@@ -9,8 +9,17 @@ import java.util.List;
  */
 
 public class Master implements Serializable {
+    private User user;
     private List<Category> categoriesList = new ArrayList<>();
     private List<Tenure> tenuresList = new ArrayList<>();
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public List<Tenure> getTenuresList() {
         return tenuresList;

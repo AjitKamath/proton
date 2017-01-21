@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -28,9 +27,7 @@ import com.android.bookmybook.adapter.ListViewAdapterCategorizedBooks;
 import com.android.bookmybook.fragment.ShareFragment;
 import com.android.bookmybook.model.Book;
 import com.android.bookmybook.model.BooksList;
-import com.android.bookmybook.model.User;
 import com.android.bookmybook.task.AsyncTaskManager;
-import com.android.bookmybook.util.CommonActivity;
 import com.android.bookmybook.util.Utility;
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 
@@ -40,6 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 import static com.android.bookmybook.util.Constants.ASYNC_TASK_GET_BOOKS_ALL;
+import static com.android.bookmybook.util.Constants.ASYNC_TASK_GET_USER;
 import static com.android.bookmybook.util.Constants.BOOK;
 import static com.android.bookmybook.util.Constants.CHECK_MASTER_FOR_ALL;
 import static com.android.bookmybook.util.Constants.FRAGMENT_SHARE_BOOK;
@@ -47,7 +45,7 @@ import static com.android.bookmybook.util.Constants.LOGGED_IN_USER;
 import static com.android.bookmybook.util.Constants.MASTER;
 import static com.android.bookmybook.util.Constants.OK;
 
-public class HomeActivity extends CommonActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends CommonActivity {
     private static final String CLASS_NAME = HomeActivity.class.getName();
     private Context mContext = this;
 
@@ -94,143 +92,13 @@ public class HomeActivity extends CommonActivity implements View.OnClickListener
     }
 
     private void initComponents(){
-        setupToolbar();
 
-        setupNavigator();
-
-        setupFab();
-    }
-
-    private void setupFab() {
-        fabtoolbar_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showFabToolbar(true);
-            }
-        });
-
-        fab_seek_ll.setOnClickListener(this);
-
-        fab_share_ll.setOnClickListener(this);
-
-    }
-
-    private void showFabToolbar(boolean show){
-        if(show){
-            layout.show();
-        }
-        else{
-            layout.hide();
-        }
-    }
-
-    @Override
-    public void onClick(View view) {
-        if(R.id.fab_seek_ll == view.getId()){
-        }
-        else if(R.id.fab_share_ll == view.getId()){
-            showFabToolbar(false);
-            showShareFragment(null);
-        }
-       /* else if(R.id.loginItem == view.getId()){
-            showLoginFragment(null);
-        }*/
-        else{
-            Log.e(CLASS_NAME, "Could not identify the view");
-            Utility.showSnacks(wrapper_home_cl, "Could not identify the view", OK, Snackbar.LENGTH_INDEFINITE);
-        }
-    }
-
-    private void showRegistrationFragment(Book book) {
-        //check for internet
-        if (!Utility.isNetworkAvailable(this)) {
-            FragmentManager fragMan = getFragmentManager();
-            Utility.showNoInternetFragment(fragMan);
-            return;
-        } else {
-            FragmentManager fragMan = getFragmentManager();
-            Utility.showRegistrationFragment(fragMan);
-            return;
-        }
-    }
-
-    private void showLoginFragment(Book book) {
-        //check for internet
-        if (!Utility.isNetworkAvailable(this)) {
-            FragmentManager fragMan = getFragmentManager();
-            Utility.showNoInternetFragment(fragMan);
-            return;
-        } else {
-            FragmentManager fragMan = getFragmentManager();
-            Utility.showLoginFragment(fragMan);
-            return;
-        }
-    }
-
-    private void showShareFragment(Book book) {
-        //check for master data
-        if(!Utility.hasMasterData(master, CHECK_MASTER_FOR_ALL)){
-            FragmentManager manager = getFragmentManager();
-            Utility.showNoInternetFragment(manager);
-            fetchMasterData();
-            return;
-        }
-
-        String fragmentNameStr = FRAGMENT_SHARE_BOOK;
-        String parentFragmentNameStr = null;
-
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(LOGGED_IN_USER, user);
-        bundle.putSerializable(MASTER, master);
-
-        if(book != null){
-            bundle.putSerializable(BOOK, book);
-        }
-
-        FragmentManager manager = getFragmentManager();
-        Fragment frag = manager.findFragmentByTag(fragmentNameStr);
-
-        if (frag != null) {
-            manager.beginTransaction().remove(frag).commit();
-        }
-
-        Fragment parentFragment = null;
-        if(parentFragmentNameStr != null && !parentFragmentNameStr.trim().isEmpty()){
-            parentFragment = manager.findFragmentByTag(parentFragmentNameStr);
-        }
-
-        ShareFragment fragment = new ShareFragment();
-        fragment.setArguments(bundle);
-        fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.fragment_theme);
-
-        if (parentFragment != null) {
-            fragment.setTargetFragment(parentFragment, 0);
-        }
-
-        fragment.show(manager, fragmentNameStr);
-    }
-
-    private void setupNavigator() {
-        //drawer
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer_layout.setDrawerListener(toggle);
-        toggle.syncState();
-
-        //navigation
-        nav_view.setItemIconTintList(null);
-        nav_view.getMenu().getItem(1).setActionView(R.layout.menu_dot);
-        nav_view.setNavigationItemSelectedListener(this);
-    }
-
-    private void setupToolbar() {
-        //toolbar
-        toolbar.setTitle(getResources().getString(R.string.app_name));
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     private void setupPage(){
         if(!Utility.isNetworkAvailable(this)){
+            FragmentManager fragManager = getFragmentManager();
+            Utility.showNoInternetFragment(fragManager);
             return;
         }
 
@@ -241,8 +109,6 @@ public class HomeActivity extends CommonActivity implements View.OnClickListener
         //fetch books
         new AsyncTaskManager(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, ASYNC_TASK_GET_BOOKS_ALL);
     }
-
-
 
     public void setupBooks(List<BooksList> booksList) {
         if(booksList == null || (booksList != null && booksList.isEmpty())){
@@ -293,28 +159,43 @@ public class HomeActivity extends CommonActivity implements View.OnClickListener
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
+    protected DrawerLayout getDrawer_layout() {
+        return drawer_layout;
+    }
 
-        if(id == R.id.accountItem)
-        {
-            showRegistrationFragment(null);
-            //Intent i = new Intent(HomeActivity.this, RegistrationActivity.class);
-            //startActivity(i);
-        }
-       else if(id == R.id.loginItem)
-        {
-            showLoginFragment(null);
-            //Intent i = new Intent(HomeActivity.this, LoginActivity.class);
-            //startActivity(i);
-        }
+    @Override
+    protected Toolbar getToolbar() {
+        return toolbar;
+    }
 
-        /*asyncTaskManager.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "REGISTER_USER");*/
+    @Override
+    protected NavigationView getNav_view() {
+        return nav_view;
+    }
 
-        drawer_layout.closeDrawer(GravityCompat.START);
-        return true;
+    @Override
+    protected FABToolbarLayout getLayout() {
+        return layout;
+    }
+
+    @Override
+    protected FloatingActionButton getFabtoolbar_fab() {
+        return fabtoolbar_fab;
+    }
+
+    @Override
+    protected LinearLayout getFab_seek_ll() {
+        return fab_seek_ll;
+    }
+
+    @Override
+    protected LinearLayout getFab_share_ll() {
+        return fab_share_ll;
+    }
+
+    @Override
+    protected CoordinatorLayout getWrapper_home_cl() {
+        return wrapper_home_cl;
     }
 }

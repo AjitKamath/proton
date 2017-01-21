@@ -8,14 +8,23 @@ import java.util.List;
  */
 
 public class BooksList implements Serializable{
-    private String category;
+    private Category category;
+    private int booksCount;
     private List<Book> booksList;
 
-    public String getCategory() {
+    public int getBooksCount() {
+        return booksCount;
+    }
+
+    public void setBooksCount(int booksCount) {
+        this.booksCount = booksCount;
+    }
+
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

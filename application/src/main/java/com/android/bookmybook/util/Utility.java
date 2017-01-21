@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.bookmybook.R;
 import com.android.bookmybook.fragment.CommonInfoFragment;
@@ -27,7 +28,9 @@ import com.android.bookmybook.fragment.CommonNoInternetFragment;
 import com.android.bookmybook.fragment.LoginFragment;
 import com.android.bookmybook.model.Category;
 import com.android.bookmybook.model.Master;
+import com.android.bookmybook.model.Response;
 import com.android.bookmybook.model.Tenure;
+import com.android.bookmybook.model.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -141,6 +144,16 @@ public class Utility extends Activity{
                 Gson gson = new Gson();
                 List<Tenure> list = gson.fromJson(jsonStr, new TypeToken<List<Tenure>>(){}.getType());
                 return list;
+            }
+            else  if(mappingClass.equals(Response.class)){
+                Gson gson = new Gson();
+                Response response = gson.fromJson(jsonStr, new TypeToken<Response>(){}.getType());
+                return response;
+            }
+            else  if(mappingClass.equals(User.class)){
+                Gson gson = new Gson();
+                User response = gson.fromJson(jsonStr, new TypeToken<User>(){}.getType());
+                return response;
             }
             else{
                 Log.e(CLASS_NAME, mappingClass+" is not identified for parsing JSON");
@@ -371,5 +384,47 @@ public class Utility extends Activity{
         LoginFragment fragment = new LoginFragment();
         fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.fragment_theme);
         fragment.show(manager, fragmentNameStr);
+    }
+
+    public static void showToast(Activity activity, String message){
+        Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
+    }
+
+    public static View shortenAmountView(Context context, View view, int amount){
+        if(amount < 0) {
+            amount = amount * -1;
+        }
+
+        if(view instanceof TextView){
+            ((TextView)view).setText(context.getResources().getText(R.string.rupee)+" "+formatAmount(String.valueOf(amount)));
+        }
+        else if(view instanceof EditText){
+            ((EditText)view).setText(formatAmount(String.valueOf(amount)));
+        }
+
+        return view;
+    }
+
+    private static String formatAmount(String amountStr) {
+        amountStr = amountStr.replace(",", "");
+
+        //99,99,99,999
+        //formatting with commas
+        switch(amountStr.length()){
+            case 4: amountStr = amountStr.substring(0, 1)+","+amountStr.substring(1);
+                break;
+            case 5: amountStr = amountStr.substring(0, 2)+","+amountStr.substring(2);
+                break;
+            case 6: amountStr = amountStr.substring(0, 1)+","+amountStr.substring(1,3)+","+amountStr.substring(3);
+                break;
+            case 7: amountStr = amountStr.substring(0, 2)+","+amountStr.substring(2,4)+","+amountStr.substring(4);
+                break;
+            case 8: amountStr = amountStr.substring(0, 1)+","+amountStr.substring(1,3)+","+amountStr.substring(3,5)+","+amountStr.substring(5);
+                break;
+            case 9: amountStr = amountStr.substring(0, 2)+","+amountStr.substring(2,4)+","+amountStr.substring(4,6)+","+amountStr.substring(6);
+                break;
+        }
+
+        return amountStr;
     }
 }

@@ -9,15 +9,18 @@ import com.android.bookmybook.activity.HomeActivity;
 import com.android.bookmybook.model.BooksList;
 import com.android.bookmybook.model.Category;
 import com.android.bookmybook.model.Tenure;
+import com.android.bookmybook.model.User;
 import com.android.bookmybook.util.AsyncTaskUtility;
-import com.android.bookmybook.util.CommonActivity;
+import com.android.bookmybook.activity.CommonActivity;
 
 import java.util.List;
 
 import static com.android.bookmybook.util.Constants.ASYNC_TASK_GET_BOOKS_ALL;
 import static com.android.bookmybook.util.Constants.ASYNC_TASK_GET_CATEGORIES_ALL;
 import static com.android.bookmybook.util.Constants.ASYNC_TASK_GET_TENURES_ALL;
+import static com.android.bookmybook.util.Constants.ASYNC_TASK_GET_USER;
 import static com.android.bookmybook.util.Constants.ASYNC_TASK_REGISTER_USER;
+import static com.android.bookmybook.util.Constants.PHP_FETCH_USER;
 
 /**
  * Created by ajit on 4/1/17.
@@ -49,6 +52,11 @@ public class AsyncTaskManager extends AsyncTask<String, Void, Object> {
         else if(ASYNC_TASK_GET_TENURES_ALL.equalsIgnoreCase(PURPOSE)){
             return AsyncTaskUtility.fetchAllTenures();
         }
+        else if(ASYNC_TASK_GET_USER.equalsIgnoreCase(PURPOSE)){
+            if(purposeStrArr.length == 2 || !purposeStrArr[1].isEmpty()){
+                return AsyncTaskUtility.fetchUser(purposeStrArr[1]);
+            }
+        }
         else{
             Log.e(CLASS_NAME, "The task("+PURPOSE+")");
         }
@@ -58,11 +66,6 @@ public class AsyncTaskManager extends AsyncTask<String, Void, Object> {
 
     @Override
     protected void onPostExecute(Object result) {
-        /*if(result == null){
-            Log.i(CLASS_NAME, PURPOSE+" returned null");
-            return;
-        }*/
-
         if(PURPOSE.equalsIgnoreCase(ASYNC_TASK_GET_BOOKS_ALL)){
             if(activity != null){
                 ((HomeActivity)activity).setupBooks((List<BooksList>)result);
@@ -76,6 +79,11 @@ public class AsyncTaskManager extends AsyncTask<String, Void, Object> {
         else if(PURPOSE.equalsIgnoreCase(ASYNC_TASK_GET_TENURES_ALL)){
             if(activity != null){
                 ((CommonActivity)activity).setupTenures((List<Tenure>)result);
+            }
+        }
+        else if(PURPOSE.equalsIgnoreCase(ASYNC_TASK_GET_USER)){
+            if(activity != null){
+                ((CommonActivity)activity).setupUser((User) result);
             }
         }
         else{

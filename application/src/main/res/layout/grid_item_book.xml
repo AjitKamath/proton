@@ -37,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:text="₹"
                     android:textColor="@color/appPrimaryDark"
-                    android:textSize="15sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/book_rent_tv"
@@ -46,7 +46,7 @@
                     android:layout_marginLeft="2dp"
                     android:text="349"
                     android:textColor="@color/appPrimaryDark"
-                    android:textSize="15sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -55,22 +55,22 @@
                     android:layout_marginRight="2dp"
                     android:text="/"
                     android:textColor="@color/textLightTertiary"
-                    android:textSize="10sp" />
+                    android:textSize="8sp" />
 
                 <TextView
                     android:id="@+id/book_duration_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="15 DAYS"
+                    android:text="MONTH"
                     android:textColor="@color/textLightTertiary"
-                    android:textSize="10sp" />
+                    android:textSize="8sp" />
 
             </LinearLayout>
 
             <ImageView
                 android:id="@+id/book_iv"
-                android:layout_width="160dp"
-                android:layout_height="220dp"
+                android:layout_width="120dp"
+                android:layout_height="170dp"
                 android:background="@drawable/book_check" />
 
             <TextView
@@ -79,9 +79,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:maxLength="20"
-                android:text="FELIDAE"
+                android:maxLines="1"
+                android:text="FELIDAE FILLATIO FELIICACY"
                 android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -93,26 +94,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="1dp"
-                    android:maxLength="20"
                     android:text="BY "
                     android:textColor="@color/textLightTertiary"
-                    android:textSize="10sp" />
+                    android:textSize="8sp" />
 
                 <TextView
                     android:id="@+id/book_author_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="1dp"
-                    android:maxLength="20"
+                    android:maxLines="1"
                     android:text="AKIF PRINCIPI"
                     android:textColor="@color/textLightTertiary"
-                    android:textSize="10sp" />
+                    android:textSize="8sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -128,7 +128,7 @@
                         android:layout_marginLeft="2dp"
                         android:text="14"
                         android:textColor="@color/textLightTertiary"
-                        android:textSize="10sp" />
+                        android:textSize="8sp" />
 
                     <TextView
                         android:layout_alignParentLeft="true"
@@ -137,15 +137,15 @@
                         android:layout_marginLeft="15dp"
                         android:text="BOOKS"
                         android:textColor="@color/textLightTertiary"
-                        android:textSize="10sp" />
+                        android:textSize="8sp" />
 
                     <ImageView
                         android:id="@+id/book_options_iv"
                         android:layout_alignParentRight="true"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="2dp"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
                         android:background="@drawable/ic_list_grey600_48dp"/>
 
 

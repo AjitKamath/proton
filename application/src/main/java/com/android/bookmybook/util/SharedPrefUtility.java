@@ -17,12 +17,14 @@ import static com.android.bookmybook.util.Constants.SHARED_PREF_FILE_NAME;
 
 public class SharedPrefUtility {
     private final String CLASS_NAME = this.getClass().getName();
+    private Context context;
 
-    public SharedPrefUtility() {
+    public SharedPrefUtility(Context context) {
         super();
+        this.context = context;
     }
 
-    public void save(Context context, String key, Object object) {
+    public void save(String key, Object object) {
         if(context == null){
             Log.e(CLASS_NAME, "Could not store the Shared Preference as the context passed is null");
             return;
@@ -54,7 +56,7 @@ public class SharedPrefUtility {
         editor.commit(); //4
     }
 
-    public Object getValue(Context context, String key) {
+    public Object getValue(String key) {
         SharedPreferences settings;
         String text;
 
@@ -64,7 +66,7 @@ public class SharedPrefUtility {
         return text;
     }
 
-    public void clearSharedPreference(Context context) {
+    public void clearSharedPreference() {
         SharedPreferences settings;
         Editor editor;
 
@@ -76,7 +78,7 @@ public class SharedPrefUtility {
         editor.commit();
     }
 
-    public void removeValue(Context context, String key) {
+    public void removeValue(String key) {
         SharedPreferences settings;
         Editor editor;
 

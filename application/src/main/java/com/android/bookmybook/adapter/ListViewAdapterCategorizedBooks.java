@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.bookmybook.R;
@@ -50,8 +50,9 @@ public class ListViewAdapterCategorizedBooks extends BaseAdapter {
 
             mHolder.category_books_ll = (LinearLayout) convertView.findViewById(R.id.category_books_ll);
             mHolder.book_category_heading_tv = (TextView) convertView.findViewById(R.id.book_category_heading_tv);
-            mHolder.book_category_heading_rl = (RelativeLayout) convertView.findViewById(R.id.book_category_heading_rl);
+            mHolder.book_category_heading_iv = (ImageView) convertView.findViewById(R.id.book_category_heading_iv);
             mHolder.category_books_rv = (RecyclerView) convertView.findViewById(R.id.category_books_rv);
+            mHolder.book_category_count_tv = (TextView) convertView.findViewById(R.id.book_category_count_tv);
 
             convertView.setTag(layout, mHolder);
 
@@ -62,15 +63,9 @@ public class ListViewAdapterCategorizedBooks extends BaseAdapter {
         BooksList categoryBooksList = booksList.get(position);
 
         //heading
-        //hard codes
-        if("FICTION".equalsIgnoreCase(categoryBooksList.getCategory())){
-            mHolder.book_category_heading_rl.setBackgroundResource(R.drawable.science_fiction);
-        }
-        else if("THRILLER".equalsIgnoreCase(categoryBooksList.getCategory())){
-            mHolder.book_category_heading_rl.setBackgroundResource(R.drawable.thriller);
-        }
-
-        mHolder.book_category_heading_tv.setText(categoryBooksList.getCategory());
+        mHolder.book_category_heading_iv.setImageResource(Integer.parseInt(categoryBooksList.getCategory().getCTGRY_IMGE()));
+        mHolder.book_category_heading_tv.setText(categoryBooksList.getCategory().getCTGRY_NAME());
+        mHolder.book_category_count_tv.setText(String.valueOf(categoryBooksList.getBooksCount())+" BOOKS");
 
         //books grid
         GridLayoutManager layoutManager = new GridLayoutManager(mContext, 2);
@@ -124,8 +119,8 @@ public class ListViewAdapterCategorizedBooks extends BaseAdapter {
         private LinearLayout category_books_ll;
         private TextView book_category_heading_tv;
         private RecyclerView category_books_rv;
-        private RelativeLayout book_category_heading_rl;
-
+        private ImageView book_category_heading_iv;
+        private TextView book_category_count_tv;
     }
 
 }

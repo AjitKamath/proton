@@ -105,7 +105,7 @@ public class CommonImagePickerFragment extends DialogFragment{
         Dialog d = getDialog();
         if (d!=null) {
             int width = ViewGroup.LayoutParams.MATCH_PARENT;
-            int height = 500;;
+            int height = 500;
             d.getWindow().setLayout(width, height);
         }
     }

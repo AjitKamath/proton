@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_home"
@@ -8,13 +8,21 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.android.bookmybook.activity.HomeActivity"
-    tools:showIn="@layout/wrapper_home">
+    tools:showIn="@layout/wrapper_home"
+    android:orientation="vertical">
+
+    <include android:id="@+id/account_summary"
+        layout="@layout/account_summary" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:background="@color/white" />
 
     <ListView
-        tools:listfooter="@layout/list_item_category_books"
         android:divider="@null"
         android:id="@+id/categorizedBooksLV"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 
-</RelativeLayout>
+</LinearLayout>

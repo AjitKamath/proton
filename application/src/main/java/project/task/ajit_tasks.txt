@@ -90,6 +90,11 @@
 3. basic design on condition of a book on share details fragment implemented.
 4. common info fragment ui.
 
+-------------------GIT PUSH ON 18-jan-17--------------------------
 
+21-jan-2017
+1. added account summary in home activity
+2. dynamic category header image, book count.
+3. moved the tool bar, fab & navigation drawer set up to common activity.
 
 

@@ -154,19 +154,15 @@ public class RegistrationFragment extends DialogFragment{
         @Override
         protected void onPostExecute(String result) {
             Response data = (Response) Utility.jsonToObject(result, Response.class);
-            if(data.getErrorCode().isEmpty())
+            if(data.IS_ERROR())
             {
                 Utility.showSnacks(act,"Something went wrong..!!","OK", Snackbar.LENGTH_INDEFINITE);
             }
-            else if(data.getErrorCode().equals("102"))
-            {
-                Utility.showSnacks(act,data.getErrorMessage(),"OK", Snackbar.LENGTH_INDEFINITE);
-            }
             else
             {
-                Utility.showSnacks(act,data.getErrorMessage(),"OK", Snackbar.LENGTH_INDEFINITE);
-                dismiss();
+                Utility.showSnacks(act,data.getUSER_MESSAGE(),"OK", Snackbar.LENGTH_INDEFINITE);
             }
+
         }
 
     }

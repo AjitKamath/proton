@@ -7,6 +7,7 @@ import com.android.bookmybook.model.Book;
 import com.android.bookmybook.model.BooksList;
 import com.android.bookmybook.model.Category;
 import com.android.bookmybook.model.Tenure;
+import com.android.bookmybook.model.User;
 
 import java.io.DataOutputStream;
 import java.io.EOFException;
@@ -18,11 +19,13 @@ import java.util.List;
 
 import static com.android.bookmybook.util.Constants.PHP_FETCH_ALL_CATEGORIES;
 import static com.android.bookmybook.util.Constants.PHP_FETCH_ALL_TENURES;
+import static com.android.bookmybook.util.Constants.PHP_FETCH_USER;
 import static com.android.bookmybook.util.Constants.PHP_POST_BOOK;
 import static com.android.bookmybook.util.Constants.SERVER_ADDRESS;
 import static com.android.bookmybook.util.Constants.SERVER_CHARSET;
 import static com.android.bookmybook.util.Constants.SERVER_TIMEOUT;
 import static com.android.bookmybook.util.Constants.SLASH;
+import static com.android.bookmybook.util.Constants.SSID;
 
 public class AsyncTaskUtility extends Activity{
 
@@ -140,77 +143,9 @@ public class AsyncTaskUtility extends Activity{
             urlConnection.getResponseCode();*/
 
 
-            List<BooksList> categorizedBooksList = new ArrayList<>();
-            List<Book> booksList = null;
-            BooksList categoryBooksList = null;
-            Book book = null;
 
-            //-----------------------------------------------------------------
-            categoryBooksList = new BooksList();
-            booksList = new ArrayList<>();
-            categoryBooksList.setCategory("FICTION");
 
-            book = new Book();
-            book.setTITLE("MELUHA");
-            book.setAUTHOR("AMISH");
-            book.setRENT(45);
-            booksList.add(book);
-
-            book = new Book();
-            book.setTITLE("THREE MISTAKES OF MY LIFE");
-            book.setAUTHOR("CHETAN BHAGAT");
-            book.setRENT(25);
-            booksList.add(book);
-
-            book = new Book();
-            book.setTITLE("BRIEF HISTORY OF TIME");
-            book.setAUTHOR("STEPHEN HAWKINGS");
-            book.setRENT(80);
-            booksList.add(book);
-
-            book = new Book();
-            book.setTITLE("ALICE IN WONDERLAND");
-            book.setAUTHOR("LEWIS CARL");
-            book.setRENT(12);
-            booksList.add(book);
-            categoryBooksList.setBooksList(booksList);
-            categorizedBooksList.add(categoryBooksList);
-            //-----------------------------------------------------------------
-
-            //-----------------------------------------------------------------
-            categoryBooksList = new BooksList();
-            booksList = new ArrayList<>();
-            categoryBooksList.setCategory("THRILLER");
-
-            book = new Book();
-            book.setTITLE("ARE YOU AFRAID OF THE DARK");
-            book.setAUTHOR("SYDNEY SHELDON");
-            book.setRENT(120);
-            booksList.add(book);
-
-            book = new Book();
-            book.setTITLE("SYMBOLS");
-            book.setAUTHOR("DAN BROWN");
-            book.setRENT(25);
-            booksList.add(book);
-
-            book = new Book();
-            book.setTITLE("KITE RUNNER");
-            book.setAUTHOR("PAULO COELHO");
-            book.setRENT(75);
-            booksList.add(book);
-
-            book = new Book();
-            book.setTITLE("ANGELS & DEMONS");
-            book.setAUTHOR("DAN BROWN");
-            book.setRENT(200);
-            booksList.add(book);
-
-            categoryBooksList.setBooksList(booksList);
-            categorizedBooksList.add(categoryBooksList);
-            //-----------------------------------------------------------------
-
-            return categorizedBooksList;
+            return TestData.getCategorizedBooksList();
         }
         catch(Exception e){
             Log.e(CLASS_NAME, e.getMessage());
@@ -280,6 +215,21 @@ public class AsyncTaskUtility extends Activity{
         }
         catch (Exception e){
             Log.e(CLASS_NAME, "Could not fetch Tenures from the server : "+e);
+        }
+
+        return null;
+    }
+
+    public static Object fetchUser(String ssid) {
+        try {
+            MultipartUtility multipart = new MultipartUtility(SERVER_ADDRESS+SLASH+PHP_FETCH_USER, SERVER_CHARSET);
+            multipart.addFormField("ssid", "1");
+
+            String response = multipart.finish();
+            return  response;
+        }
+        catch (Exception e){
+            Log.e(CLASS_NAME, "Could not fetch User from the server : "+e);
         }
 
         return null;

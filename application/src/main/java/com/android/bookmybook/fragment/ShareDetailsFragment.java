@@ -25,6 +25,7 @@ import com.android.bookmybook.R;
 import com.android.bookmybook.adapter.HorizontalListAdapter;
 import com.android.bookmybook.model.Book;
 import com.android.bookmybook.model.Condition;
+import com.android.bookmybook.model.Response;
 import com.android.bookmybook.util.AsyncTaskUtility;
 import com.android.bookmybook.util.Utility;
 
@@ -38,9 +39,14 @@ import butterknife.OnClick;
 
 import static com.android.bookmybook.util.Constants.BOOK;
 import static com.android.bookmybook.util.Constants.CAMERA_CHOICE;
+import static com.android.bookmybook.util.Constants.CHECK_MASTER_FOR_ALL;
 import static com.android.bookmybook.util.Constants.FRAGMENT_SHARE_BOOK;
 import static com.android.bookmybook.util.Constants.FRAGMENT_SHARE_BOOK_DETAILS;
+import static com.android.bookmybook.util.Constants.FRAGMENT_SHARE_MESSAGE;
 import static com.android.bookmybook.util.Constants.GALLERY_CHOICE;
+import static com.android.bookmybook.util.Constants.LOGGED_IN_USER;
+import static com.android.bookmybook.util.Constants.MASTER;
+import static com.android.bookmybook.util.Constants.RESPONSE;
 import static com.android.bookmybook.util.Constants.UI_FONT;
 import static com.android.bookmybook.util.Constants.UN_IDENTIFIED_PARENT_FRAGMENT;
 
@@ -295,8 +301,58 @@ public class ShareDetailsFragment extends DialogFragment{
 
         @Override
         protected void onPostExecute(String result) {
-            Utility.closeProgress(progress);
             Log.i(CLASS_NAME, result);
+
+            Response response = (Response) Utility.jsonToObject(result, Response.class);
+
+            //book shared fail
+            if(response == null || response.IS_ERROR()){
+                Utility.closeProgress(progress);
+                showShareMessageFragment(response);
+                return;
+            }
+
+            //if success
+            Utility.closeProgress(progress);
+
+            //dismiss share details fragment
+            dismiss();
+
+            //dismiss parent share fragment
+            ((ShareFragment)getTargetFragment()).dismiss();
+
+            showShareMessageFragment(response);
         }
+    }
+
+    private void showShareMessageFragment(Response response) {
+        String fragmentNameStr = FRAGMENT_SHARE_MESSAGE;
+        String parentFragmentNameStr = null;
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(BOOK, book);
+        bundle.putSerializable(RESPONSE, response);
+
+        FragmentManager manager = getFragmentManager();
+        Fragment frag = manager.findFragmentByTag(fragmentNameStr);
+
+        if (frag != null) {
+            manager.beginTransaction().remove(frag).commit();
+        }
+
+        Fragment parentFragment = null;
+        if(parentFragmentNameStr != null && !parentFragmentNameStr.trim().isEmpty()){
+            parentFragment = manager.findFragmentByTag(parentFragmentNameStr);
+        }
+
+        ShareMessageFragment fragment = new ShareMessageFragment();
+        fragment.setArguments(bundle);
+        fragment.setStyle(android.support.v4.app.DialogFragment.STYLE_NORMAL, R.style.fragment_theme);
+
+        if (parentFragment != null) {
+            fragment.setTargetFragment(parentFragment, 0);
+        }
+
+        fragment.show(manager, fragmentNameStr);
     }
 }

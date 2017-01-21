@@ -1,7 +1,11 @@
 package com.android.bookmybook.util;
 
+import com.android.bookmybook.R;
+import com.android.bookmybook.model.Book;
+import com.android.bookmybook.model.BooksList;
 import com.android.bookmybook.model.Category;
 import com.android.bookmybook.model.Tenure;
+import com.android.bookmybook.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +16,15 @@ import java.util.List;
 public class TestData {
     private static List<Category> categoryList;
     private static List<Tenure> tenureList;
+    private static List<BooksList> categorizedBooksList;
+    private static User user;
+
+    static {
+        user = new User();
+        user.setUSER_ID("8");
+        user.setNAME("AJIT");
+        user.setSSID("123456");
+    }
 
     static {
         categoryList = new ArrayList<>();
@@ -54,11 +67,137 @@ public class TestData {
         }
     }
 
+    static {
+        categorizedBooksList = new ArrayList<>();
+        List<Book> booksList = null;
+        BooksList categoryBooksList = null;
+        Book book = null;
+        Category category = null;
+
+        //-----------------------------------------------------------------
+        categoryBooksList = new BooksList();
+        booksList = new ArrayList<>();
+        category = new Category();
+
+        category.setCTGRY_NAME("SCI-FI");
+        category.setCTGRY_IMGE(String.valueOf(R.drawable.science_fiction));
+
+        book = new Book();
+        book.setTITLE("ANGELS & DEMONS");
+        book.setAUTHOR("DAN BROWN");
+        book.setRENT(45);
+        booksList.add(book);
+
+        book = new Book();
+        book.setTITLE("BRIEF HISTORY OF TIME");
+        book.setAUTHOR("STEPHEN HAWKINGS");
+        book.setRENT(80);
+        booksList.add(book);
+
+        book = new Book();
+        book.setTITLE("ALICE IN WONDERLAND");
+        book.setAUTHOR("LEWIS CAROL");
+        book.setRENT(12);
+        booksList.add(book);
+
+        categoryBooksList.setCategory(category);
+        categoryBooksList.setBooksCount(125);
+        categoryBooksList.setBooksList(booksList);
+        categorizedBooksList.add(categoryBooksList);
+        //-----------------------------------------------------------------
+
+        //-----------------------------------------------------------------
+        categoryBooksList = new BooksList();
+        booksList = new ArrayList<>();
+        category = new Category();
+
+        category.setCTGRY_NAME("ROMANCE");
+        category.setCTGRY_IMGE(String.valueOf(R.drawable.romance));
+
+        book = new Book();
+        book.setTITLE("I TOO HAD A LOVE STORY");
+        book.setAUTHOR("Ravinder Singh");
+        book.setRENT(18);
+        booksList.add(book);
+
+        book = new Book();
+        book.setTITLE("PORTRAIT OF A ROMANTIC");
+        book.setAUTHOR("ISAAC ALBENIZ");
+        book.setRENT(270);
+        booksList.add(book);
+
+        book = new Book();
+        book.setTITLE("DYNAMICS OF LOVE");
+        book.setAUTHOR("MARIO MIKULINCER");
+        book.setRENT(96);
+        booksList.add(book);
+
+        book = new Book();
+        book.setTITLE("LOVE, DRUGS & WAR");
+        book.setAUTHOR("CHRIS WALLY");
+        book.setRENT(412);
+        booksList.add(book);
+
+        categoryBooksList.setCategory(category);
+        categoryBooksList.setBooksCount(48);
+        categoryBooksList.setBooksList(booksList);
+        categorizedBooksList.add(categoryBooksList);
+        //-----------------------------------------------------------------
+
+        //-----------------------------------------------------------------
+        categoryBooksList = new BooksList();
+        booksList = new ArrayList<>();
+        category = new Category();
+
+        category.setCTGRY_NAME("MYTHOLOGY");
+        category.setCTGRY_IMGE(String.valueOf(R.drawable.mythology));
+
+        book = new Book();
+        book.setTITLE("RAMAYAN - AN EPIC MYTHOLOGY");
+        book.setAUTHOR("HARISHANKAR BHAT");
+        book.setRENT(110);
+        booksList.add(book);
+
+        book = new Book();
+        book.setTITLE("COMMANDMENTS OF THE GOD");
+        book.setAUTHOR("GEORGE IGNATIUS");
+        book.setRENT(270);
+        booksList.add(book);
+
+        book = new Book();
+        book.setTITLE("FROM THE EYES OF KUNTI");
+        book.setAUTHOR("SHWETA ADHYAPAK");
+        book.setRENT(80);
+        booksList.add(book);
+
+        book = new Book();
+        book.setTITLE("HAND OF THE GOD");
+        book.setAUTHOR("GURU RAM RAHIM SINGH");
+        book.setRENT(100);
+        booksList.add(book);
+
+        categoryBooksList.setCategory(category);
+        categoryBooksList.setBooksCount(89);
+        categoryBooksList.setBooksList(booksList);
+        categorizedBooksList.add(categoryBooksList);
+        //-----------------------------------------------------------------
+
+
+    }
+
     public static List<Category> getCategories(){
         return categoryList;
     }
 
     public static List<Tenure> getTenures(){
         return tenureList;
+    }
+
+    public static List<BooksList> getCategorizedBooksList() {
+        return categorizedBooksList;
+    }
+
+    public static User getUser() {
+        return user;
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/book_options_seek"
@@ -7,14 +8,18 @@
         android:title="SEEK" />
 
     <item
+        android:id="@+id/book_options_share"
+        android:icon="@drawable/share_book"
+        android:title="SHARE" />
+
+    <item
         android:id="@+id/book_options_wish"
         android:icon="@drawable/favorite"
         android:title="WISH" />
 
     <item
-        android:id="@+id/book_options_share"
-        android:icon="@drawable/share_book"
-        android:title="SHARE" />
-
+        android:id="@+id/book_options_bag"
+        android:icon="@drawable/bag"
+        android:title="ADD TO BAG" />
 
 </menu>

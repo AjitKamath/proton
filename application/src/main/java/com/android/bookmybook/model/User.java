@@ -17,6 +17,15 @@ public class User implements Serializable {
     private String CITY;
     private Date CREATE_DTM;
     private Date MOD_DTM;
+    private String SSID;
+
+    public String getSSID() {
+        return SSID;
+    }
+
+    public void setSSID(String SSID) {
+        this.SSID = SSID;
+    }
 
     public String getUSER_ID() {
         return USER_ID;
