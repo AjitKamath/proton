@@ -473,6 +473,11 @@ public class ShareFragment extends DialogFragment {
 
             }
         });
+
+        //when the page loads
+        common_fragment_header_back_tv.setVisibility(View.GONE);
+        common_fragment_header_next_tv.setVisibility(View.VISIBLE);
+        common_fragment_header_next_tv.setText("NEXT");
     }
 
     private void showSpinner(View view, String whichSpinnerStr){

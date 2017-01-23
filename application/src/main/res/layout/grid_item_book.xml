@@ -33,18 +33,10 @@
                 android:gravity="center">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="₹"
-                    android:textColor="@color/appPrimaryDark"
-                    android:textSize="12sp" />
-
-                <TextView
                     android:id="@+id/book_rent_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="2dp"
-                    android:text="349"
+                    android:text="₹ 349"
                     android:textColor="@color/appPrimaryDark"
                     android:textSize="12sp" />
 
@@ -122,27 +114,18 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_alignParentLeft="true"
+                        android:layout_toLeftOf="@+id/book_options_iv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="2dp"
                         android:text="14"
-                        android:textColor="@color/textLightTertiary"
-                        android:textSize="8sp" />
-
-                    <TextView
-                        android:layout_alignParentLeft="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:text="BOOKS"
+                        android:gravity="center_vertical"
                         android:textColor="@color/textLightTertiary"
                         android:textSize="8sp" />
 
                     <ImageView
                         android:id="@+id/book_options_iv"
                         android:layout_alignParentRight="true"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="2dp"
                         android:layout_marginRight="2dp"
                         android:layout_width="12dp"
                         android:layout_height="12dp"

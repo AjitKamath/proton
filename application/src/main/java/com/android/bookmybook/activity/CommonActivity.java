@@ -121,6 +121,12 @@ public abstract class CommonActivity extends AppCompatActivity implements View.O
         new AsyncTaskManager(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, ASYNC_TASK_GET_TENURES_ALL);
     }
 
+    private void clearMasterData(){
+        if(master != null){
+            master = null;
+        }
+    }
+
     private void monitorMasterData() {
         final Handler h = new Handler();
         final int delay = 1000; //milliseconds
@@ -131,9 +137,7 @@ public abstract class CommonActivity extends AppCompatActivity implements View.O
                         && master.getTenuresList() != null && !master.getTenuresList().isEmpty()
                         && master.getCategoriesList() != null && !master.getCategoriesList().isEmpty()
                         && master.getUser() != null && master.getUser().getSSID() != null && !master.getUser().getSSID().trim().isEmpty()){
-                    h.removeCallbacks(this);
                     Utility.closeProgress(progress);
-                    return;
                 }
                 h.postDelayed(this, delay);
             }
@@ -167,13 +171,17 @@ public abstract class CommonActivity extends AppCompatActivity implements View.O
         //TODO: not for production
         if(user == null){
             master.setUser(TestData.getUser());
-            return;
         }
         //TODO: not for production
-
-        master.setUser(user);
+        else{
+            master.setUser(user);
+        }
 
         //save ssid
+        new SharedPrefUtility(mContext).save(SSID, master.getUser().getSSID());
+
+        //setup account summary
+        setupAccountSummary();
     }
 
     private void setupToolbar() {
@@ -186,7 +194,7 @@ public abstract class CommonActivity extends AppCompatActivity implements View.O
     private void setupNavigator() {
         //drawer
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, getDrawer_layout(), getToolbar(), R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        getDrawer_layout().setDrawerListener(toggle);
+        getDrawer_layout().addDrawerListener(toggle);
         toggle.syncState();
 
         //navigation
@@ -212,9 +220,6 @@ public abstract class CommonActivity extends AppCompatActivity implements View.O
             showFabToolbar(false);
             showShareFragment(null);
         }
-       /* else if(R.id.loginItem == view.getId()){
-            showLoginFragment(null);
-        }*/
         else{
             Log.e(CLASS_NAME, "Could not identify the view");
             Utility.showSnacks(getWrapper_home_cl(), "Could not identify the view", OK, Snackbar.LENGTH_INDEFINITE);
@@ -230,7 +235,6 @@ public abstract class CommonActivity extends AppCompatActivity implements View.O
         });
         getFab_seek_ll().setOnClickListener(this);
         getFab_share_ll().setOnClickListener(this);
-
     }
 
     private void showShareFragment(Book book) {
@@ -281,6 +285,7 @@ public abstract class CommonActivity extends AppCompatActivity implements View.O
     public boolean onNavigationItemSelected(MenuItem item) {
         if(R.id.navigation_drawer_logout == item.getItemId()){
             new SharedPrefUtility(mContext).clearSharedPreference();
+            clearMasterData();
         }
         else{
             Utility.showSnacks(getDrawer_layout(), "NOT IMPLEMENTED YET", OK, Snackbar.LENGTH_INDEFINITE);
@@ -288,8 +293,11 @@ public abstract class CommonActivity extends AppCompatActivity implements View.O
         }
 
         getDrawer_layout().closeDrawer(GravityCompat.START);
+        onResume();
         return true;
     }
+
+    protected abstract void setupAccountSummary();
 
     protected abstract DrawerLayout getDrawer_layout();
 

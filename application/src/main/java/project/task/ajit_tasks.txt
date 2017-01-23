@@ -97,4 +97,14 @@
 2. dynamic category header image, book count.
 3. moved the tool bar, fab & navigation drawer set up to common activity.
 
+-------------------GIT PUSH ON 21-jan-17--------------------------
 
+22-jan-2017
+1. setting up account summary from user data
+2. managing session id in shared prefs
+3. force login.
+4. logout.
+
+23-jan-2017
+1. ui updated for login and registration fragment.
+2. ui updated for fab.

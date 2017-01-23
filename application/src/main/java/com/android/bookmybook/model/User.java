@@ -19,6 +19,12 @@ public class User implements Serializable {
     private Date MOD_DTM;
     private String SSID;
 
+    private Integer balance;
+    private Integer seeks;
+    private Integer shares;
+    private Integer wishes;
+    private Integer bag;
+
     public String getSSID() {
         return SSID;
     }
@@ -97,5 +103,45 @@ public class User implements Serializable {
 
     public void setMOD_DTM(Date MOD_DTM) {
         this.MOD_DTM = MOD_DTM;
+    }
+
+    public Integer getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Integer balance) {
+        this.balance = balance;
+    }
+
+    public Integer getSeeks() {
+        return seeks;
+    }
+
+    public void setSeeks(Integer seeks) {
+        this.seeks = seeks;
+    }
+
+    public Integer getShares() {
+        return shares;
+    }
+
+    public void setShares(Integer shares) {
+        this.shares = shares;
+    }
+
+    public Integer getWishes() {
+        return wishes;
+    }
+
+    public void setWishes(Integer wishes) {
+        this.wishes = wishes;
+    }
+
+    public Integer getBag() {
+        return bag;
+    }
+
+    public void setBag(Integer bag) {
+        this.bag = bag;
     }
 }

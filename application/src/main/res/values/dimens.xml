@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!--screen-->
     <dimen name="screen_padding">10dp</dimen>
 
@@ -28,4 +28,5 @@
     <dimen name="form_fields_header_text_margin_bottom">3dp</dimen>
     <dimen name="form_fields_label_text_width">100dp</dimen>
     <dimen name="form_fields_text_size">12sp</dimen>
+
 </resources>

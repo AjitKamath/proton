@@ -223,7 +223,7 @@ public class AsyncTaskUtility extends Activity{
     public static Object fetchUser(String ssid) {
         try {
             MultipartUtility multipart = new MultipartUtility(SERVER_ADDRESS+SLASH+PHP_FETCH_USER, SERVER_CHARSET);
-            multipart.addFormField("ssid", "1");
+            multipart.addFormField("ssid", ssid);
 
             String response = multipart.finish();
             return  response;

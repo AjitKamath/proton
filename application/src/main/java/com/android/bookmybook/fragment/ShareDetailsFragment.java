@@ -168,7 +168,7 @@ public class ShareDetailsFragment extends DialogFragment{
             fragment_share_description_tv.setText(book.getDESCRIPTION());
         }
 
-        fragment_share_min_rent_tv.setText(String.valueOf(book.getRENT()));
+        fragment_share_min_rent_tv = (TextView) Utility.shortenAmountView(mContext, fragment_share_min_rent_tv, book.getRENT());
         fragment_share_min_rent_duration_tv.setText(book.getMinDuration().getTENURE_NAME());
 
         //if min and max duration are same, no need to show the projected rent/max duration
@@ -176,8 +176,10 @@ public class ShareDetailsFragment extends DialogFragment{
             fragment_share_max_rent__ll.setVisibility(View.INVISIBLE);
         }
         else{
+            int maxDurationRent = Utility.calculateMaxRent(book.getRENT(), book.getMinDuration().getNO_OF_DAYS(), book.getMaxDuration().getNO_OF_DAYS());
+
             fragment_share_max_rent__ll.setVisibility(View.VISIBLE);
-            fragment_share_max_rent_tv.setText(String.valueOf(Utility.calculateMaxRent(book.getRENT(), book.getMinDuration().getNO_OF_DAYS(), book.getMaxDuration().getNO_OF_DAYS())));
+            fragment_share_max_rent_tv = (TextView) Utility.shortenAmountView(mContext, fragment_share_max_rent_tv, maxDurationRent);
             fragment_share_max_rent_duration_tv.setText(book.getMaxDuration().getTENURE_NAME());
         }
 

@@ -26,10 +26,11 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/account_summary_name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="AJIT"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 
@@ -69,10 +70,11 @@
                     android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/account_summary_wishes_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="6"
+                    android:text="0"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 
@@ -99,10 +101,11 @@
                     android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/account_summary_bag_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="2"
+                    android:text="0"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 
@@ -122,10 +125,11 @@
                     android:background="@drawable/account" />
 
                 <TextView
+                    android:id="@+id/account_summary_balance_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="₹ 345"
+                    android:text="₹ 0"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 
@@ -170,10 +174,11 @@
                     android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/account_summary_seeks_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="6"
+                    android:text="0"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -200,10 +205,11 @@
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/account_summary_shares_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="14"
+                android:text="0"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
 

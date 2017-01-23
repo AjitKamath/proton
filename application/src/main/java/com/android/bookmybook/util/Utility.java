@@ -26,6 +26,7 @@ import com.android.bookmybook.R;
 import com.android.bookmybook.fragment.CommonInfoFragment;
 import com.android.bookmybook.fragment.CommonNoInternetFragment;
 import com.android.bookmybook.fragment.LoginFragment;
+import com.android.bookmybook.fragment.RegistrationFragment;
 import com.android.bookmybook.model.Category;
 import com.android.bookmybook.model.Master;
 import com.android.bookmybook.model.Response;
@@ -53,6 +54,7 @@ import static com.android.bookmybook.util.Constants.DISCOUNT_FACTOR;
 import static com.android.bookmybook.util.Constants.FRAGMENT_COMMON_INFO;
 import static com.android.bookmybook.util.Constants.FRAGMENT_LOGIN;
 import static com.android.bookmybook.util.Constants.FRAGMENT_NO_INTERNET;
+import static com.android.bookmybook.util.Constants.FRAGMENT_REGISTRATION;
 import static com.android.bookmybook.util.Constants.INFO_MESSAGE_PRIMARY;
 import static com.android.bookmybook.util.Constants.INFO_MESSAGE_SECONDARY;
 import static com.android.bookmybook.util.Constants.OK;
@@ -359,7 +361,7 @@ public class Utility extends Activity{
     }
 
     public static void showRegistrationFragment(FragmentManager manager){
-        String fragmentNameStr = FRAGMENT_LOGIN;
+        String fragmentNameStr = FRAGMENT_REGISTRATION;
 
         Fragment frag = manager.findFragmentByTag(fragmentNameStr);
 
@@ -367,7 +369,7 @@ public class Utility extends Activity{
             manager.beginTransaction().remove(frag).commit();
         }
 
-        LoginFragment fragment = new LoginFragment();
+        RegistrationFragment fragment = new RegistrationFragment();
         fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.fragment_theme);
         fragment.show(manager, fragmentNameStr);
     }

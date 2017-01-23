@@ -24,6 +24,11 @@ public class TestData {
         user.setUSER_ID("8");
         user.setNAME("AJIT");
         user.setSSID("123456");
+        user.setBag(3);
+        user.setBalance(330);
+        user.setSeeks(2);
+        user.setShares(4);
+        user.setWishes(6);
     }
 
     static {

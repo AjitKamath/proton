@@ -171,18 +171,10 @@
                     android:textSize="@dimen/form_fields_text_size" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
-                    android:text="@string/rupee"
-                    android:textColor="@color/text_currency"
-                    android:textSize="@dimen/form_fields_text_size" />
-
-                <TextView
                     android:id="@+id/fragment_share_min_rent_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="230"
+                    android:text="₹ 230"
                     android:textColor="@color/textLightTertiary"
                     android:textSize="10sp" />
 
@@ -211,18 +203,10 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="2dp"
-                        android:text="@string/rupee"
-                        android:textColor="@color/text_currency"
-                        android:textSize="@dimen/form_fields_text_size" />
-
-                    <TextView
                         android:id="@+id/fragment_share_max_rent_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="925"
+                        android:text="₹ 925"
                         android:textColor="@color/textLightTertiary"
                         android:textSize="10sp" />
 

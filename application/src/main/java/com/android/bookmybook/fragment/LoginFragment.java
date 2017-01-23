@@ -99,11 +99,10 @@ public class LoginFragment extends DialogFragment{
 
     @OnClick(R.id.registration_from_login)
     public void onSignupFromLogin(View view) {
+        FragmentManager fragMan = getFragmentManager();
+        Utility.showRegistrationFragment(fragMan);
 
-            FragmentManager fragMan = getFragmentManager();
-            Utility.showRegistrationFragment(fragMan);
-            return;
-
+        dismiss();
     }
 
     @OnClick(R.id.sign_in_button)
@@ -123,14 +122,17 @@ public class LoginFragment extends DialogFragment{
         mail = String.valueOf(email.getText());
         pwd = String.valueOf(password.getText());
 
-
         if (mail.isEmpty()) {
             Utility.showSnacks(act,"PLEASE ENTER EMAIL","OK", Snackbar.LENGTH_INDEFINITE);
+            return false;
         } else if (!isValidMail(mail)) {
             Utility.showSnacks(act,"INVALID EMAIL","OK", Snackbar.LENGTH_INDEFINITE);
+            return false;
         } else if (pwd.isEmpty()) {
             Utility.showSnacks(act,"PLEASE ENTER PASSWORD","OK", Snackbar.LENGTH_INDEFINITE);
+            return false;
         }
+
         return true;
     }
 

@@ -21,8 +21,10 @@ import android.widget.TextView;
 import com.android.bookmybook.R;
 import com.android.bookmybook.activity.HomeActivity;
 import com.android.bookmybook.model.Book;
+import com.android.bookmybook.util.Utility;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.provider.ChildLoadProvider;
+import com.bumptech.glide.util.Util;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -59,7 +61,7 @@ public class RecyclerViewAdapterBooks extends RecyclerView.Adapter<RecyclerViewA
 
         viewHolder.book_title_tv.setText(book.getTITLE());
         viewHolder.book_author_tv.setText(book.getAUTHOR());
-        viewHolder.book_rent_tv.setText(String.valueOf(book.getRENT()));
+        viewHolder.book_rent_tv = (TextView) Utility.shortenAmountView(context, viewHolder.book_rent_tv, book.getRENT());
         viewHolder.book_duration_tv.setText("MONTH");
 
         viewHolder.book_options_iv.setOnClickListener(new View.OnClickListener() {

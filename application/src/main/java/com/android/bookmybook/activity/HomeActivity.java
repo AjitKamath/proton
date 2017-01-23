@@ -21,13 +21,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.bookmybook.R;
 import com.android.bookmybook.adapter.ListViewAdapterCategorizedBooks;
 import com.android.bookmybook.fragment.ShareFragment;
 import com.android.bookmybook.model.Book;
 import com.android.bookmybook.model.BooksList;
+import com.android.bookmybook.model.User;
 import com.android.bookmybook.task.AsyncTaskManager;
+import com.android.bookmybook.util.TestData;
 import com.android.bookmybook.util.Utility;
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 
@@ -61,6 +64,24 @@ public class HomeActivity extends CommonActivity {
 
     @InjectView(R.id.nav_view)
     NavigationView nav_view;
+
+    @InjectView(R.id.account_summary_name_tv)
+    TextView account_summary_name_tv;
+
+    @InjectView(R.id.account_summary_wishes_tv)
+    TextView account_summary_wishes_tv;
+
+    @InjectView(R.id.account_summary_bag_tv)
+    TextView account_summary_bag_tv;
+
+    @InjectView(R.id.account_summary_balance_tv)
+    TextView account_summary_balance_tv;
+
+    @InjectView(R.id.account_summary_seeks_tv)
+    TextView account_summary_seeks_tv;
+
+    @InjectView(R.id.account_summary_shares_tv)
+    TextView account_summary_shares_tv;
 
     @InjectView(R.id.categorizedBooksLV)
     ListView categorizedBooksLV;
@@ -119,6 +140,39 @@ public class HomeActivity extends CommonActivity {
         categorizedBooksLV.setAdapter(adapter);
 
         Utility.closeProgress(progress);
+    }
+
+    @Override
+    protected void setupAccountSummary() {
+        if(master != null){
+            if(master.getUser() != null) {
+                User user = master.getUser();
+
+                if (user.getNAME() != null) {
+                    account_summary_name_tv.setText(user.getNAME());
+                }
+
+                if(user.getWishes() != null){
+                    account_summary_wishes_tv.setText(String.valueOf(user.getWishes()));
+                }
+
+                if(user.getBag() != null){
+                    account_summary_bag_tv.setText(String.valueOf(user.getBag()));
+                }
+
+                if(user.getBalance() != null){
+                    account_summary_balance_tv = (TextView) Utility.shortenAmountView(mContext, account_summary_balance_tv, user.getBalance());
+                }
+
+                if(user.getShares() != null){
+                    account_summary_shares_tv.setText(String.valueOf(user.getShares()));
+                }
+
+                if(user.getSeeks() != null){
+                    account_summary_seeks_tv.setText(String.valueOf(user.getSeeks()));
+                }
+            }
+        }
     }
 
     @Override
