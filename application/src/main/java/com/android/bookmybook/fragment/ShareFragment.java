@@ -32,7 +32,6 @@ import com.android.bookmybook.model.Book;
 import com.android.bookmybook.model.Category;
 import com.android.bookmybook.model.Master;
 import com.android.bookmybook.model.Tenure;
-import com.android.bookmybook.model.User;
 import com.android.bookmybook.util.Utility;
 
 import java.io.File;
@@ -62,7 +61,6 @@ import static com.android.bookmybook.util.Constants.FRAGMENT_SHARE_BOOK_DETAILS;
 import static com.android.bookmybook.util.Constants.GALLERY_CHOICE;
 import static com.android.bookmybook.util.Constants.HEADER;
 import static com.android.bookmybook.util.Constants.LIST_DATA;
-import static com.android.bookmybook.util.Constants.LOGGED_IN_USER;
 import static com.android.bookmybook.util.Constants.MASTER;
 import static com.android.bookmybook.util.Constants.MAX_DURATION;
 import static com.android.bookmybook.util.Constants.MIN_DURATION;
@@ -104,7 +102,6 @@ public class ShareFragment extends DialogFragment {
     /*components*/
 
     /*data from activity/fragment*/
-    private User user;
     private Book book = new Book();
     private Master master;
     /*data from activity/fragment*/
@@ -258,7 +255,6 @@ public class ShareFragment extends DialogFragment {
         }
 
         master = (Master) getArguments().get(MASTER);
-        user = (User) getArguments().get(LOGGED_IN_USER);
     }
 
     private void setupPage() {
@@ -355,7 +351,7 @@ public class ShareFragment extends DialogFragment {
 
                 book.setMinDuration(minDuration);
                 book.setMaxDuration(maxDuration);
-                book.setUSER_ID(user.getUSER_ID());
+                book.setUSER_ID(master.getUser().getUSER_ID());
 
                 showShareDetailsFragment();
             }

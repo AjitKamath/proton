@@ -19,19 +19,20 @@
         app:srcCompat="@drawable/myself" />
 
     <TextView
+        android:id="@+id/common_nav_header_name_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
         android:textColor="@color/textLightPrimary"
-        android:text="VISHAL VARSHNEY" />
+        android:text="UNAVAILABLE" />
 
     <TextView
+        android:id="@+id/common_nav_header_city_tv"
         android:layout_marginTop="5dp"
-        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/textLightSecondary"
         android:textSize="10sp"
-        android:text="CHENNAI" />
+        android:text="UNAVAILABLE" />
 
 </LinearLayout>

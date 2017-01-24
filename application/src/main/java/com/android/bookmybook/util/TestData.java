@@ -22,7 +22,8 @@ public class TestData {
     static {
         user = new User();
         user.setUSER_ID("8");
-        user.setNAME("AJIT");
+        user.setNAME("VISHAL");
+        user.setCITY("MUMBAI");
         user.setSSID("123456");
         user.setBag(3);
         user.setBalance(330);

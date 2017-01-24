@@ -108,3 +108,11 @@
 23-jan-2017
 1. ui updated for login and registration fragment.
 2. ui updated for fab.
+
+-------------------GIT PUSH ON 23-jan-17--------------------------
+
+24-jan-2017
+1. setup navigation header from user object.
+2. issue with flickering login screen due to progress bar and post delayed is resolved.
+3. null pointer exception while sharing a book is resolved.
+4. account summary reset on logout.

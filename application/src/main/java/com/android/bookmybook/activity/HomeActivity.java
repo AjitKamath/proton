@@ -172,6 +172,14 @@ public class HomeActivity extends CommonActivity {
                     account_summary_seeks_tv.setText(String.valueOf(user.getSeeks()));
                 }
             }
+            else{
+                account_summary_name_tv.setText("");
+                account_summary_wishes_tv.setText("0");
+                account_summary_bag_tv.setText("0");
+                account_summary_balance_tv.setText("0");
+                account_summary_shares_tv.setText("0");
+                account_summary_seeks_tv.setText("0");
+            }
         }
     }
 

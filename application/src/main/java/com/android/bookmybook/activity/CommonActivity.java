@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.bookmybook.R;
 import com.android.bookmybook.fragment.ShareFragment;
@@ -46,6 +47,7 @@ import static com.android.bookmybook.util.Constants.FRAGMENT_SHARE_BOOK;
 import static com.android.bookmybook.util.Constants.LOGGED_IN_USER;
 import static com.android.bookmybook.util.Constants.MASTER;
 import static com.android.bookmybook.util.Constants.OK;
+import static com.android.bookmybook.util.Constants.SERVER_TIMEOUT;
 import static com.android.bookmybook.util.Constants.SSID;
 
 public abstract class CommonActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener{
@@ -91,13 +93,20 @@ public abstract class CommonActivity extends AppCompatActivity implements View.O
             return;
         }
 
-        //show progress bar when loading master data
-        progress = Utility.getProgressDialog(mContext, "loading app data ..");
-        Utility.showProgress(progress);
+        //fetch user
+        fetchUser();
 
         //monitor master
         monitorMasterData();
+    }
 
+    private void clearMasterData(){
+        if(master != null){
+            master = new Master();
+        }
+    }
+
+    private void fetchUser(){
         /*fetch user*/
         Object object = new SharedPrefUtility(mContext).getValue(SSID);
         String request[] = new String[2];
@@ -113,35 +122,47 @@ public abstract class CommonActivity extends AppCompatActivity implements View.O
             new AsyncTaskManager(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, request);
         }
         /*fetch user*/
+    }
 
+    private void fetchCategories(){
         //fetch book categories
         new AsyncTaskManager(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, ASYNC_TASK_GET_CATEGORIES_ALL);
+    }
 
+    private void fetchTenures(){
         //fetch tenures
         new AsyncTaskManager(this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, ASYNC_TASK_GET_TENURES_ALL);
     }
 
-    private void clearMasterData(){
-        if(master != null){
-            master = null;
-        }
-    }
-
     private void monitorMasterData() {
+        //show progress bar when loading master data
+        progress = Utility.getProgressDialog(mContext, "loading app data ..");
+        Utility.showProgress(progress);
+
         final Handler h = new Handler();
-        final int delay = 1000; //milliseconds
 
         h.postDelayed(new Runnable(){
             public void run(){
                 if(master != null
                         && master.getTenuresList() != null && !master.getTenuresList().isEmpty()
-                        && master.getCategoriesList() != null && !master.getCategoriesList().isEmpty()
-                        && master.getUser() != null && master.getUser().getSSID() != null && !master.getUser().getSSID().trim().isEmpty()){
+                        && master.getCategoriesList() != null && !master.getCategoriesList().isEmpty()){
                     Utility.closeProgress(progress);
+                    h.removeCallbacks(this);
                 }
-                h.postDelayed(this, delay);
+                //check what is missing in the master data and call its respective service
+                else{
+                    if(master == null || master.getCategoriesList() == null || master.getCategoriesList().isEmpty()){
+                        fetchCategories();
+                    }
+
+                    if(master == null || master.getTenuresList() == null || master.getTenuresList().isEmpty()){
+                        fetchTenures();
+                    }
+
+                    h.postDelayed(this, SERVER_TIMEOUT);
+                }
             }
-        }, delay);
+        }, SERVER_TIMEOUT);
     }
 
     public void setupCategories(List<Category> categoriesList){
@@ -182,6 +203,17 @@ public abstract class CommonActivity extends AppCompatActivity implements View.O
 
         //setup account summary
         setupAccountSummary();
+
+        //setup navigation drawer
+        setupNavigationDrawer();
+    }
+
+    private void setupNavigationDrawer() {
+        //set navigation drawer header
+        if(master != null && master.getUser() != null){
+            ((TextView)getNav_view().findViewById(R.id.common_nav_header_name_tv)).setText(master.getUser().getNAME());
+            ((TextView)getNav_view().findViewById(R.id.common_nav_header_city_tv)).setText(master.getUser().getCITY());
+        }
     }
 
     private void setupToolbar() {
@@ -250,7 +282,6 @@ public abstract class CommonActivity extends AppCompatActivity implements View.O
         String parentFragmentNameStr = null;
 
         Bundle bundle = new Bundle();
-        bundle.putSerializable(LOGGED_IN_USER, user);
         bundle.putSerializable(MASTER, master);
 
         if(book != null){
@@ -286,6 +317,7 @@ public abstract class CommonActivity extends AppCompatActivity implements View.O
         if(R.id.navigation_drawer_logout == item.getItemId()){
             new SharedPrefUtility(mContext).clearSharedPreference();
             clearMasterData();
+            setupAccountSummary();
         }
         else{
             Utility.showSnacks(getDrawer_layout(), "NOT IMPLEMENTED YET", OK, Snackbar.LENGTH_INDEFINITE);
